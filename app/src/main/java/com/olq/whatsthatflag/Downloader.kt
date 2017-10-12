@@ -23,21 +23,23 @@ class Downloader(imgView: ImageView, progressBar: ProgressBar) {
         showProgressBar()
 
         doAsync {
-            val currentURL: String = getImgURL(urlString)
+            val currentURL: String ?= getImgURL(urlString)
 
             uiThread {
                 Log.d("Request", "Finished")
-                Log.d("Request - CurrentURL", currentURL)
-
                 hideProgressBar()
-                myImgView.loadUrl(currentURL)
+
+                if(currentURL != null) {
+                    Log.d("Request - CurrentURL", currentURL)
+                    myImgView.loadUrl(currentURL)
+                }
             }
         }
     }
 
-    fun getImgURL(urlString: String): String {
+    fun getImgURL(urlString: String): String? {
         var inputStream: InputStream? = null
-        var imgURL: String = ""
+        var imgURL: String ?= null
 
         try {
             val url = URL(urlString)
@@ -62,7 +64,7 @@ class Downloader(imgView: ImageView, progressBar: ProgressBar) {
         return imgURL
     }
 
-    fun extractImgURL(inputStream: InputStream): String {
+    fun extractImgURL(inputStream: InputStream): String? {
         val reader: BufferedReader = inputStream.bufferedReader()
         var dataLine: String? = reader.readLine()
         val content: String
@@ -82,7 +84,7 @@ class Downloader(imgView: ImageView, progressBar: ProgressBar) {
             }
         }
 
-        return ""
+        return null
     }
 
 

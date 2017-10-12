@@ -23,7 +23,6 @@ class MainActivity : Activity() {
             "Zimbabwe"
     )
 
-
     val buttonNames = arrayOf<String>(
             "", "", "", ""
     )
@@ -36,14 +35,19 @@ class MainActivity : Activity() {
         randomizeFlagList()
 
         downloader = Downloader(myImgView, myProgressBar)
-        downloader.downloadContent(getURLFromName(flagList.get(id)))
 
+        loadImg()
         renameBtns()
     }
 
 
     fun randomizeFlagList() {
         Collections.shuffle(flagList)
+    }
+
+    fun loadImg(){
+        downloader.downloadContent(
+                getURLFromName(flagList[id]))
     }
 
     fun renameBtns(){
@@ -93,7 +97,6 @@ class MainActivity : Activity() {
 
 
 
-
     fun btnClicked(view: View){
         when((view as Button).text){
             flagList[id] -> {
@@ -112,9 +115,7 @@ class MainActivity : Activity() {
         if(id == flagList.size) id = 0
 
         renameBtns()
-
-        downloader.downloadContent(
-                getURLFromName(flagList.get(id)))
+        loadImg()
     }
 
     fun incrementScore(){
