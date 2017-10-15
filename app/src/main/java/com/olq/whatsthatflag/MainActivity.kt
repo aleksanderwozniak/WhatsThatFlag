@@ -16,8 +16,6 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    val AMOUNT_OF_COUNTRIES = 20
-
     var id: Int = 0
     var score: Int = 0
 
@@ -29,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val amountOfCountries = intent.getIntExtra("AMOUNT_OF_COUNTRIES", 20)
 
         showProgressBar()
         toast("Downloading content...")
@@ -39,7 +38,11 @@ class MainActivity : AppCompatActivity() {
             uiThread {
                 hideProgressBar()
 
-                splitFlagList(flagList, AMOUNT_OF_COUNTRIES)
+                if(amountOfCountries != -1) {
+                    splitFlagList(flagList, amountOfCountries)
+                }
+
+                Collections.shuffle(flagList)
 
                 loadImg()
                 renameBtns()
@@ -48,7 +51,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun splitFlagList(flagList: MutableList<String>, amountOfCountries: Int){
-        Collections.shuffle(flagList)
         flagList.split(amountOfCountries)
 
         Log.d("splitFlagList", flagList.size.toString() + "\n" + flagList.toString())
