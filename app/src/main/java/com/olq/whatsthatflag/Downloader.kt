@@ -11,6 +11,7 @@ import java.io.BufferedReader
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.*
 import java.util.regex.Pattern
 
 class Downloader(imgView: ImageView, progressBar: ProgressBar) {
@@ -19,18 +20,94 @@ class Downloader(imgView: ImageView, progressBar: ProgressBar) {
     val myProgressBar = progressBar
 
 
-    fun downloadContent(urlString: String) {
+    fun downloadListOfCountries(list: MutableList<String>, amountOfCountries: Int){
+        showProgressBar()
+
+        doAsync {
+            val countriesURL = "https://www.state.gov/misc/list/"
+            var inputStream: InputStream? = null
+
+            try {
+                val url = URL(countriesURL)
+                val connection = url.openConnection() as HttpURLConnection
+
+                connection.requestMethod = "GET"
+                connection.connect()
+
+                inputStream = connection.inputStream
+
+
+                val reader: BufferedReader = inputStream.bufferedReader()
+                var dataLine: String? = reader.readLine()
+
+
+                //MARK: START of HTML section containing names of countries
+                while (dataLine != null && !dataLine.contains("<!--Responsive Alphabetical Nav Targets-->")) {
+                    dataLine = reader.readLine()
+                }
+
+
+                //MARK: END of that HTML section
+                while (dataLine != null && !dataLine.contains("<!--/Responsive Alphabetical Nav Targets-->")){
+                    dataLine = reader.readLine()
+
+                    val p = Pattern.compile("\">(.*?)</a></li>")
+                    val m = p.matcher(dataLine)
+
+                    if (m.find()) {
+                        Log.d("Regex", m.group(1).toString())
+                        list.add(m.group(1))
+                    }
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close()
+                }
+            }
+
+            uiThread {
+                Log.d("Download List", "Finished")
+                hideProgressBar()
+
+
+                splitFlagList(list, amountOfCountries)
+            }
+        }
+    }
+
+    fun splitFlagList(flagList: MutableList<String>, amountOfCountries: Int){
+        Collections.shuffle(flagList)
+        flagList.split(amountOfCountries)
+
+        Log.d("splitFlagList", flagList.size.toString() + "\n\n" + flagList.toString())
+    }
+
+    fun MutableList<String>.split(fromIndex: Int){
+        for (i in fromIndex..this.size-1){
+            this.removeAt(0)
+        }
+    }
+
+
+
+
+
+    fun downloadImage(urlString: String) {
         showProgressBar()
 
         doAsync {
             val currentURL: String ?= getImgURL(urlString)
 
             uiThread {
-                Log.d("Request", "Finished")
+                Log.d("Download Image", "Finished")
                 hideProgressBar()
 
                 if(currentURL != null) {
-                    Log.d("Request - CurrentURL", currentURL)
+                    Log.d("Download Image", "CurrentURL: $currentURL")
                     myImgView.loadUrl(currentURL)
                 }
             }

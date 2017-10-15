@@ -5,7 +5,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 import java.util.*
+
+
+const val AMOUNT_OF_COUNTRIES = 20
 
 class MainActivity : Activity() {
 
@@ -13,15 +17,7 @@ class MainActivity : Activity() {
     var score: Int = 0
     lateinit var downloader: Downloader
 
-    var flagList = mutableListOf(
-            "Poland",
-            "Italy",
-            "Germany",
-            "England",
-            "France",
-            "Spain",
-            "Zimbabwe"
-    )
+    var flagList = mutableListOf<String>()
 
     val buttonNames = arrayOf<String>(
             "", "", "", ""
@@ -32,21 +28,19 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        randomizeFlagList()
-
         downloader = Downloader(myImgView, myProgressBar)
+        downloader.downloadListOfCountries(flagList, AMOUNT_OF_COUNTRIES)
 
-        loadImg()
-        renameBtns()
+        //MARK: Issue
+        // Countries are loaded in async, but views are not updated after being ready to be used.
+        // This results in first btnClick being empty, and only after it the App will work as intended.
+
+        toast("Press any button") // This is not rly a solution... But it works for now.
     }
 
-
-    fun randomizeFlagList() {
-        Collections.shuffle(flagList)
-    }
 
     fun loadImg(){
-        downloader.downloadContent(
+        downloader.downloadImage(
                 getURLFromName(flagList[id]))
     }
 
