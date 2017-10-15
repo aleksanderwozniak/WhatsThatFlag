@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.olq.whatsthatflag.MainActivity.MainActivity"
+    tools:context="com.olq.whatsthatflag.MainActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="73dp">
 
@@ -58,7 +58,8 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#455a64"
             android:onClick="btnClicked"
-            android:text="Button" />
+            android:text="Button"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/myBtnB"
@@ -66,7 +67,8 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#455a64"
             android:onClick="btnClicked"
-            android:text="Button" />
+            android:text="Button"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/myBtnC"
@@ -74,7 +76,8 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#455a64"
             android:onClick="btnClicked"
-            android:text="Button" />
+            android:text="Button"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/myBtnD"
@@ -82,7 +85,8 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#455a64"
             android:onClick="btnClicked"
-            android:text="Button" />
+            android:text="Button"
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <TextView

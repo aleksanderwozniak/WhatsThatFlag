@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="holo_primary">#684949</color>
     <color name="holo_blue">#33b5e5</color>
+    <color name="primary_material_dark">#212121</color>
+    <color name="colorText">#455a64</color>
+    <color name="colorTextBright">#607d8b</color>
 </resources>

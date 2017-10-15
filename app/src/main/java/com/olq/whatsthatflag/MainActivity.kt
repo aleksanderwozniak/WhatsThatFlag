@@ -1,7 +1,7 @@
 package com.olq.whatsthatflag
 
-import android.app.Activity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
@@ -9,15 +9,17 @@ import org.jetbrains.anko.toast
 import java.util.*
 
 
-const val AMOUNT_OF_COUNTRIES = 20
-
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
 
     var id: Int = 0
     var score: Int = 0
+
+    val AMOUNT_OF_COUNTRIES = 20
+
     lateinit var downloader: Downloader
 
     var flagList = mutableListOf<String>()
+
 
     val buttonNames = arrayOf<String>(
             "", "", "", ""
