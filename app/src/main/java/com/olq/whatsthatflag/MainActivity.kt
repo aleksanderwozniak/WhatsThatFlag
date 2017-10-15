@@ -2,10 +2,13 @@ package com.olq.whatsthatflag
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
 import java.util.*
 
 
@@ -31,15 +34,36 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         downloader = Downloader(myImgView, myProgressBar)
-        downloader.downloadListOfCountries(flagList, AMOUNT_OF_COUNTRIES)
 
-        //MARK: Issue
-        // Countries are loaded in async, but views are not updated after being ready to be used.
-        // This results in first btnClick being empty, and only after it the App will work as intended.
+        toast("Downloading content...")
+        myProgressBar.visibility = View.VISIBLE
 
-        toast("Press any button") // This is not rly a solution... But it works for now.
+        doAsync {
+            downloader.downloadListOfCountries(flagList)
+
+            uiThread {
+                myProgressBar.visibility = View.INVISIBLE
+
+                splitFlagList(flagList, AMOUNT_OF_COUNTRIES)
+
+                renameBtns()
+                loadImg()
+            }
+        }
     }
 
+    fun splitFlagList(flagList: MutableList<String>, amountOfCountries: Int){
+        Collections.shuffle(flagList)
+        flagList.split(amountOfCountries)
+
+        Log.d("splitFlagList", flagList.size.toString() + "\n" + flagList.toString())
+    }
+
+    fun MutableList<String>.split(fromIndex: Int){
+        for (i in fromIndex..this.size-1){
+            this.removeAt(0)
+        }
+    }
 
     fun loadImg(){
         downloader.downloadImage(
