@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
@@ -14,40 +16,33 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    val AMOUNT_OF_COUNTRIES = 20
+
     var id: Int = 0
     var score: Int = 0
 
-    val AMOUNT_OF_COUNTRIES = 20
-
-    lateinit var downloader: Downloader
-
     var flagList = mutableListOf<String>()
-
-
-    val buttonNames = arrayOf<String>(
-            "", "", "", ""
-    )
+    val buttonNames = arrayOf<String>("", "", "", "")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        downloader = Downloader(myImgView, myProgressBar)
 
+        showProgressBar()
         toast("Downloading content...")
-        myProgressBar.visibility = View.VISIBLE
 
         doAsync {
-            downloader.downloadListOfCountries(flagList)
+            Downloader.downloadListOfCountries(flagList)
 
             uiThread {
-                myProgressBar.visibility = View.INVISIBLE
+                hideProgressBar()
 
                 splitFlagList(flagList, AMOUNT_OF_COUNTRIES)
 
-                renameBtns()
                 loadImg()
+                renameBtns()
             }
         }
     }
@@ -66,8 +61,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun loadImg(){
-        downloader.downloadImage(
-                getURLFromName(flagList[id]))
+        showProgressBar()
+
+        doAsync {
+        val currentURL: String ?= Downloader
+                .getImgURL(getURLFromName(flagList[id]))
+
+            uiThread {
+                Log.d("Download Image", "Finished")
+                hideProgressBar()
+
+                if(currentURL != null) {
+                    Log.d("Download Image", "CurrentURL: $currentURL")
+                    myImgView.loadUrl(currentURL)
+                }
+            }
+        }
+    }
+
+    fun ImageView.loadUrl(url: String) {
+        Picasso.with(context).load(url).into(this)
     }
 
     fun renameBtns(){
@@ -134,8 +147,8 @@ class MainActivity : AppCompatActivity() {
         id++
         if(id == flagList.size) id = 0
 
-        renameBtns()
         loadImg()
+        renameBtns()
     }
 
     fun incrementScore(){
@@ -145,5 +158,14 @@ class MainActivity : AppCompatActivity() {
 
     fun getURLFromName(countryName: String): String{
         return "https://en.wikipedia.org/wiki/$countryName"
+    }
+
+
+    fun showProgressBar(){
+        myProgressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgressBar(){
+        myProgressBar.visibility = View.INVISIBLE
     }
 }
