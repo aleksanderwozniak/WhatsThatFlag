@@ -38,11 +38,11 @@ class MainActivity : AppCompatActivity() {
             uiThread {
                 hideProgressBar()
 
+                Collections.shuffle(flagList)
+
                 if(amountOfCountries != -1) {
                     splitFlagList(flagList, amountOfCountries)
                 }
-
-                Collections.shuffle(flagList)
 
                 loadImg()
                 renameBtns()
