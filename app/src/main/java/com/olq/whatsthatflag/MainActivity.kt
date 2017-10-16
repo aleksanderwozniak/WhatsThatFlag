@@ -12,6 +12,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import java.util.*
+import com.olq.whatsthatflag.StartActivity.CONTINENT.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,12 +29,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val amountOfCountries = intent.getIntExtra("AMOUNT_OF_COUNTRIES", 20)
+        val selectedContinent = intent.getSerializableExtra("SELECTED_CONTINENT") as StartActivity.CONTINENT
+
+
 
         showProgressBar()
         toast("Downloading content...")
 
         doAsync {
-            Downloader.downloadListOfCountries(flagList)
+            downloadContinent(selectedContinent)
 
             uiThread {
                 hideProgressBar()
@@ -46,6 +50,18 @@ class MainActivity : AppCompatActivity() {
 
                 loadImg()
                 renameBtns()
+            }
+        }
+    }
+
+    fun downloadContinent(continent: StartActivity.CONTINENT){
+        when(continent){
+            GLOBAL -> Downloader.downloadListOfCountries(flagList)
+            EUROPE -> Downloader.downloadEuropeanCountries(flagList)
+            ASIA -> Downloader.downloadAsianCountries(flagList)
+
+            else -> {
+                Downloader.downloadListOfCountries(flagList)
             }
         }
     }
