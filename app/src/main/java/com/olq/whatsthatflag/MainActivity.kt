@@ -56,12 +56,12 @@ class MainActivity : AppCompatActivity() {
 
     fun downloadContinent(continent: StartActivity.CONTINENT){
         when(continent){
-            GLOBAL -> Downloader.downloadListOfCountries(flagList)
+            GLOBAL -> Downloader.downloadGlobalList(flagList)
             EUROPE -> Downloader.downloadEuropeanCountries(flagList)
             ASIA -> Downloader.downloadAsianCountries(flagList)
 
             else -> {
-                Downloader.downloadListOfCountries(flagList)
+                Downloader.downloadGlobalList(flagList)
             }
         }
     }

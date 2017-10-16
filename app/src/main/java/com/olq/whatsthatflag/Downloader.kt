@@ -9,19 +9,12 @@ import java.util.regex.Pattern
 
 object Downloader {
 
-    fun downloadListOfCountries(list: MutableList<String>){
+    fun downloadGlobalList(list: MutableList<String>){
         val countriesURL = "https://simple.wikipedia.org/wiki/List_of_countries"
         var inputStream: InputStream? = null
 
         try {
-            val url = URL(countriesURL)
-            val connection = url.openConnection() as HttpURLConnection
-
-            connection.requestMethod = "GET"
-            connection.connect()
-
-            inputStream = connection.inputStream
-
+            inputStream = setupConnectionStream(countriesURL)
 
             val reader: BufferedReader = inputStream.bufferedReader()
             var dataLine: String? = reader.readLine()
@@ -37,13 +30,7 @@ object Downloader {
             while (dataLine != null && !dataLine.contains("Zimbabwe")){
                 dataLine = reader.readLine()
 
-                val p = Pattern.compile("title=\"(.*?)\">")
-                val m = p.matcher(dataLine)
-
-                while (m.find()) {
-                    Log.d("Regex", m.group(1).toString())
-                    list.add(m.group(1))
-                }
+                setupRegex(list, dataLine, "title=\"(.*?)\">")
             }
 
         } catch (e: Exception) {
@@ -57,23 +44,12 @@ object Downloader {
     }
 
 
-
-
-
-
     fun downloadEuropeanCountries(list: MutableList<String>){
         val countriesURL = "https://simple.wikipedia.org/wiki/List_of_European_countries"
         var inputStream: InputStream? = null
 
         try {
-            val url = URL(countriesURL)
-            val connection = url.openConnection() as HttpURLConnection
-
-            connection.requestMethod = "GET"
-            connection.connect()
-
-            inputStream = connection.inputStream
-
+            inputStream = setupConnectionStream(countriesURL)
 
             val reader: BufferedReader = inputStream.bufferedReader()
             var dataLine: String? = reader.readLine()
@@ -90,13 +66,7 @@ object Downloader {
                 dataLine = reader.readLine()
 
                 if(dataLine.contains("<span class")) {
-                    val p = Pattern.compile("title=\"(.*?)\">")
-                    val m = p.matcher(dataLine)
-
-                    if (m.find()) {
-                        Log.d("Regex", m.group(1).toString())
-                        list.add(m.group(1))
-                    }
+                    setupRegex(list, dataLine, "title=\"(.*?)\">")
                 }
             }
 
@@ -112,20 +82,12 @@ object Downloader {
 
 
 
-
     fun downloadAsianCountries(list: MutableList<String>){
         val countriesURL = "https://simple.wikipedia.org/wiki/Asia"
         var inputStream: InputStream? = null
 
         try {
-            val url = URL(countriesURL)
-            val connection = url.openConnection() as HttpURLConnection
-
-            connection.requestMethod = "GET"
-            connection.connect()
-
-            inputStream = connection.inputStream
-
+            inputStream = setupConnectionStream(countriesURL)
 
             val reader: BufferedReader = inputStream.bufferedReader()
             var dataLine: String? = reader.readLine()
@@ -141,13 +103,7 @@ object Downloader {
             while (dataLine != null && !dataLine.contains("id=\"Related_pages\"")){
                 dataLine = reader.readLine()
 
-                val p = Pattern.compile("title=\"(.*?)\">")
-                val m = p.matcher(dataLine)
-
-                if (m.find()) {
-                    Log.d("Regex", m.group(1).toString())
-                    list.add(m.group(1))
-                }
+                setupRegex(list, dataLine, "title=\"(.*?)\">")
             }
 
         } catch (e: Exception) {
@@ -161,19 +117,34 @@ object Downloader {
     }
 
 
+    fun setupConnectionStream(countriesURL: String) : InputStream{
+        val url = URL(countriesURL)
+        val connection = url.openConnection() as HttpURLConnection
+
+        connection.requestMethod = "GET"
+        connection.connect()
+
+        return connection.inputStream
+    }
+
+
+    fun setupRegex(list: MutableList<String>, dataLine: String, regex: String){
+        val p = Pattern.compile(regex)
+        val m = p.matcher(dataLine)
+
+        while (m.find()) {
+            Log.d("Regex", m.group(1).toString())
+            list.add(m.group(1))
+        }
+    }
+
 
     fun getImgURL(urlString: String): String? {
         var inputStream: InputStream? = null
         var imgURL: String ?= null
 
         try {
-            val url = URL(urlString)
-            val connection = url.openConnection() as HttpURLConnection
-
-            connection.requestMethod = "GET"
-            connection.connect()
-
-            inputStream = connection.inputStream
+            inputStream = setupConnectionStream(urlString)
 
             imgURL = extractImgURL(inputStream)
 
