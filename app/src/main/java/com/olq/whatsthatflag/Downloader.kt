@@ -117,6 +117,52 @@ object Downloader {
     }
 
 
+    fun downloadAfricanCountries(list: MutableList<String>){
+        val countriesURL = "https://simple.wikipedia.org/wiki/Africa"
+        var inputStream: InputStream? = null
+
+        try {
+            inputStream = setupConnectionStream(countriesURL)
+
+            val reader: BufferedReader = inputStream.bufferedReader()
+            var dataLine: String? = reader.readLine()
+
+
+            //MARK: START of HTML section containing names of countries
+            while (dataLine != null && !dataLine.contains("href=\"/wiki/Northern_Africa\"")) {
+                dataLine = reader.readLine()
+            }
+
+
+            //MARK: END of that HTML section
+            while (dataLine != null && !dataLine.contains("title=\"Lomé\"")){
+                dataLine = reader.readLine()
+
+                if (dataLine.contains("<span class")) {
+                    setupRegex(list, dataLine, "title=\"(.*?)\">")
+                }
+            }
+
+            // Countries listed below do not have a flag
+            // or it does not make sense to include them
+            list.remove("Western Sahara")
+            list.remove("Réunion")
+            list.remove("Mayotte")
+            list.remove("Saint Helena")
+
+            Log.d("Regex complete", list.toString())
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+        } finally {
+            if (inputStream != null) {
+                inputStream.close()
+            }
+        }
+    }
+
+
     fun setupConnectionStream(countriesURL: String) : InputStream{
         val url = URL(countriesURL)
         val connection = url.openConnection() as HttpURLConnection

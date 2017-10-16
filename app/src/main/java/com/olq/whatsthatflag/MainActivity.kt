@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
             GLOBAL -> Downloader.downloadGlobalList(flagList)
             EUROPE -> Downloader.downloadEuropeanCountries(flagList)
             ASIA -> Downloader.downloadAsianCountries(flagList)
+            AFRICA -> Downloader.downloadAfricanCountries(flagList)
 
             else -> {
                 Downloader.downloadGlobalList(flagList)

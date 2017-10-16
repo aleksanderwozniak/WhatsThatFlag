@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_weight="1"
-            android:text="Asia" />
+            android:text="Africa" />
     </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>

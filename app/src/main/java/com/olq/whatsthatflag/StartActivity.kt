@@ -10,10 +10,11 @@ import org.jetbrains.anko.startActivity
 
 class StartActivity : AppCompatActivity() {
 
-    public enum class CONTINENT{
+    enum class CONTINENT{
         GLOBAL,
         EUROPE,
-        ASIA
+        ASIA,
+        AFRICA
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +56,6 @@ class StartActivity : AppCompatActivity() {
 
     fun onStartBtnClick(view: View){
         val amount = calculateAmountOfCountries(myCountriesSeekBar.progress)
-//        val selectedContinent = getSelectedContinent(radioGroupContintents.checkedRadioButtonId).toString()
         val selectedContinent = getSelectedContinent(radioGroupContintents.checkedRadioButtonId)
 
         startActivity<MainActivity>(
@@ -67,7 +67,8 @@ class StartActivity : AppCompatActivity() {
         when (radioBtnId){
             radioGlobal.id -> return CONTINENT.GLOBAL
             radioEurope.id -> return CONTINENT.EUROPE
-            radioAsia.id -> return CONTINENT.ASIA
+//            radioAsia.id -> return CONTINENT.ASIA
+            radioAsia.id -> return CONTINENT.AFRICA
 
             else -> {
                 return CONTINENT.GLOBAL
