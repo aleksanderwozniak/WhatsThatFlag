@@ -2,10 +2,10 @@ package com.olq.whatsthatflag
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_start.*
+import kotlinx.android.synthetic.main.radio_group_table_layout.*
 import org.jetbrains.anko.startActivity
 
 class StartActivity : AppCompatActivity() {
@@ -14,14 +14,14 @@ class StartActivity : AppCompatActivity() {
         GLOBAL,
         EUROPE,
         ASIA,
-        AFRICA
+        AMERICA,
+        AFRICA,
+        OCEANIA
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
-
-//        Log.d("StartActivity", "radioGroupContintents.checkedRadioButtonId = ${radioGroupContintents.checkedRadioButtonId}")
 
         myCountriesSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(p0: SeekBar, p1: Int, p2: Boolean) {
@@ -40,6 +40,8 @@ class StartActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(p0: SeekBar?) {
             }
         })
+
+        radioGlobal.callOnClick()
     }
 
     fun calculateAmountOfCountries(progress: Int): Int {
@@ -56,7 +58,7 @@ class StartActivity : AppCompatActivity() {
 
     fun onStartBtnClick(view: View){
         val amount = calculateAmountOfCountries(myCountriesSeekBar.progress)
-        val selectedContinent = getSelectedContinent(radioGroupContintents.checkedRadioButtonId)
+        val selectedContinent = getSelectedContinent((radioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
 
         startActivity<MainActivity>(
                 "AMOUNT_OF_COUNTRIES" to amount,
@@ -67,8 +69,10 @@ class StartActivity : AppCompatActivity() {
         when (radioBtnId){
             radioGlobal.id -> return CONTINENT.GLOBAL
             radioEurope.id -> return CONTINENT.EUROPE
-//            radioAsia.id -> return CONTINENT.ASIA
-            radioAsia.id -> return CONTINENT.AFRICA
+            radioAsia.id -> return CONTINENT.ASIA
+            radioAmerica.id -> return CONTINENT.AMERICA
+            radioAfrica.id -> return CONTINENT.AFRICA
+            radioOceania.id -> return CONTINENT.OCEANIA
 
             else -> {
                 return CONTINENT.GLOBAL

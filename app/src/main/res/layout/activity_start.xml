@@ -93,48 +93,14 @@
             app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
 
-    <RadioGroup
-        android:id="@+id/radioGroupContintents"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/radioGroupContinents"
+        layout="@layout/radio_group_table_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_weight="1"
-        android:checkedButton="@+id/radioGlobal"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/seekBarLinearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startTextView"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="271dp">
-
-
-        <RadioButton
-            android:id="@+id/radioGlobal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_weight="1"
-            android:text="Global" />
-
-        <RadioButton
-            android:id="@+id/radioEurope"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_weight="1"
-            android:text="Europe" />
-
-        <RadioButton
-            android:id="@+id/radioAsia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_weight="1"
-            android:text="Africa" />
-    </RadioGroup>
+        app:layout_constraintTop_toBottomOf="@+id/startTextView" />
 
 </android.support.constraint.ConstraintLayout>

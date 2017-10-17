@@ -148,7 +148,6 @@ object Downloader {
             list.remove("Western Sahara")
             list.remove("Réunion")
             list.remove("Mayotte")
-            list.remove("Saint Helena")
 
             Log.d("Regex complete", list.toString())
 
