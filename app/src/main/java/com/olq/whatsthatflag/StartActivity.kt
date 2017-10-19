@@ -5,10 +5,19 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_start.*
+import kotlinx.android.synthetic.main.radio_group_table_layout.*
 import org.jetbrains.anko.startActivity
 
 class StartActivity : AppCompatActivity() {
 
+    enum class CONTINENT{
+        GLOBAL,
+        EUROPE,
+        ASIA,
+        AMERICAS,
+        AFRICA,
+        OCEANIA
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +40,8 @@ class StartActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(p0: SeekBar?) {
             }
         })
+
+        radioGlobal.callOnClick()
     }
 
     fun calculateAmountOfCountries(progress: Int): Int {
@@ -47,7 +58,25 @@ class StartActivity : AppCompatActivity() {
 
     fun onStartBtnClick(view: View){
         val amount = calculateAmountOfCountries(myCountriesSeekBar.progress)
+        val selectedContinent = getSelectedContinent((radioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
 
-        startActivity<MainActivity>("AMOUNT_OF_COUNTRIES" to amount)
+        startActivity<MainActivity>(
+                "AMOUNT_OF_COUNTRIES" to amount,
+                "SELECTED_CONTINENT" to selectedContinent)
+    }
+
+    fun getSelectedContinent(radioBtnId: Int): CONTINENT{
+        when (radioBtnId){
+            radioGlobal.id -> return CONTINENT.GLOBAL
+            radioEurope.id -> return CONTINENT.EUROPE
+            radioAsia.id -> return CONTINENT.ASIA
+            radioAmericas.id -> return CONTINENT.AMERICAS
+            radioAfrica.id -> return CONTINENT.AFRICA
+            radioOceania.id -> return CONTINENT.OCEANIA
+
+            else -> {
+                return CONTINENT.GLOBAL
+            }
+        }
     }
 }

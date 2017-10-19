@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.olq.whatsthatflag.RadioGroupTableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <TableRow>
+
+        <RadioButton
+            android:id="@+id/radioGlobal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Global" />
+
+        <RadioButton
+            android:id="@+id/radioEurope"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Europe" />
+
+        <RadioButton
+            android:id="@+id/radioAsia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Asia" />
+    </TableRow>
+
+    <TableRow>
+
+        <RadioButton
+            android:id="@+id/radioAmericas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Americas" />
+
+        <RadioButton
+            android:id="@+id/radioAfrica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Africa" />
+
+        <RadioButton
+            android:id="@+id/radioOceania"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Oceania" />
+    </TableRow>
+
+</com.olq.whatsthatflag.RadioGroupTableLayout>
