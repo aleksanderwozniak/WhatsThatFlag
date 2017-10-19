@@ -12,29 +12,23 @@ object Downloader {
     val COUNTRIES_URL = "https://en.wikipedia.org/wiki/" +
             "List_of_sovereign_states_and_dependent_territories_by_continent"
 
+
+
     fun downloadGlobalList(list: MutableList<String>){
         val countriesURL = "https://simple.wikipedia.org/wiki/List_of_countries"
         var inputStream: InputStream? = null
 
         try {
             inputStream = setupConnectionStream(countriesURL)
-
             val reader: BufferedReader = inputStream.bufferedReader()
-            var dataLine: String? = reader.readLine()
 
+            addGlobe(list, reader)
 
-            //MARK: START of HTML section containing names of countries
-            while (dataLine != null && !dataLine.contains("title=\"Sovereign state\"")) {
-                dataLine = reader.readLine()
-            }
-
-
-            //MARK: END of that HTML section
-            while (dataLine != null && !dataLine.contains("Zimbabwe")){
-                dataLine = reader.readLine()
-
-                setupRegex(list, dataLine, "title=\"(.*?)\">")
-            }
+            // Countries listed below do not have a flag
+            // or it does not make sense to include them
+            list.remove("Palestine")
+            list.remove("Tibet")
+            list.remove("Upper Volta")
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -46,6 +40,62 @@ object Downloader {
         }
     }
 
+    private fun setupConnectionStream(countriesURL: String) : InputStream{
+        val url = URL(countriesURL)
+        val connection = url.openConnection() as HttpURLConnection
+
+        connection.requestMethod = "GET"
+        connection.connect()
+
+        return connection.inputStream
+    }
+
+    private fun addGlobe(list: MutableList<String>, reader: BufferedReader){
+        readSourceCode(
+                list,
+                reader,
+                "title=\"Sovereign state\"",
+                "Zimbabwe",
+                false)
+    }
+
+    private fun readSourceCode(list: MutableList<String>, reader: BufferedReader, readFrom: String, readTo: String, dataLineSpecialCheck: Boolean = true){
+        var dataLine: String? = reader.readLine()
+
+        //MARK: START of HTML section containing names of countries
+        while (dataLine != null && !dataLine.contains(readFrom)) {
+            dataLine = reader.readLine()
+        }
+
+
+        //MARK: END of that HTML section
+        while (dataLine != null && !dataLine.contains(readTo)) {
+            dataLine = reader.readLine()
+
+            if(dataLineSpecialCheck){
+                if (dataLine.contains("<span class=\"flagicon\"")) {
+                    setupRegex(list, dataLine, "title=\"(.*?)\">")
+                }
+
+            }else{
+                if (dataLine.contains("<p>")) {
+                    setupRegex(list, dataLine, "title=\"(.*?)\">")
+                }
+            }
+        }
+    }
+
+    private fun setupRegex(list: MutableList<String>, dataLine: String, regex: String){
+        val p = Pattern.compile(regex)
+        val m = p.matcher(dataLine)
+
+        while (m.find()) {
+            Log.d("Regex", m.group(1).toString())
+            list.add(m.group(1))
+        }
+    }
+
+
 
     fun downloadEuropeanCountries(list: MutableList<String>){
         var inputStream: InputStream? = null
@@ -54,23 +104,8 @@ object Downloader {
             inputStream = setupConnectionStream(COUNTRIES_URL)
 
             val reader: BufferedReader = inputStream.bufferedReader()
-            var dataLine: String? = reader.readLine()
 
-
-            //MARK: START of HTML section containing names of countries
-            while (dataLine != null && !dataLine.contains("Europe: political geography</a>.</i></p>")) {
-                dataLine = reader.readLine()
-            }
-
-
-            //MARK: END of that HTML section
-            while (dataLine != null && !dataLine.contains("Holy See</a></b></td>")){
-                dataLine = reader.readLine()
-
-                if (dataLine.contains("<span class=\"flagicon\"")) {
-                    setupRegex(list, dataLine, "title=\"(.*?)\">")
-                }
-            }
+            addEurope(list, reader)
 
             // Countries listed below do not have a flag
             // or it does not make sense to include them
@@ -86,31 +121,24 @@ object Downloader {
         }
     }
 
+    private fun addEurope(list: MutableList<String>, reader: BufferedReader){
+        readSourceCode(
+                list,
+                reader,
+                "Europe: political geography</a>.</i></p>",
+                "Holy See</a></b></td>")
+    }
+
+
 
     fun downloadAsianCountries(list: MutableList<String>){
         var inputStream: InputStream? = null
 
         try {
             inputStream = setupConnectionStream(COUNTRIES_URL)
-
             val reader: BufferedReader = inputStream.bufferedReader()
-            var dataLine: String? = reader.readLine()
 
-
-            //MARK: START of HTML section containing names of countries
-            while (dataLine != null && !dataLine.contains("Asia: territories and regions</a>.</i></p>")) {
-                dataLine = reader.readLine()
-            }
-
-
-            //MARK: END of that HTML section
-            while (dataLine != null && !dataLine.contains("Yemen</a></b></td>")){
-                dataLine = reader.readLine()
-
-                if (dataLine.contains("<span class=\"flagicon\"")) {
-                    setupRegex(list, dataLine, "title=\"(.*?)\">")
-                }
-            }
+            addAsia(list, reader)
 
             // Countries listed below do not have a flag
             // or it does not make sense to include them
@@ -128,17 +156,25 @@ object Downloader {
         }
     }
 
+    private fun addAsia(list: MutableList<String>, reader: BufferedReader){
+        readSourceCode(
+                list,
+                reader,
+                "Asia: territories and regions</a>.</i></p>",
+                "Yemen</a></b></td>")
+    }
+
+
 
     fun downloadAmericanCountries(list: MutableList<String>) {
         var inputStream: InputStream? = null
 
         try {
             inputStream = setupConnectionStream(COUNTRIES_URL)
-
             val reader: BufferedReader = inputStream.bufferedReader()
 
-            downloadNorthAmerica(list, reader)
-            downloadSouthAmerica(list, reader)
+            addNorthAmerica(list, reader)
+            addSouthAmerica(list, reader)
 
             // Countries listed below do not have a flag
             // or it does not make sense to include them
@@ -168,43 +204,22 @@ object Downloader {
         }
     }
 
-    private fun downloadNorthAmerica(list: MutableList<String>, reader: BufferedReader){
-        var dataLine: String? = reader.readLine()
-
-        //MARK: START of HTML section containing names of countries
-        while (dataLine != null && !dataLine.contains("North America: countries and territories</a>.</i></p>")) {
-            dataLine = reader.readLine()
-        }
-
-
-        //MARK: END of that HTML section
-        while (dataLine != null && !dataLine.contains("United States Virgin Islands</a></i></td>")) {
-            dataLine = reader.readLine()
-
-            if (dataLine.contains("<span class=\"flagicon\"")) {
-                setupRegex(list, dataLine, "title=\"(.*?)\">")
-            }
-        }
+    private fun addNorthAmerica(list: MutableList<String>, reader: BufferedReader){
+        readSourceCode(
+                list,
+                reader,
+                "North America: countries and territories</a>.</i></p>",
+                "United States Virgin Islands</a></i></td>")
     }
 
-    private fun downloadSouthAmerica(list: MutableList<String>, reader: BufferedReader){
-        var dataLine: String? = reader.readLine()
-
-        //MARK: START of HTML section containing names of countries
-        while (dataLine != null && !dataLine.contains("South America: demographics</a>.</i></p>")) {
-            dataLine = reader.readLine()
-        }
-
-
-        //MARK: END of that HTML section
-        while (dataLine != null && !dataLine.contains("Venezuela</a></b></td>")) {
-            dataLine = reader.readLine()
-
-            if (dataLine.contains("<span class=\"flagicon\"")) {
-                setupRegex(list, dataLine, "title=\"(.*?)\">")
-            }
-        }
+    private fun addSouthAmerica(list: MutableList<String>, reader: BufferedReader){
+        readSourceCode(
+                list,
+                reader,
+                "South America: demographics</a>.</i></p>",
+                "Venezuela</a></b></td>")
     }
+
 
 
     fun downloadAfricanCountries(list: MutableList<String>){
@@ -212,25 +227,9 @@ object Downloader {
 
         try {
             inputStream = setupConnectionStream(COUNTRIES_URL)
-
             val reader: BufferedReader = inputStream.bufferedReader()
-            var dataLine: String? = reader.readLine()
 
-
-            //MARK: START of HTML section containing names of countries
-            while (dataLine != null && !dataLine.contains("<a href=\"/wiki/Africa\" title=\"Africa\">Africa</a>")) {
-                dataLine = reader.readLine()
-            }
-
-
-            //MARK: END of that HTML section
-            while (dataLine != null && !dataLine.contains("Zimbabwe</a></b></td>")){
-                dataLine = reader.readLine()
-
-                if (dataLine.contains("<span class")) {
-                    setupRegex(list, dataLine, "title=\"(.*?)\">")
-                }
-            }
+            addAfrica(list, reader)
 
             // Countries listed below do not have a flag
             // or it does not make sense to include them
@@ -250,31 +249,24 @@ object Downloader {
         }
     }
 
+    private fun addAfrica(list: MutableList<String>, reader: BufferedReader){
+        readSourceCode(
+                list,
+                reader,
+                "<a href=\"/wiki/Africa\" title=\"Africa\">Africa</a>",
+                "Zimbabwe</a></b></td>")
+    }
+
+
 
     fun downloadOceanicCountries(list: MutableList<String>){
         var inputStream: InputStream? = null
 
         try {
             inputStream = setupConnectionStream(COUNTRIES_URL)
-
             val reader: BufferedReader = inputStream.bufferedReader()
-            var dataLine: String? = reader.readLine()
 
-
-            //MARK: START of HTML section containing names of countries
-            while (dataLine != null && !dataLine.contains("title=\"Australia (continent)\">Australia (continent)</a> and <a href=\"/wiki/Pacific_Islands\"")) {
-                dataLine = reader.readLine()
-            }
-
-
-            //MARK: END of that HTML section
-            while (dataLine != null && !dataLine.contains("Vanuatu</a></b></td>")){
-                dataLine = reader.readLine()
-
-                if (dataLine.contains("<span class=\"flagicon\"")) {
-                    setupRegex(list, dataLine, "title=\"(.*?)\">")
-                }
-            }
+            addOceania(list, reader)
 
             // Countries listed below do not have a flag
             // or it does not make sense to include them
@@ -304,27 +296,15 @@ object Downloader {
         }
     }
 
-
-    fun setupConnectionStream(countriesURL: String) : InputStream{
-        val url = URL(countriesURL)
-        val connection = url.openConnection() as HttpURLConnection
-
-        connection.requestMethod = "GET"
-        connection.connect()
-
-        return connection.inputStream
+    private fun addOceania(list: MutableList<String>, reader: BufferedReader){
+        readSourceCode(
+                list,
+                reader,
+                "title=\"Australia (continent)\">Australia (continent)</a> and <a href=\"/wiki/Pacific_Islands\"",
+                "Vanuatu</a></b></td>")
     }
 
 
-    fun setupRegex(list: MutableList<String>, dataLine: String, regex: String){
-        val p = Pattern.compile(regex)
-        val m = p.matcher(dataLine)
-
-        while (m.find()) {
-            Log.d("Regex", m.group(1).toString())
-            list.add(m.group(1))
-        }
-    }
 
 
     fun getImgURL(urlString: String): String? {
@@ -333,7 +313,6 @@ object Downloader {
 
         try {
             inputStream = setupConnectionStream(urlString)
-
             imgURL = extractImgURL(inputStream)
 
         } catch (e: Exception) {
@@ -348,7 +327,7 @@ object Downloader {
         return imgURL
     }
 
-    fun extractImgURL(inputStream: InputStream): String? {
+    private fun extractImgURL(inputStream: InputStream): String? {
         val reader: BufferedReader = inputStream.bufferedReader()
         var dataLine: String? = reader.readLine()
         val content: String
