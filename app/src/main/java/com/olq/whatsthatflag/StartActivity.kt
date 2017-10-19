@@ -14,7 +14,7 @@ class StartActivity : AppCompatActivity() {
         GLOBAL,
         EUROPE,
         ASIA,
-        AMERICA,
+        AMERICAS,
         AFRICA,
         OCEANIA
     }
@@ -70,7 +70,7 @@ class StartActivity : AppCompatActivity() {
             radioGlobal.id -> return CONTINENT.GLOBAL
             radioEurope.id -> return CONTINENT.EUROPE
             radioAsia.id -> return CONTINENT.ASIA
-            radioAmerica.id -> return CONTINENT.AMERICA
+            radioAmericas.id -> return CONTINENT.AMERICAS
             radioAfrica.id -> return CONTINENT.AFRICA
             radioOceania.id -> return CONTINENT.OCEANIA
 
