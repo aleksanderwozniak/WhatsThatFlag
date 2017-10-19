@@ -48,30 +48,33 @@ object Downloader {
 
 
     fun downloadEuropeanCountries(list: MutableList<String>){
-        val countriesURL = "https://simple.wikipedia.org/wiki/List_of_European_countries"
         var inputStream: InputStream? = null
 
         try {
-            inputStream = setupConnectionStream(countriesURL)
+            inputStream = setupConnectionStream(COUNTRIES_URL)
 
             val reader: BufferedReader = inputStream.bufferedReader()
             var dataLine: String? = reader.readLine()
 
 
             //MARK: START of HTML section containing names of countries
-            while (dataLine != null && !dataLine.contains("/wiki/Capital_(political)")) {
+            while (dataLine != null && !dataLine.contains("Europe: political geography</a>.</i></p>")) {
                 dataLine = reader.readLine()
             }
 
 
             //MARK: END of that HTML section
-            while (dataLine != null && !dataLine.contains("</table>")){
+            while (dataLine != null && !dataLine.contains("Holy See</a></b></td>")){
                 dataLine = reader.readLine()
 
-                if(dataLine.contains("<span class")) {
+                if (dataLine.contains("<span class=\"flagicon\"")) {
                     setupRegex(list, dataLine, "title=\"(.*?)\">")
                 }
             }
+
+            // Countries listed below do not have a flag
+            // or it does not make sense to include them
+            list.remove("Svalbard")
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -85,28 +88,35 @@ object Downloader {
 
 
     fun downloadAsianCountries(list: MutableList<String>){
-        val countriesURL = "https://simple.wikipedia.org/wiki/Asia"
         var inputStream: InputStream? = null
 
         try {
-            inputStream = setupConnectionStream(countriesURL)
+            inputStream = setupConnectionStream(COUNTRIES_URL)
 
             val reader: BufferedReader = inputStream.bufferedReader()
             var dataLine: String? = reader.readLine()
 
 
             //MARK: START of HTML section containing names of countries
-            while (dataLine != null && !dataLine.contains("id=\"List_of_Asian_Countries\"")) {
+            while (dataLine != null && !dataLine.contains("Asia: territories and regions</a>.</i></p>")) {
                 dataLine = reader.readLine()
             }
 
 
             //MARK: END of that HTML section
-            while (dataLine != null && !dataLine.contains("id=\"Related_pages\"")){
+            while (dataLine != null && !dataLine.contains("Yemen</a></b></td>")){
                 dataLine = reader.readLine()
 
-                setupRegex(list, dataLine, "title=\"(.*?)\">")
+                if (dataLine.contains("<span class=\"flagicon\"")) {
+                    setupRegex(list, dataLine, "title=\"(.*?)\">")
+                }
             }
+
+            // Countries listed below do not have a flag
+            // or it does not make sense to include them
+            list.remove("Akrotiri and Dhekelia")
+            list.remove("British Indian Ocean Territory")
+
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -120,64 +130,31 @@ object Downloader {
 
 
     fun downloadAmericanCountries(list: MutableList<String>) {
-        val countriesURL = "https://en.wikipedia.org/wiki/List_of_countries_in_the_Americas_by_population"
         var inputStream: InputStream? = null
 
         try {
-            inputStream = setupConnectionStream(countriesURL)
+            inputStream = setupConnectionStream(COUNTRIES_URL)
 
             val reader: BufferedReader = inputStream.bufferedReader()
-            var dataLine: String? = reader.readLine()
 
-
-            //MARK: START of HTML section containing names of countries
-            while (dataLine != null && !dataLine.contains("<td>1</td>")) {
-                dataLine = reader.readLine()
-            }
-
-
-            //MARK: END of that HTML section
-            while (dataLine != null && !dataLine.contains("<td align=\"left\"><b>Total</b></td>")) {
-                dataLine = reader.readLine()
-
-                if (dataLine.contains("<td align=\"left\"><span class")) {
-                    setupRegex(list, dataLine, "title=\"(.*?)\">")
-                }
-            }
+            downloadNorthAmerica(list, reader)
+            downloadSouthAmerica(list, reader)
 
             // Countries listed below do not have a flag
             // or it does not make sense to include them
+            list.remove("Clipperton Island")
             list.remove("Guadeloupe")
             list.remove("Martinique")
-            list.remove("French Guiana")
-            list.remove("Collectivity of Saint Martin")
-            list.remove("Caribbean Netherlands")
             list.remove("Saint Barthélemy")
+            list.remove("Collectivity of Saint Martin")
             list.remove("Saint Pierre and Miquelon")
+            list.remove("French Guiana")
 
-            //MARK: Quickfix for American countries
-            //region Quickfix - START
-            //Removed by hand, ordered by Population @Wikipedia
-            list.remove("United States")
-            list.remove("France")
-            list.remove("France")
-            list.remove("Kingdom of the Netherlands")
-            list.remove("Kingdom of the Netherlands")
-            list.remove("United States")
-            list.remove("United Kingdom")
-            list.remove("United Kingdom")
-            list.remove("Denmark")
-            list.remove("Kingdom of the Netherlands")
-            list.remove("United Kingdom")
-            list.remove("France")
-            list.remove("United Kingdom")
-            list.remove("Kingdom of the Netherlands")
-            list.remove("United Kingdom")
-            list.remove("France")
-            list.remove("France")
-            list.remove("United Kingdom")
-            list.remove("United Kingdom")
-            //endregion Quickfix - END
+            // Those countries could be included,
+            // but their og:images are not flags
+            list.remove("Saba")
+            list.remove("Sint Eustatius")
+            list.remove("Navassa Island")
 
             Log.d("Regex complete", list.toString())
 
@@ -187,6 +164,44 @@ object Downloader {
         } finally {
             if (inputStream != null) {
                 inputStream.close()
+            }
+        }
+    }
+
+    private fun downloadNorthAmerica(list: MutableList<String>, reader: BufferedReader){
+        var dataLine: String? = reader.readLine()
+
+        //MARK: START of HTML section containing names of countries
+        while (dataLine != null && !dataLine.contains("North America: countries and territories</a>.</i></p>")) {
+            dataLine = reader.readLine()
+        }
+
+
+        //MARK: END of that HTML section
+        while (dataLine != null && !dataLine.contains("United States Virgin Islands</a></i></td>")) {
+            dataLine = reader.readLine()
+
+            if (dataLine.contains("<span class=\"flagicon\"")) {
+                setupRegex(list, dataLine, "title=\"(.*?)\">")
+            }
+        }
+    }
+
+    private fun downloadSouthAmerica(list: MutableList<String>, reader: BufferedReader){
+        var dataLine: String? = reader.readLine()
+
+        //MARK: START of HTML section containing names of countries
+        while (dataLine != null && !dataLine.contains("South America: demographics</a>.</i></p>")) {
+            dataLine = reader.readLine()
+        }
+
+
+        //MARK: END of that HTML section
+        while (dataLine != null && !dataLine.contains("Venezuela</a></b></td>")) {
+            dataLine = reader.readLine()
+
+            if (dataLine.contains("<span class=\"flagicon\"")) {
+                setupRegex(list, dataLine, "title=\"(.*?)\">")
             }
         }
     }

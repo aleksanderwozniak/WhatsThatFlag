@@ -39,7 +39,7 @@
             android:layout_column="0"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="America" />
+            android:text="Americas" />
 
         <RadioButton
             android:id="@+id/radioAfrica"
