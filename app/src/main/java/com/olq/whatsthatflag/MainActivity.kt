@@ -31,7 +31,9 @@ class MainActivity : AppCompatActivity() {
         val amountOfCountries = intent.getIntExtra("AMOUNT_OF_COUNTRIES", 20)
         val selectedContinent = intent.getSerializableExtra("SELECTED_CONTINENT") as StartActivity.CONTINENT
 
+        val categoryText = selectedContinent.toString().toLowerCase().capitalize()
 
+        categoryTextView.text = "Category: $categoryText"
 
         showProgressBar()
         toast("Downloading content...")
@@ -174,7 +176,7 @@ class MainActivity : AppCompatActivity() {
 
     fun incrementScore(){
         score++
-        myTextView.text = "Score: $score"
+        scoreTextView.text = "Score: $score"
     }
 
     fun getURLFromName(countryName: String): String{
