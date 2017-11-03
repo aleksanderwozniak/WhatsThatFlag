@@ -12,7 +12,6 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import java.util.*
-import com.olq.whatsthatflag.StartActivity.CONTINENT.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         toast("Downloading content...")
 
         doAsync {
-            downloadContinent(selectedContinent)
+            Downloader.downloadContinent(selectedContinent, flagList)
 
             uiThread {
                 hideProgressBar()
@@ -52,21 +51,6 @@ class MainActivity : AppCompatActivity() {
 
                 loadImg()
                 renameBtns()
-            }
-        }
-    }
-
-    fun downloadContinent(continent: StartActivity.CONTINENT){
-        when(continent){
-            GLOBAL -> Downloader.downloadGlobalList(flagList)
-            EUROPE -> Downloader.downloadEuropeanCountries(flagList)
-            ASIA -> Downloader.downloadAsianCountries(flagList)
-            AMERICAS -> Downloader.downloadAmericanCountries(flagList)
-            AFRICA -> Downloader.downloadAfricanCountries(flagList)
-            OCEANIA -> Downloader.downloadOceanicCountries(flagList)
-
-            else -> {
-                Downloader.downloadGlobalList(flagList)
             }
         }
     }

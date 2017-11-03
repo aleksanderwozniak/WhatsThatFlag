@@ -9,26 +9,60 @@ import java.util.regex.Pattern
 
 object Downloader {
 
-    val COUNTRIES_URL = "https://en.wikipedia.org/wiki/" +
+    private val COUNTRIES_URL = "https://en.wikipedia.org/wiki/" +
             "List_of_sovereign_states_and_dependent_territories_by_continent"
 
 
-
-    fun downloadGlobalList(list: MutableList<String>){
-        val countriesURL = "https://simple.wikipedia.org/wiki/List_of_countries"
+    fun downloadContinent(continent: StartActivity.CONTINENT, list: MutableList<String>) {
         var inputStream: InputStream? = null
 
         try {
-            inputStream = setupConnectionStream(countriesURL)
+            inputStream = setupConnectionStream(COUNTRIES_URL)
+
             val reader: BufferedReader = inputStream.bufferedReader()
 
-            addGlobe(list, reader)
+            when(continent) {
+                StartActivity.CONTINENT.GLOBAL -> {
+                    addAfrica(list, reader)
+                    addAsia(list, reader)
+                    addEurope(list, reader)
+                    addNorthAmerica(list, reader)
+                    addSouthAmerica(list, reader)
+                    addOceania(list, reader)
 
-            // Countries listed below do not have a flag
-            // or it does not make sense to include them
-            list.remove("Palestine")
-            list.remove("Tibet")
-            list.remove("Upper Volta")
+                    removeInvalidFlagsFromAfrica(list)
+                    removeInvalidFlagsFromAsia(list)
+                    removeInvalidFlagsFromEurope(list)
+                    removeInvalidFlagsFromAmericas(list)
+                    removeInvalidFlagsFromOceania(list)
+                }
+
+                StartActivity.CONTINENT.EUROPE -> {
+                    addEurope(list, reader)
+                    removeInvalidFlagsFromEurope(list)
+                }
+
+                StartActivity.CONTINENT.ASIA -> {
+                    addAsia(list, reader)
+                    removeInvalidFlagsFromAsia(list)
+                }
+
+                StartActivity.CONTINENT.AMERICAS -> {
+                    addNorthAmerica(list, reader)
+                    addSouthAmerica(list, reader)
+                    removeInvalidFlagsFromAmericas(list)
+                }
+
+                StartActivity.CONTINENT.AFRICA -> {
+                    addAfrica(list, reader)
+                    removeInvalidFlagsFromAfrica(list)
+                }
+
+                StartActivity.CONTINENT.OCEANIA -> {
+                    addOceania(list, reader)
+                    removeInvalidFlagsFromOceania(list)
+                }
+            }
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -40,6 +74,7 @@ object Downloader {
         }
     }
 
+
     private fun setupConnectionStream(countriesURL: String) : InputStream{
         val url = URL(countriesURL)
         val connection = url.openConnection() as HttpURLConnection
@@ -50,14 +85,47 @@ object Downloader {
         return connection.inputStream
     }
 
-    private fun addGlobe(list: MutableList<String>, reader: BufferedReader){
-        readSourceCode(
-                list,
-                reader,
-                "title=\"Sovereign state\"",
-                "Zimbabwe",
-                false)
+
+
+    //region Continents to be added
+    private fun addEurope(list: MutableList<String>, reader: BufferedReader){
+        readSourceCode(list, reader,
+                "Europe: political geography</a>.</i></p>",
+                "Holy See</a></b></td>")
     }
+
+    private fun addAsia(list: MutableList<String>, reader: BufferedReader){
+        readSourceCode(list, reader,
+                "Asia: territories and regions</a>.</i></p>",
+                "Yemen</a></b></td>")
+    }
+
+    private fun addNorthAmerica(list: MutableList<String>, reader: BufferedReader){
+        readSourceCode(list, reader,
+                "North America: countries and territories</a>.</i></p>",
+                "United States Virgin Islands</a></i></td>")
+    }
+
+    private fun addSouthAmerica(list: MutableList<String>, reader: BufferedReader){
+        readSourceCode(list, reader,
+                "South America: demographics</a>.</i></p>",
+                "Venezuela</a></b></td>")
+    }
+
+    private fun addAfrica(list: MutableList<String>, reader: BufferedReader){
+        readSourceCode(list, reader,
+                "<a href=\"/wiki/Africa\" title=\"Africa\">Africa</a>",
+                "Zimbabwe</a></b></td>")
+    }
+
+    private fun addOceania(list: MutableList<String>, reader: BufferedReader){
+        readSourceCode(list, reader,
+                "title=\"Australia (continent)\">Australia (continent)</a> and <a href=\"/wiki/Pacific_Islands\"",
+                "Vanuatu</a></b></td>")
+    }
+    //endregion
+
+
 
     private fun readSourceCode(list: MutableList<String>, reader: BufferedReader, readFrom: String, readTo: String, dataLineSpecialCheck: Boolean = true){
         var dataLine: String? = reader.readLine()
@@ -97,213 +165,54 @@ object Downloader {
 
 
 
-    fun downloadEuropeanCountries(list: MutableList<String>){
-        var inputStream: InputStream? = null
-
-        try {
-            inputStream = setupConnectionStream(COUNTRIES_URL)
-
-            val reader: BufferedReader = inputStream.bufferedReader()
-
-            addEurope(list, reader)
-
-            // Countries listed below do not have a flag
-            // or it does not make sense to include them
-            list.remove("Svalbard")
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-
-        } finally {
-            if (inputStream != null) {
-                inputStream.close()
-            }
-        }
+    //region Invalid flags to be removed
+    private fun removeInvalidFlagsFromEurope(list: MutableList<String>) {
+        list.remove("Svalbard")
     }
 
-    private fun addEurope(list: MutableList<String>, reader: BufferedReader){
-        readSourceCode(
-                list,
-                reader,
-                "Europe: political geography</a>.</i></p>",
-                "Holy See</a></b></td>")
+    private fun removeInvalidFlagsFromAsia(list: MutableList<String>) {
+        list.remove("Akrotiri and Dhekelia")
+        list.remove("British Indian Ocean Territory")
     }
 
+    private fun removeInvalidFlagsFromAmericas(list: MutableList<String>) {
+        list.remove("Clipperton Island")
+        list.remove("Guadeloupe")
+        list.remove("Martinique")
+        list.remove("Saint Barthélemy")
+        list.remove("Collectivity of Saint Martin")
+        list.remove("Saint Pierre and Miquelon")
+        list.remove("French Guiana")
 
-
-    fun downloadAsianCountries(list: MutableList<String>){
-        var inputStream: InputStream? = null
-
-        try {
-            inputStream = setupConnectionStream(COUNTRIES_URL)
-            val reader: BufferedReader = inputStream.bufferedReader()
-
-            addAsia(list, reader)
-
-            // Countries listed below do not have a flag
-            // or it does not make sense to include them
-            list.remove("Akrotiri and Dhekelia")
-            list.remove("British Indian Ocean Territory")
-
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-
-        } finally {
-            if (inputStream != null) {
-                inputStream.close()
-            }
-        }
+        // Those countries could be included,
+        // but their og:images are not flags
+        list.remove("Saba")
+        list.remove("Sint Eustatius")
+        list.remove("Navassa Island")
     }
 
-    private fun addAsia(list: MutableList<String>, reader: BufferedReader){
-        readSourceCode(
-                list,
-                reader,
-                "Asia: territories and regions</a>.</i></p>",
-                "Yemen</a></b></td>")
+    private fun removeInvalidFlagsFromAfrica(list: MutableList<String>) {
+        list.remove("Réunion")
+        list.remove("Mayotte")
+        list.remove("Saint Helena, Ascension and Tristan da Cunha")
     }
 
+    private fun removeInvalidFlagsFromOceania(list: MutableList<String>) {
+        list.remove("Ashmore and Cartier Islands")
+        list.remove("Baker Island")
+        list.remove("Coral Sea Islands")
+        list.remove("Howland Island")
+        list.remove("Jarvis Island")
+        list.remove("Johnston Atoll")
+        list.remove("Kingman Reef")
+        list.remove("Midway Atoll")
+        list.remove("Palmyra Atoll")
 
-
-    fun downloadAmericanCountries(list: MutableList<String>) {
-        var inputStream: InputStream? = null
-
-        try {
-            inputStream = setupConnectionStream(COUNTRIES_URL)
-            val reader: BufferedReader = inputStream.bufferedReader()
-
-            addNorthAmerica(list, reader)
-            addSouthAmerica(list, reader)
-
-            // Countries listed below do not have a flag
-            // or it does not make sense to include them
-            list.remove("Clipperton Island")
-            list.remove("Guadeloupe")
-            list.remove("Martinique")
-            list.remove("Saint Barthélemy")
-            list.remove("Collectivity of Saint Martin")
-            list.remove("Saint Pierre and Miquelon")
-            list.remove("French Guiana")
-
-            // Those countries could be included,
-            // but their og:images are not flags
-            list.remove("Saba")
-            list.remove("Sint Eustatius")
-            list.remove("Navassa Island")
-
-            Log.d("Regex complete", list.toString())
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-
-        } finally {
-            if (inputStream != null) {
-                inputStream.close()
-            }
-        }
+        // Removed for now - their main pages have different og:images than flags
+        list.remove("Easter Island")
+        list.remove("New Caledonia")
     }
-
-    private fun addNorthAmerica(list: MutableList<String>, reader: BufferedReader){
-        readSourceCode(
-                list,
-                reader,
-                "North America: countries and territories</a>.</i></p>",
-                "United States Virgin Islands</a></i></td>")
-    }
-
-    private fun addSouthAmerica(list: MutableList<String>, reader: BufferedReader){
-        readSourceCode(
-                list,
-                reader,
-                "South America: demographics</a>.</i></p>",
-                "Venezuela</a></b></td>")
-    }
-
-
-
-    fun downloadAfricanCountries(list: MutableList<String>){
-        var inputStream: InputStream? = null
-
-        try {
-            inputStream = setupConnectionStream(COUNTRIES_URL)
-            val reader: BufferedReader = inputStream.bufferedReader()
-
-            addAfrica(list, reader)
-
-            // Countries listed below do not have a flag
-            // or it does not make sense to include them
-            list.remove("Réunion")
-            list.remove("Mayotte")
-            list.remove("Saint Helena, Ascension and Tristan da Cunha")
-
-            Log.d("Regex complete", list.toString())
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-
-        } finally {
-            if (inputStream != null) {
-                inputStream.close()
-            }
-        }
-    }
-
-    private fun addAfrica(list: MutableList<String>, reader: BufferedReader){
-        readSourceCode(
-                list,
-                reader,
-                "<a href=\"/wiki/Africa\" title=\"Africa\">Africa</a>",
-                "Zimbabwe</a></b></td>")
-    }
-
-
-
-    fun downloadOceanicCountries(list: MutableList<String>){
-        var inputStream: InputStream? = null
-
-        try {
-            inputStream = setupConnectionStream(COUNTRIES_URL)
-            val reader: BufferedReader = inputStream.bufferedReader()
-
-            addOceania(list, reader)
-
-            // Countries listed below do not have a flag
-            // or it does not make sense to include them
-            list.remove("Ashmore and Cartier Islands")
-            list.remove("Baker Island")
-            list.remove("Coral Sea Islands")
-            list.remove("Howland Island")
-            list.remove("Jarvis Island")
-            list.remove("Johnston Atoll")
-            list.remove("Kingman Reef")
-            list.remove("Midway Atoll")
-            list.remove("Palmyra Atoll")
-
-            // Removed for now - their main pages have different og:images than flags
-            list.remove("Easter Island")
-            list.remove("New Caledonia")
-
-            Log.d("Regex complete", list.toString())
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-
-        } finally {
-            if (inputStream != null) {
-                inputStream.close()
-            }
-        }
-    }
-
-    private fun addOceania(list: MutableList<String>, reader: BufferedReader){
-        readSourceCode(
-                list,
-                reader,
-                "title=\"Australia (continent)\">Australia (continent)</a> and <a href=\"/wiki/Pacific_Islands\"",
-                "Vanuatu</a></b></td>")
-    }
-
+    //endregion
 
 
 
