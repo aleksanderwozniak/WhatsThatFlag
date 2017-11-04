@@ -176,6 +176,7 @@ object Downloader {
     }
 
     private fun removeInvalidFlagsFromAmericas(list: MutableList<String>) {
+        list.remove("Bonaire")
         list.remove("Clipperton Island")
         list.remove("Guadeloupe")
         list.remove("Martinique")

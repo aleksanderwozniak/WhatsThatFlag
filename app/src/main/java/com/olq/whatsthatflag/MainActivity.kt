@@ -9,7 +9,6 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import java.util.*
 
@@ -35,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         categoryTextView.text = "Category: $categoryText"
 
         showProgressBar()
-        toast("Downloading content...")
 
         doAsync {
             Downloader.downloadContinent(selectedContinent, flagList)
