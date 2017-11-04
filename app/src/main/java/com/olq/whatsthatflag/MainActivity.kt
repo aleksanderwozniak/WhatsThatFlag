@@ -73,13 +73,13 @@ class MainActivity : AppCompatActivity() {
                 .getImgURL(getURLFromName(flagList[id]))
 
             uiThread {
-                Log.d("Download Image", "Finished")
-                hideProgressBar()
-
                 if(currentURL != null) {
                     Log.d("Download Image", "CurrentURL: $currentURL")
                     myImgView.loadUrl(currentURL)
                 }
+
+                Log.d("Download Image", "Finished")
+                hideProgressBar()
             }
         }
     }
@@ -168,9 +168,11 @@ class MainActivity : AppCompatActivity() {
 
     fun showProgressBar(){
         myProgressBar.visibility = View.VISIBLE
+        myImgView.visibility = View.INVISIBLE
     }
 
     fun hideProgressBar(){
         myProgressBar.visibility = View.INVISIBLE
+        myImgView.visibility = View.VISIBLE
     }
 }

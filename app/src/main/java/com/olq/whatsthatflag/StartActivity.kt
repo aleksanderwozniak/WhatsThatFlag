@@ -10,7 +10,7 @@ import org.jetbrains.anko.startActivity
 
 class StartActivity : AppCompatActivity() {
 
-    enum class CONTINENT{
+    enum class CONTINENT {
         GLOBAL,
         EUROPE,
         ASIA,
@@ -23,7 +23,7 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
-        myCountriesSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+        myCountriesSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar, p1: Int, p2: Boolean) {
                 val amount = calculateAmountOfCountries(p1)
 
@@ -34,18 +34,16 @@ class StartActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onStartTrackingTouch(p0: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(p0: SeekBar?) {
-            }
+            override fun onStartTrackingTouch(p0: SeekBar?) {}
+            override fun onStopTrackingTouch(p0: SeekBar?) {}
         })
 
+        // Make one of radio buttons selected
         radioGlobal.callOnClick()
     }
 
     fun calculateAmountOfCountries(progress: Int): Int {
-        when(progress){
+        when (progress) {
             0 -> return 5
             1 -> return 10
             2 -> return 20
@@ -56,7 +54,7 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    fun onStartBtnClick(view: View){
+    fun onStartBtnClick(view: View) {
         val amount = calculateAmountOfCountries(myCountriesSeekBar.progress)
         val selectedContinent = getSelectedContinent((radioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
 
@@ -65,8 +63,8 @@ class StartActivity : AppCompatActivity() {
                 "SELECTED_CONTINENT" to selectedContinent)
     }
 
-    fun getSelectedContinent(radioBtnId: Int): CONTINENT{
-        when (radioBtnId){
+    fun getSelectedContinent(radioBtnId: Int): CONTINENT {
+        when (radioBtnId) {
             radioGlobal.id -> return CONTINENT.GLOBAL
             radioEurope.id -> return CONTINENT.EUROPE
             radioAsia.id -> return CONTINENT.ASIA
