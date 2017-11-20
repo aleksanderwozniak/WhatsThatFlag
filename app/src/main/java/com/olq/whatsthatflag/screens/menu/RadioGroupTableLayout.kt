@@ -1,4 +1,4 @@
-package com.olq.whatsthatflag
+package com.olq.whatsthatflag.screens.menu
 
 import android.content.Context
 import android.util.AttributeSet

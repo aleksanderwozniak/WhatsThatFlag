@@ -1,4 +1,4 @@
-package com.olq.whatsthatflag
+package com.olq.whatsthatflag.screens.game
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,14 +6,17 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import com.olq.whatsthatflag.model.Downloader
+import com.olq.whatsthatflag.R
+import com.olq.whatsthatflag.screens.menu.MenuActivity
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_game.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
+class GameActivity : AppCompatActivity() {
 
     var id: Int = 0
     var score: Int = 0
@@ -24,10 +27,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_game)
 
         val amountOfCountries = intent.getIntExtra("AMOUNT_OF_COUNTRIES", 20)
-        val selectedContinent = intent.getSerializableExtra("SELECTED_CONTINENT") as StartActivity.CONTINENT
+        val selectedContinent = intent.getSerializableExtra("SELECTED_CONTINENT") as MenuActivity.CONTINENT
 
         val categoryText = selectedContinent.toString().toLowerCase().capitalize()
 
@@ -69,8 +72,7 @@ class MainActivity : AppCompatActivity() {
         showProgressBar()
 
         doAsync {
-        val currentURL: String ?= Downloader
-                .getImgURL(getURLFromName(flagList[id]))
+        val currentURL: String ?= Downloader.getImgURL(getURLFromName(flagList[id]))
 
             uiThread {
                 if(currentURL != null) {

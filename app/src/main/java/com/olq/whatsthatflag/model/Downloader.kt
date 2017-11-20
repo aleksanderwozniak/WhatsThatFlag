@@ -1,6 +1,7 @@
-package com.olq.whatsthatflag
+package com.olq.whatsthatflag.model
 
 import android.util.Log
+import com.olq.whatsthatflag.screens.menu.MenuActivity
 import java.io.BufferedReader
 import java.io.InputStream
 import java.net.HttpURLConnection
@@ -13,7 +14,7 @@ object Downloader {
             "List_of_sovereign_states_and_dependent_territories_by_continent"
 
 
-    fun downloadContinent(continent: StartActivity.CONTINENT, list: MutableList<String>) {
+    fun downloadContinent(continent: MenuActivity.CONTINENT, list: MutableList<String>) {
         var inputStream: InputStream? = null
 
         try {
@@ -22,7 +23,7 @@ object Downloader {
             val reader: BufferedReader = inputStream.bufferedReader()
 
             when(continent) {
-                StartActivity.CONTINENT.GLOBAL -> {
+                MenuActivity.CONTINENT.GLOBAL -> {
                     addAfrica(list, reader)
                     addAsia(list, reader)
                     addEurope(list, reader)
@@ -37,28 +38,28 @@ object Downloader {
                     removeInvalidFlagsFromOceania(list)
                 }
 
-                StartActivity.CONTINENT.EUROPE -> {
+                MenuActivity.CONTINENT.EUROPE -> {
                     addEurope(list, reader)
                     removeInvalidFlagsFromEurope(list)
                 }
 
-                StartActivity.CONTINENT.ASIA -> {
+                MenuActivity.CONTINENT.ASIA -> {
                     addAsia(list, reader)
                     removeInvalidFlagsFromAsia(list)
                 }
 
-                StartActivity.CONTINENT.AMERICAS -> {
+                MenuActivity.CONTINENT.AMERICAS -> {
                     addNorthAmerica(list, reader)
                     addSouthAmerica(list, reader)
                     removeInvalidFlagsFromAmericas(list)
                 }
 
-                StartActivity.CONTINENT.AFRICA -> {
+                MenuActivity.CONTINENT.AFRICA -> {
                     addAfrica(list, reader)
                     removeInvalidFlagsFromAfrica(list)
                 }
 
-                StartActivity.CONTINENT.OCEANIA -> {
+                MenuActivity.CONTINENT.OCEANIA -> {
                     addOceania(list, reader)
                     removeInvalidFlagsFromOceania(list)
                 }

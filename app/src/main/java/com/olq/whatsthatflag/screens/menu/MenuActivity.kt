@@ -1,14 +1,16 @@
-package com.olq.whatsthatflag
+package com.olq.whatsthatflag.screens.menu
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
-import kotlinx.android.synthetic.main.activity_start.*
+import com.olq.whatsthatflag.screens.game.GameActivity
+import com.olq.whatsthatflag.R
+import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.radio_group_table_layout.*
 import org.jetbrains.anko.startActivity
 
-class StartActivity : AppCompatActivity() {
+class MenuActivity : AppCompatActivity() {
 
     enum class CONTINENT {
         GLOBAL,
@@ -21,7 +23,7 @@ class StartActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_start)
+        setContentView(R.layout.activity_menu)
 
         myCountriesSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar, p1: Int, p2: Boolean) {
@@ -58,7 +60,7 @@ class StartActivity : AppCompatActivity() {
         val amount = calculateAmountOfCountries(myCountriesSeekBar.progress)
         val selectedContinent = getSelectedContinent((radioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
 
-        startActivity<MainActivity>(
+        startActivity<GameActivity>(
                 "AMOUNT_OF_COUNTRIES" to amount,
                 "SELECTED_CONTINENT" to selectedContinent)
     }

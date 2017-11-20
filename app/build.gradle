@@ -37,4 +37,6 @@ dependencies {
 
     compile "org.jetbrains.anko:anko:$anko_version"
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    compile 'com.github.tajchert:WaitingDots:0.4.0'
 }

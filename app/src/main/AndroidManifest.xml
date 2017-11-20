@@ -11,17 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
-            android:name=".MainActivity"
+            android:name=".screens.game.GameActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".screens.menu.MenuActivity"
             android:screenOrientation="portrait">
         </activity>
-
-        <activity
-            android:name=".StartActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".screens.start.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
