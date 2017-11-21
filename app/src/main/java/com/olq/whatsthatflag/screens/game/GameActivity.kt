@@ -10,9 +10,9 @@ import com.olq.whatsthatflag.screens.menu.MenuActivity
 import com.olq.whatsthatflag.utils.loadUrl
 import kotlinx.android.synthetic.main.activity_game.*
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.customTitle
+import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.yesButton
+import org.jetbrains.anko.toast
 
 
 class GameActivity : AppCompatActivity(), GameScreenContract.View {
@@ -68,12 +68,20 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         myImgView.visibility = View.VISIBLE
     }
 
+    override fun displayMessage(msg: String) {
+        toast(msg)
+    }
+
     override fun showSummaryDialog(score: Int, totalFlagAmount: Int) {
-        alert {
+        val summaryDialog = alert (Appcompat) {
             title = "Summary"
             message = "You scored $score out of $totalFlagAmount"
 
             positiveButton("Continue", { startActivity<MenuActivity>() })
-        }.show()
+        }.build()
+
+        summaryDialog.setCancelable(false)
+        summaryDialog.setCanceledOnTouchOutside(false)
+        summaryDialog.show()
     }
 }

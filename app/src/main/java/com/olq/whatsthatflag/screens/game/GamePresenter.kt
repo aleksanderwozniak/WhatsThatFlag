@@ -21,11 +21,16 @@ class GamePresenter(private val view: GameScreenContract.View,
     override fun start(gameData: Pair<MenuActivity.CONTINENT, Int>) {
         score = 0
         currentFlagId = 0
-        amountOfLoadedCountries = gameData.second
 
         view.showScore(score)
 
         model.selectFlags(gameData)
+        amountOfLoadedCountries = model.flagList.size
+
+
+        if (gameData.first == MenuActivity.CONTINENT.OCEANIA && gameData.second == 40) {
+            view.displayMessage("There are only $amountOfLoadedCountries countries in Oceania")
+        }
 
         downloadImg(currentFlagId)
         renameBtns(currentFlagId)

@@ -15,6 +15,7 @@ interface GameScreenContract {
         fun showProgressBar()
         fun hideProgressBar()
         fun showSummaryDialog(score: Int, totalFlagAmount: Int)
+        fun displayMessage(msg: String)
     }
 
 
