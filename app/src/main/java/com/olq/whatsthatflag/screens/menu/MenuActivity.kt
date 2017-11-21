@@ -25,26 +25,25 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
-        myCountriesSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(p0: SeekBar, p1: Int, p2: Boolean) {
-                val amount = calculateAmountOfCountries(p1)
-
-                if (amount == -1) {
-                    mySeekBarText.text = "Countries: All"
-                } else {
-                    mySeekBarText.text = "Countries: $amount"
-                }
-            }
-
-            override fun onStartTrackingTouch(p0: SeekBar?) {}
-            override fun onStopTrackingTouch(p0: SeekBar?) {}
-        })
+        mySeekBarText.text = getString(R.string.countries_amount, "20")
+        setSeekBarListener()
 
         // Make one of radio buttons selected
         radioGlobal.callOnClick()
     }
 
-    fun calculateAmountOfCountries(progress: Int): Int {
+
+    fun onStartBtnClick(view: View) {
+        val amount = calculateAmountOfCountries(myCountriesSeekBar.progress)
+        val selectedContinent = getSelectedContinent((radioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
+
+        startActivity<GameActivity>(
+                "AMOUNT_OF_COUNTRIES" to amount,
+                "SELECTED_CONTINENT" to selectedContinent)
+    }
+
+
+    private fun calculateAmountOfCountries(progress: Int): Int {
         when (progress) {
             0 -> return 5
             1 -> return 10
@@ -56,16 +55,7 @@ class MenuActivity : AppCompatActivity() {
         }
     }
 
-    fun onStartBtnClick(view: View) {
-        val amount = calculateAmountOfCountries(myCountriesSeekBar.progress)
-        val selectedContinent = getSelectedContinent((radioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
-
-        startActivity<GameActivity>(
-                "AMOUNT_OF_COUNTRIES" to amount,
-                "SELECTED_CONTINENT" to selectedContinent)
-    }
-
-    fun getSelectedContinent(radioBtnId: Int): CONTINENT {
+    private fun getSelectedContinent(radioBtnId: Int): CONTINENT {
         when (radioBtnId) {
             radioGlobal.id -> return CONTINENT.GLOBAL
             radioEurope.id -> return CONTINENT.EUROPE
@@ -78,5 +68,23 @@ class MenuActivity : AppCompatActivity() {
                 return CONTINENT.GLOBAL
             }
         }
+    }
+
+
+    private fun setSeekBarListener() {
+        myCountriesSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(p0: SeekBar, p1: Int, p2: Boolean) {
+                val amount = calculateAmountOfCountries(p1)
+
+                if (amount == -1) {
+                    mySeekBarText.text = getString(R.string.countries_amount, getString(R.string.countries_all))
+                } else {
+                    mySeekBarText.text = getString(R.string.countries_amount, amount.toString())
+                }
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {}
+            override fun onStopTrackingTouch(p0: SeekBar?) {}
+        })
     }
 }

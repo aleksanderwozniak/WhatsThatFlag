@@ -30,7 +30,7 @@ class Model (private val downloader: Downloader) {
 
     fun downloadAllFlags() {
         val flags = mutableListOf<String>()
-        downloader.downloadContinent(MenuActivity.CONTINENT.GLOBAL, flags)
+        downloader.downloadAllFlags(flags)
 
         totalFlagList = flags
     }

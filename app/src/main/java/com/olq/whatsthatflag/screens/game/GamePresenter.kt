@@ -23,6 +23,8 @@ class GamePresenter(private val view: GameScreenContract.View,
         currentFlagId = 0
         amountOfLoadedCountries = gameData.second
 
+        view.showScore(score)
+
         model.selectFlags(gameData)
 
         downloadImg(currentFlagId)

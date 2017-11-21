@@ -13,10 +13,10 @@ class Downloader {
     private val COUNTRIES_URL = "https://en.wikipedia.org/wiki/" +
             "List_of_sovereign_states_and_dependent_territories_by_continent"
 
-    val continentIds = IntArray(5)
     // each index stores data about size of particular continent summed with all previous continents
+    val continentIds = IntArray(5)
 
-    fun downloadContinent(continent: MenuActivity.CONTINENT, list: MutableList<String>) {
+    fun downloadAllFlags(list: MutableList<String>) {
         var inputStream: InputStream? = null
 
         try {
@@ -24,51 +24,23 @@ class Downloader {
 
             val reader: BufferedReader = inputStream.bufferedReader()
 
-            when(continent) {
-                MenuActivity.CONTINENT.GLOBAL -> {
-                    addAfrica(list, reader)
-                    removeInvalidFlagsFromAfrica(list)
 
-                    addAsia(list, reader)
-                    removeInvalidFlagsFromAsia(list)
+            addAfrica(list, reader)
+            removeInvalidFlagsFromAfrica(list)
 
-                    addEurope(list, reader)
-                    removeInvalidFlagsFromEurope(list)
+            addAsia(list, reader)
+            removeInvalidFlagsFromAsia(list)
 
-                    addNorthAmerica(list, reader)
-                    addSouthAmerica(list, reader)
-                    removeInvalidFlagsFromAmericas(list)
+            addEurope(list, reader)
+            removeInvalidFlagsFromEurope(list)
 
-                    addOceania(list, reader)
-                    removeInvalidFlagsFromOceania(list)
-                }
+            addNorthAmerica(list, reader)
+            addSouthAmerica(list, reader)
+            removeInvalidFlagsFromAmericas(list)
 
-//                MenuActivity.CONTINENT.EUROPE -> {
-//                    addEurope(list, reader)
-//                    removeInvalidFlagsFromEurope(list)
-//                }
-//
-//                MenuActivity.CONTINENT.ASIA -> {
-//                    addAsia(list, reader)
-//                    removeInvalidFlagsFromAsia(list)
-//                }
-//
-//                MenuActivity.CONTINENT.AMERICAS -> {
-//                    addNorthAmerica(list, reader)
-//                    addSouthAmerica(list, reader)
-//                    removeInvalidFlagsFromAmericas(list)
-//                }
-//
-//                MenuActivity.CONTINENT.AFRICA -> {
-//                    addAfrica(list, reader)
-//                    removeInvalidFlagsFromAfrica(list)
-//                }
-//
-//                MenuActivity.CONTINENT.OCEANIA -> {
-//                    addOceania(list, reader)
-//                    removeInvalidFlagsFromOceania(list)
-//                }
-            }
+            addOceania(list, reader)
+            removeInvalidFlagsFromOceania(list)
+
 
         } catch (e: Exception) {
             e.printStackTrace()

@@ -25,25 +25,10 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
         val categoryText = selectedContinent.toString().toLowerCase().capitalize()
 
-        categoryTextView.text = "Category: $categoryText"
+        categoryTextView.text = getString(R.string.category_text, categoryText)
 
         presenter = GamePresenter(this, Injector.provideModel())
         presenter.start(Pair(selectedContinent, amountOfCountries))
-    }
-
-
-
-    override fun loadImg(currentURL: String){
-        myImgView.loadUrl(currentURL)
-    }
-
-
-
-    override fun renameButtons(btnNames: List<String>) {
-        myBtnA.text = btnNames[0]
-        myBtnB.text = btnNames[1]
-        myBtnC.text = btnNames[2]
-        myBtnD.text = btnNames[3]
     }
 
 
@@ -54,8 +39,19 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     }
 
 
+    override fun loadImg(currentUrl: String){
+        myImgView.loadUrl(currentUrl)
+    }
+
+    override fun renameButtons(btnNames: List<String>) {
+        myBtnA.text = btnNames[0]
+        myBtnB.text = btnNames[1]
+        myBtnC.text = btnNames[2]
+        myBtnD.text = btnNames[3]
+    }
+
     override fun showScore(score: Int) {
-        scoreTextView.text = "Score: $score"
+        scoreTextView.text = getString(R.string.score_text, score)
     }
 
     override fun showProgressBar() {
