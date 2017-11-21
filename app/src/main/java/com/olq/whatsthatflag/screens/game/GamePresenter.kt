@@ -67,8 +67,8 @@ class GamePresenter(private val view: GameScreenContract.View,
             renameBtns(currentFlagId)
 
         } else {
-            // TODO: display SummaryScreen, remove view.showProgressBar()
-            view.showProgressBar()
+            // TODO: consider -> display SummaryScreen, remove view.showSummaryDialog()
+            view.showSummaryDialog(score, amountOfLoadedCountries)
         }
     }
 

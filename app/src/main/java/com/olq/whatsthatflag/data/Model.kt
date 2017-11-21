@@ -29,10 +29,7 @@ class Model (private val downloader: Downloader) {
 
 
     fun downloadAllFlags() {
-        val flags = mutableListOf<String>()
-        downloader.downloadAllFlags(flags)
-
-        totalFlagList = flags
+        totalFlagList = downloader.downloadAllFlags()
     }
 
 

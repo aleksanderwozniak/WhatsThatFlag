@@ -16,8 +16,9 @@ class Downloader {
     // each index stores data about size of particular continent summed with all previous continents
     val continentIds = IntArray(5)
 
-    fun downloadAllFlags(list: MutableList<String>) {
+    fun downloadAllFlags(): List<String> {
         var inputStream: InputStream? = null
+        val listOfFlags = mutableListOf<String>()
 
         try {
             inputStream = setupConnectionStream(COUNTRIES_URL)
@@ -25,21 +26,21 @@ class Downloader {
             val reader: BufferedReader = inputStream.bufferedReader()
 
 
-            addAfrica(list, reader)
-            removeInvalidFlagsFromAfrica(list)
+            addAfrica(listOfFlags, reader)
+            removeInvalidFlagsFromAfrica(listOfFlags)
 
-            addAsia(list, reader)
-            removeInvalidFlagsFromAsia(list)
+            addAsia(listOfFlags, reader)
+            removeInvalidFlagsFromAsia(listOfFlags)
 
-            addEurope(list, reader)
-            removeInvalidFlagsFromEurope(list)
+            addEurope(listOfFlags, reader)
+            removeInvalidFlagsFromEurope(listOfFlags)
 
-            addNorthAmerica(list, reader)
-            addSouthAmerica(list, reader)
-            removeInvalidFlagsFromAmericas(list)
+            addNorthAmerica(listOfFlags, reader)
+            addSouthAmerica(listOfFlags, reader)
+            removeInvalidFlagsFromAmericas(listOfFlags)
 
-            addOceania(list, reader)
-            removeInvalidFlagsFromOceania(list)
+            addOceania(listOfFlags, reader)
+            removeInvalidFlagsFromOceania(listOfFlags)
 
 
         } catch (e: Exception) {
@@ -49,6 +50,8 @@ class Downloader {
             if (inputStream != null) {
                 inputStream.close()
             }
+
+            return listOfFlags
         }
     }
 
@@ -105,7 +108,8 @@ class Downloader {
 
 
 
-    private fun readSourceCode(list: MutableList<String>, reader: BufferedReader, readFrom: String, readTo: String, dataLineSpecialCheck: Boolean = true){
+    private fun readSourceCode(list: MutableList<String>, reader: BufferedReader,
+                               readFrom: String, readTo: String) {
         var dataLine: String? = reader.readLine()
 
         //MARK: START of HTML section containing names of countries
@@ -118,15 +122,8 @@ class Downloader {
         while (dataLine != null && !dataLine.contains(readTo)) {
             dataLine = reader.readLine()
 
-            if(dataLineSpecialCheck){
-                if (dataLine.contains("<span class=\"flagicon\"")) {
-                    setupRegex(list, dataLine, "title=\"(.*?)\">")
-                }
-
-            }else{
-                if (dataLine.contains("<p>")) {
-                    setupRegex(list, dataLine, "title=\"(.*?)\">")
-                }
+            if (dataLine.contains("<span class=\"flagicon\"")) {
+                setupRegex(list, dataLine, "title=\"(.*?)\">")
             }
         }
     }

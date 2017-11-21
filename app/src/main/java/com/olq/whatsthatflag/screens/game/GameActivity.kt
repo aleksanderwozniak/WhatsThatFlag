@@ -9,6 +9,10 @@ import com.olq.whatsthatflag.injector.Injector
 import com.olq.whatsthatflag.screens.menu.MenuActivity
 import com.olq.whatsthatflag.utils.loadUrl
 import kotlinx.android.synthetic.main.activity_game.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.customTitle
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.yesButton
 
 
 class GameActivity : AppCompatActivity(), GameScreenContract.View {
@@ -62,5 +66,14 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     override fun hideProgressBar() {
         myProgressBar.visibility = View.INVISIBLE
         myImgView.visibility = View.VISIBLE
+    }
+
+    override fun showSummaryDialog(score: Int, totalFlagAmount: Int) {
+        alert {
+            title = "Summary"
+            message = "You scored $score out of $totalFlagAmount"
+
+            positiveButton("Continue", { startActivity<MenuActivity>() })
+        }.show()
     }
 }
