@@ -1,19 +1,22 @@
-package com.olq.whatsthatflag
+package com.olq.whatsthatflag.data
 
 import android.util.Log
+import com.olq.whatsthatflag.screens.menu.MenuActivity
 import java.io.BufferedReader
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.regex.Pattern
 
-object Downloader {
+class Downloader {
 
     private val COUNTRIES_URL = "https://en.wikipedia.org/wiki/" +
             "List_of_sovereign_states_and_dependent_territories_by_continent"
 
+    // each index stores data about size of particular continent summed with all previous continents
+    val continentIds = IntArray(5)
 
-    fun downloadContinent(continent: StartActivity.CONTINENT, list: MutableList<String>) {
+    fun downloadAllFlags(list: MutableList<String>) {
         var inputStream: InputStream? = null
 
         try {
@@ -21,48 +24,23 @@ object Downloader {
 
             val reader: BufferedReader = inputStream.bufferedReader()
 
-            when(continent) {
-                StartActivity.CONTINENT.GLOBAL -> {
-                    addAfrica(list, reader)
-                    addAsia(list, reader)
-                    addEurope(list, reader)
-                    addNorthAmerica(list, reader)
-                    addSouthAmerica(list, reader)
-                    addOceania(list, reader)
 
-                    removeInvalidFlagsFromAfrica(list)
-                    removeInvalidFlagsFromAsia(list)
-                    removeInvalidFlagsFromEurope(list)
-                    removeInvalidFlagsFromAmericas(list)
-                    removeInvalidFlagsFromOceania(list)
-                }
+            addAfrica(list, reader)
+            removeInvalidFlagsFromAfrica(list)
 
-                StartActivity.CONTINENT.EUROPE -> {
-                    addEurope(list, reader)
-                    removeInvalidFlagsFromEurope(list)
-                }
+            addAsia(list, reader)
+            removeInvalidFlagsFromAsia(list)
 
-                StartActivity.CONTINENT.ASIA -> {
-                    addAsia(list, reader)
-                    removeInvalidFlagsFromAsia(list)
-                }
+            addEurope(list, reader)
+            removeInvalidFlagsFromEurope(list)
 
-                StartActivity.CONTINENT.AMERICAS -> {
-                    addNorthAmerica(list, reader)
-                    addSouthAmerica(list, reader)
-                    removeInvalidFlagsFromAmericas(list)
-                }
+            addNorthAmerica(list, reader)
+            addSouthAmerica(list, reader)
+            removeInvalidFlagsFromAmericas(list)
 
-                StartActivity.CONTINENT.AFRICA -> {
-                    addAfrica(list, reader)
-                    removeInvalidFlagsFromAfrica(list)
-                }
+            addOceania(list, reader)
+            removeInvalidFlagsFromOceania(list)
 
-                StartActivity.CONTINENT.OCEANIA -> {
-                    addOceania(list, reader)
-                    removeInvalidFlagsFromOceania(list)
-                }
-            }
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -168,11 +146,13 @@ object Downloader {
     //region Invalid flags to be removed
     private fun removeInvalidFlagsFromEurope(list: MutableList<String>) {
         list.remove("Svalbard")
+        continentIds[2] = list.size
     }
 
     private fun removeInvalidFlagsFromAsia(list: MutableList<String>) {
         list.remove("Akrotiri and Dhekelia")
         list.remove("British Indian Ocean Territory")
+        continentIds[1] = list.size
     }
 
     private fun removeInvalidFlagsFromAmericas(list: MutableList<String>) {
@@ -190,12 +170,15 @@ object Downloader {
         list.remove("Saba")
         list.remove("Sint Eustatius")
         list.remove("Navassa Island")
+
+        continentIds[3] = list.size
     }
 
     private fun removeInvalidFlagsFromAfrica(list: MutableList<String>) {
         list.remove("Réunion")
         list.remove("Mayotte")
         list.remove("Saint Helena, Ascension and Tristan da Cunha")
+        continentIds[0] = list.size
     }
 
     private fun removeInvalidFlagsFromOceania(list: MutableList<String>) {
@@ -212,6 +195,8 @@ object Downloader {
         // Removed for now - their main pages have different og:images than flags
         list.remove("Easter Island")
         list.remove("New Caledonia")
+
+        continentIds[4] = list.size
     }
     //endregion
 
