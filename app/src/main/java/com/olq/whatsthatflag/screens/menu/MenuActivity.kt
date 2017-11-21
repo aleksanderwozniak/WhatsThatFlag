@@ -43,13 +43,19 @@ class MenuActivity : AppCompatActivity() {
     }
 
 
+    override fun onBackPressed() {
+        // Prevents going back to StartScreen
+        moveTaskToBack(true)
+    }
+
+
     private fun calculateAmountOfCountries(progress: Int): Int {
         when (progress) {
             0 -> return 5
             1 -> return 10
             2 -> return 20
             3 -> return 40
-            4 -> return -1
+            4 -> return -1 // ALL = -1
 
             else -> { return -1 }
         }
