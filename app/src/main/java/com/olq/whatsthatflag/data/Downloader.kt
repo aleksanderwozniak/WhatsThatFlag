@@ -149,6 +149,7 @@ class Downloader {
     private fun removeInvalidFlagsFromAsia(list: MutableList<String>) {
         list.remove("Akrotiri and Dhekelia")
         list.remove("British Indian Ocean Territory")
+        list.remove("Abkhazia")
         continentIds[1] = list.size
     }
 

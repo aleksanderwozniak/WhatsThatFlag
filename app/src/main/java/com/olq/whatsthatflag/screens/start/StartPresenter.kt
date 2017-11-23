@@ -13,12 +13,17 @@ class StartPresenter(private val view: StartScreenContract.View,
 
 
     override fun start() {
-        doAsync {
-            model.downloadAllFlags()
+        if (view.isConnectedToInternet()) {
+            doAsync {
+                model.downloadAllFlags()
 
-            onComplete {
-                view.startMenuActivity()
+                onComplete {
+                    view.startMenuActivity()
+                }
             }
+
+        } else {
+            view.showNoConnectionAlert()
         }
     }
 }
