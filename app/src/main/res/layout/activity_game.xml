@@ -64,41 +64,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/myBtnA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorText"
-            android:onClick="btnClicked"
             android:text="@string/button_text"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:theme="@style/DarkButtonTheme"/>
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/myBtnB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorText"
-            android:onClick="btnClicked"
             android:text="@string/button_text"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:theme="@style/DarkButtonTheme"/>
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/myBtnC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorText"
-            android:onClick="btnClicked"
             android:text="@string/button_text"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:theme="@style/DarkButtonTheme"/>
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/myBtnD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorText"
-            android:onClick="btnClicked"
             android:text="@string/button_text"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:theme="@style/DarkButtonTheme"/>
     </LinearLayout>
 
     <TextView

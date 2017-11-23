@@ -36,7 +36,7 @@ class GamePresenter(private val view: GameScreenContract.View,
         renameBtns(currentFlagId)
     }
 
-    fun downloadImg(id: Int) {
+    private fun downloadImg(id: Int) {
         view.showProgressBar()
 
         doAsync {
@@ -53,19 +53,35 @@ class GamePresenter(private val view: GameScreenContract.View,
         }
     }
 
-    fun renameBtns(id: Int) {
+    private fun renameBtns(id: Int) {
         val btnNames = model.getButtonNames(id)
         view.renameButtons(btnNames)
     }
 
 
-    override fun answerBtnClicked(countryName: String) {
-        if (countryName == model.flagList[currentFlagId]) {
+    override fun answerBtnClicked(selectedCountry: String) {
+        val correctCountry = model.flagList[currentFlagId]
+        val success = isAnswerCorrect(selectedCountry, correctCountry)
+
+        if (!success) {
+            view.animateWrongAnswer(selectedCountry, correctCountry)
+        } else {
+            view.animateCorrectAnswer(correctCountry)
+        }
+    }
+
+    private fun isAnswerCorrect(selectedCountry: String, correctCountry: String): Boolean {
+        if (selectedCountry == correctCountry) {
             score++
             view.showScore(score)
+
+            return true
         }
 
+        return false
+    }
 
+    override fun timerFinished() {
         if (currentFlagId < amountOfLoadedCountries - 1) {
             currentFlagId++
             downloadImg(currentFlagId)
@@ -77,8 +93,7 @@ class GamePresenter(private val view: GameScreenContract.View,
         }
     }
 
-
-    fun getURLFromName(countryName: String): String{
+    private fun getURLFromName(countryName: String): String{
         return "https://en.wikipedia.org/wiki/$countryName"
     }
 }

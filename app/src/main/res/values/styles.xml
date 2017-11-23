@@ -9,4 +9,8 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+
+    <style name="DarkButtonTheme" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorText</item>
+    </style>
 </resources>

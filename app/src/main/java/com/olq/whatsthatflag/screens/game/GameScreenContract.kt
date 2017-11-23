@@ -16,11 +16,14 @@ interface GameScreenContract {
         fun hideProgressBar()
         fun showSummaryDialog(score: Int, totalFlagAmount: Int)
         fun displayMessage(msg: String)
+        fun animateCorrectAnswer(btnName: String)
+        fun animateWrongAnswer(btnSelectedName: String, btnCorrectName: String)
     }
 
 
     interface Presenter {
         fun start(gameData: Pair<MenuActivity.CONTINENT, Int>)
-        fun answerBtnClicked(countryName: String)
+        fun answerBtnClicked(selectedCountry: String)
+        fun timerFinished()
     }
 }

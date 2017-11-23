@@ -1,9 +1,11 @@
 package com.olq.whatsthatflag.screens.game
 
+import android.graphics.PorterDuff
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Button
 import com.olq.whatsthatflag.R
 import com.olq.whatsthatflag.injector.Injector
 import com.olq.whatsthatflag.screens.menu.MenuActivity
@@ -33,13 +35,16 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
         presenter = GamePresenter(this, Injector.provideModel())
         presenter.start(Pair(selectedContinent, amountOfCountries))
+
+        setupListeners()
     }
 
 
-    fun btnClicked(view: View) {
-        val countryName = (view as Button).text.toString()
-
-        presenter.answerBtnClicked(countryName)
+    private fun setupListeners() {
+        myBtnA.setOnClickListener { presenter.answerBtnClicked(myBtnA.text.toString()) }
+        myBtnB.setOnClickListener { presenter.answerBtnClicked(myBtnB.text.toString()) }
+        myBtnC.setOnClickListener { presenter.answerBtnClicked(myBtnC.text.toString()) }
+        myBtnD.setOnClickListener { presenter.answerBtnClicked(myBtnD.text.toString()) }
     }
 
 
@@ -83,5 +88,60 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         summaryDialog.setCancelable(false)
         summaryDialog.setCanceledOnTouchOutside(false)
         summaryDialog.show()
+    }
+
+    override fun animateCorrectAnswer(btnName: String) {
+        val buttons = listOf(myBtnA, myBtnB, myBtnC, myBtnD)
+        val correctBtn = buttons.find { btn -> btn.text == btnName }!!
+
+        val colorGreen = ContextCompat.getColor(this, R.color.green)
+        val colorGray = ContextCompat.getColor(this, R.color.colorText)
+
+        correctBtn.background.setColorFilter(colorGreen, PorterDuff.Mode.SRC)
+
+        val timer = object : CountDownTimer(1000, 1000) {
+            override fun onFinish() {
+                correctBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
+                presenter.timerFinished()
+            }
+
+            override fun onTick(p0: Long) {  }
+        }
+
+        timer.start()
+    }
+
+    override fun animateWrongAnswer(btnSelectedName: String, btnCorrectName: String) {
+        val buttons = listOf(myBtnA, myBtnB, myBtnC, myBtnD)
+        val correctBtn = buttons.find { btn -> btn.text == btnCorrectName }!!
+        val wrongBtn = buttons.find { btn -> btn.text == btnSelectedName }!!
+
+        val colorGreen = ContextCompat.getColor(this, R.color.green)
+        val colorRed = ContextCompat.getColor(this, R.color.red)
+        val colorGray = ContextCompat.getColor(this, R.color.colorText)
+        var isGreenTinted = false
+
+        wrongBtn.background.setColorFilter(colorRed, PorterDuff.Mode.SRC)
+
+        val timer = object : CountDownTimer(1200, 199) {
+            override fun onFinish() {
+                wrongBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
+                correctBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
+
+                presenter.timerFinished()
+            }
+
+            override fun onTick(p0: Long) {
+                if (isGreenTinted) {
+                    correctBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
+                } else {
+                    correctBtn.background.setColorFilter(colorGreen, PorterDuff.Mode.SRC)
+                }
+
+                isGreenTinted = !isGreenTinted
+            }
+        }
+
+        timer.start()
     }
 }
