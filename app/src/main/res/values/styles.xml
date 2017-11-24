@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:colorBackground">@android:color/background_dark</item>
+        <item name="android:colorBackground">@color/blackSubtle</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
@@ -11,6 +11,6 @@
 
 
     <style name="DarkButtonTheme" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/colorText</item>
+        <item name="colorButtonNormal">@color/bluishGray</item>
     </style>
 </resources>

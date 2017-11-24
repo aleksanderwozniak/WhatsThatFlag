@@ -1,8 +1,6 @@
 package com.olq.whatsthatflag.screens.game
 
-import android.content.Context
 import android.graphics.PorterDuff
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v4.content.ContextCompat
@@ -98,7 +96,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         val correctBtn = buttons.find { btn -> btn.text == btnName }!!
 
         val colorGreen = ContextCompat.getColor(this, R.color.green)
-        val colorGray = ContextCompat.getColor(this, R.color.colorText)
+        val colorGray = ContextCompat.getColor(this, R.color.bluishGray)
 
         correctBtn.background.setColorFilter(colorGreen, PorterDuff.Mode.SRC)
 
@@ -121,7 +119,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
         val colorGreen = ContextCompat.getColor(this, R.color.green)
         val colorRed = ContextCompat.getColor(this, R.color.red)
-        val colorGray = ContextCompat.getColor(this, R.color.colorText)
+        val colorGray = ContextCompat.getColor(this, R.color.bluishGray)
         var isGreenTinted = false
 
         wrongBtn.background.setColorFilter(colorRed, PorterDuff.Mode.SRC)

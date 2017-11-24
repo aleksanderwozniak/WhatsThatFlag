@@ -6,8 +6,11 @@
     <color name="holo_primary">#684949</color>
     <color name="holo_blue">#33b5e5</color>
     <color name="primary_material_dark" tools:override="true">#212121</color>
-    <color name="colorText">#455a64</color>
-    <color name="colorTextBright">#607d8b</color>
-    <color name="green">#40b040</color>
-    <color name="red">#b04040</color>
+    <color name="bluishGray">#455a64</color>
+    <color name="bluishGrayBright">#607d8b</color>
+    <color name="colorText">#dddddd</color>
+    <color name="colorTextDark">#bcbcbc</color>
+    <color name="green">#408e2f</color>
+    <color name="red">#a43741</color>
+    <color name="blackSubtle">#0d0d0f</color>
 </resources>

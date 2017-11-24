@@ -48,6 +48,7 @@ class GamePresenter(private val view: GameScreenContract.View,
                     null -> {
                         if (view.isConnectedToInternet()) {
                             downloadImg(id)
+                            view.displayMessage("Reattempting download")
                         } else {
                             view.showNoConnectionAlert()
                         }

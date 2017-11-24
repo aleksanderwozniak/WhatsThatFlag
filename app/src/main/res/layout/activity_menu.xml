@@ -32,7 +32,7 @@
         android:layout_marginStart="8dp"
         android:fontFamily="@font/advent_pro_thin"
         android:text="@string/title_text"
-        android:textColor="@color/colorTextBright"
+        android:textColor="@color/colorText"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +75,7 @@
             android:fontFamily="@font/advent_pro_thin"
             android:text="@string/countries_amount"
             android:textAlignment="center"
-            android:textColor="@color/colorTextBright"
+            android:textColor="@color/colorText"
             android:textSize="18sp"
             android:textStyle="bold" />
 
