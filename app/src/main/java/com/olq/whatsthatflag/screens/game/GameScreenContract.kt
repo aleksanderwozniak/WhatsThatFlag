@@ -18,6 +18,9 @@ interface GameScreenContract {
         fun displayMessage(msg: String)
         fun animateCorrectAnswer(btnName: String)
         fun animateWrongAnswer(btnSelectedName: String, btnCorrectName: String)
+        fun setButtonsClickability(enabled: Boolean)
+        fun isConnectedToInternet(): Boolean
+        fun showNoConnectionAlert()
     }
 
 
@@ -25,5 +28,6 @@ interface GameScreenContract {
         fun start(gameData: Pair<MenuActivity.CONTINENT, Int>)
         fun answerBtnClicked(selectedCountry: String)
         fun timerFinished()
+        fun refreshConnection()
     }
 }

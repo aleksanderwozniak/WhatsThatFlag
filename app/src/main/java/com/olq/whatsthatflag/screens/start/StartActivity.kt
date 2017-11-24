@@ -1,12 +1,11 @@
 package com.olq.whatsthatflag.screens.start
 
-import android.content.Context
-import android.net.ConnectivityManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.olq.whatsthatflag.R
 import com.olq.whatsthatflag.injector.Injector
 import com.olq.whatsthatflag.screens.menu.MenuActivity
+import com.olq.whatsthatflag.utils.checkInternetConnection
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.startActivity
@@ -29,11 +28,7 @@ class StartActivity : AppCompatActivity(), StartScreenContract.View {
     }
 
     override fun isConnectedToInternet(): Boolean {
-        val cm = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = cm.activeNetworkInfo
-
-        return activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting
+        return checkInternetConnection(applicationContext)
     }
 
     override fun showNoConnectionAlert() {

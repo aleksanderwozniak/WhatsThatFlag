@@ -1,6 +1,8 @@
 package com.olq.whatsthatflag.screens.game
 
+import android.content.Context
 import android.graphics.PorterDuff
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v4.content.ContextCompat
@@ -9,6 +11,7 @@ import android.view.View
 import com.olq.whatsthatflag.R
 import com.olq.whatsthatflag.injector.Injector
 import com.olq.whatsthatflag.screens.menu.MenuActivity
+import com.olq.whatsthatflag.utils.checkInternetConnection
 import com.olq.whatsthatflag.utils.loadUrl
 import kotlinx.android.synthetic.main.activity_game.*
 import org.jetbrains.anko.alert
@@ -143,5 +146,30 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         }
 
         timer.start()
+    }
+
+    override fun setButtonsClickability(enabled: Boolean) {
+        myBtnA.isClickable = enabled
+        myBtnB.isClickable = enabled
+        myBtnC.isClickable = enabled
+        myBtnD.isClickable = enabled
+    }
+
+    override fun isConnectedToInternet(): Boolean {
+        return checkInternetConnection(applicationContext)
+    }
+
+    override fun showNoConnectionAlert() {
+        val internetErrorAlert = alert (Appcompat) {
+            title = "Connection error!"
+            message = "Make sure you are connected to Internet"
+
+            positiveButton("Refresh", { presenter.refreshConnection() })
+            negativeButton("Exit App", { finishAffinity() })
+        }.build()
+
+        internetErrorAlert.setCancelable(false)
+        internetErrorAlert.setCanceledOnTouchOutside(false)
+        internetErrorAlert.show()
     }
 }

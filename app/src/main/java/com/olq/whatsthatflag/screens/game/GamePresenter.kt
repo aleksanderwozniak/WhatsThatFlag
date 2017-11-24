@@ -44,13 +44,28 @@ class GamePresenter(private val view: GameScreenContract.View,
             val imgUrl = model.getImgUrl(getURLFromName(country))
 
             uiThread {
-                if (imgUrl != null) {
-                    view.loadImg(imgUrl)
-                }
+                when (imgUrl) {
+                    null -> {
+                        if (view.isConnectedToInternet()) {
+                            downloadImg(id)
+                        } else {
+                            view.showNoConnectionAlert()
+                        }
+                    }
 
-                view.hideProgressBar()
+                    else -> {
+                        view.loadImg(imgUrl)
+
+                        view.hideProgressBar()
+                        view.setButtonsClickability(true)
+                    }
+                }
             }
         }
+    }
+
+    override fun refreshConnection() {
+        downloadImg(currentFlagId)
     }
 
     private fun renameBtns(id: Int) {
@@ -68,6 +83,8 @@ class GamePresenter(private val view: GameScreenContract.View,
         } else {
             view.animateCorrectAnswer(correctCountry)
         }
+
+        view.setButtonsClickability(false)
     }
 
     private fun isAnswerCorrect(selectedCountry: String, correctCountry: String): Boolean {
