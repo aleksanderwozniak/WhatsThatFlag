@@ -46,9 +46,8 @@
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:theme="@style/DarkButtonTheme"
-        android:onClick="onStartBtnClick"
         android:text="@string/start_btn_text"
+        android:theme="@style/DarkButtonTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

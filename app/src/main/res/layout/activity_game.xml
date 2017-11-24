@@ -39,8 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            android:background="@drawable/border_img"
-            android:src="@mipmap/ic_launcher" />
+            android:background="@drawable/border_img" />
 
         <ProgressBar
             android:id="@+id/myProgressBar"
