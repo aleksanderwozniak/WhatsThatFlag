@@ -1,5 +1,6 @@
 package com.olq.whatsthatflag.screens.game
 
+import android.util.Log
 import com.olq.whatsthatflag.data.Model
 import com.olq.whatsthatflag.screens.menu.MenuActivity
 import org.jetbrains.anko.doAsync
@@ -112,6 +113,7 @@ class GamePresenter(private val view: GameScreenContract.View,
     }
 
     private fun getURLFromName(countryName: String): String{
-        return "https://en.wikipedia.org/wiki/$countryName"
+        val validCountryName: String = countryName.replace("[ ]".toRegex(), "_")
+        return "https://en.wikipedia.org/wiki/$validCountryName"
     }
 }

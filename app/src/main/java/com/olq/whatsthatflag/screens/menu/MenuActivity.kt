@@ -2,7 +2,6 @@ package com.olq.whatsthatflag.screens.menu
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.SeekBar
 import com.olq.whatsthatflag.screens.game.GameActivity
 import com.olq.whatsthatflag.R

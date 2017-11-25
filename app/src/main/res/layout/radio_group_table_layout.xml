@@ -12,6 +12,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:textColor="@color/colorText"
+            android:theme="@style/CustomRadioButtonTheme"
             android:text="Global" />
 
         <RadioButton
@@ -21,6 +22,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:textColor="@color/colorText"
+            android:theme="@style/CustomRadioButtonTheme"
             android:text="Europe" />
 
         <RadioButton
@@ -30,6 +32,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:textColor="@color/colorText"
+            android:theme="@style/CustomRadioButtonTheme"
             android:text="Asia" />
     </TableRow>
 
@@ -43,6 +46,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:textColor="@color/colorText"
+            android:theme="@style/CustomRadioButtonTheme"
             android:text="Americas" />
 
         <RadioButton
@@ -53,6 +57,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:textColor="@color/colorText"
+            android:theme="@style/CustomRadioButtonTheme"
             android:text="Africa" />
 
         <RadioButton
@@ -63,6 +68,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:textColor="@color/colorText"
+            android:theme="@style/CustomRadioButtonTheme"
             android:text="Oceania" />
     </TableRow>
 

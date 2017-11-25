@@ -79,9 +79,11 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     }
 
     override fun showSummaryDialog(score: Int, totalFlagAmount: Int) {
+        val percent: Int = (score * 100) / totalFlagAmount
+
         val summaryDialog = alert (Appcompat) {
             title = "Summary"
-            message = "You scored $score out of $totalFlagAmount"
+            message = "You scored $score out of $totalFlagAmount ($percent%)"
 
             positiveButton("Continue", { startActivity<MenuActivity>() })
         }.build()
