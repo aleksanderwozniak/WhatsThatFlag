@@ -16,18 +16,21 @@ interface GameScreenContract {
         fun hideProgressBar()
         fun showSummaryDialog(score: Int, totalFlagAmount: Int)
         fun displayMessage(msg: String)
-        fun animateCorrectAnswer(btnName: String)
+        fun animateCorrectAnswer(btnName: String, staticAnimation: Boolean = true)
         fun animateWrongAnswer(btnSelectedName: String, btnCorrectName: String)
         fun setButtonsClickability(enabled: Boolean)
         fun isConnectedToInternet(): Boolean
         fun showNoConnectionAlert()
+        fun startAnswerTimer()
+        fun stopAnswerTimer()
     }
 
 
     interface Presenter {
         fun start(gameData: Pair<MenuActivity.CONTINENT, Int>)
         fun answerBtnClicked(selectedCountry: String)
-        fun timerFinished()
-        fun refreshConnection()
+        fun animationTimerFinished()
+        fun redownloadImg(goToNext: Boolean = false)
+        fun answerTimerFinished()
     }
 }

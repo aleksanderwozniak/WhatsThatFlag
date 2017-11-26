@@ -1,6 +1,5 @@
 package com.olq.whatsthatflag.screens.game
 
-import android.util.Log
 import com.olq.whatsthatflag.data.Model
 import com.olq.whatsthatflag.screens.menu.MenuActivity
 import org.jetbrains.anko.doAsync
@@ -33,6 +32,7 @@ class GamePresenter(private val view: GameScreenContract.View,
             view.displayMessage("There are only $amountOfLoadedCountries countries in Oceania")
         }
 
+        view.setButtonsClickability(false)
         downloadImg(currentFlagId)
         renameBtns(currentFlagId)
     }
@@ -60,14 +60,22 @@ class GamePresenter(private val view: GameScreenContract.View,
 
                         view.hideProgressBar()
                         view.setButtonsClickability(true)
+
+                        view.startAnswerTimer()
                     }
                 }
             }
         }
     }
 
-    override fun refreshConnection() {
-        downloadImg(currentFlagId)
+    override fun redownloadImg(goToNext: Boolean) {
+        if (!goToNext) {
+            downloadImg(currentFlagId)
+            renameBtns(currentFlagId)
+
+        } else {
+            manageFlagId()
+        }
     }
 
     private fun renameBtns(id: Int) {
@@ -77,6 +85,8 @@ class GamePresenter(private val view: GameScreenContract.View,
 
 
     override fun answerBtnClicked(selectedCountry: String) {
+        view.stopAnswerTimer()
+
         val correctCountry = model.flagList[currentFlagId]
         val success = isAnswerCorrect(selectedCountry, correctCountry)
 
@@ -100,19 +110,29 @@ class GamePresenter(private val view: GameScreenContract.View,
         return false
     }
 
-    override fun timerFinished() {
+    override fun animationTimerFinished() {
+        manageFlagId()
+    }
+
+    private fun manageFlagId() {
         if (currentFlagId < amountOfLoadedCountries - 1) {
             currentFlagId++
             downloadImg(currentFlagId)
             renameBtns(currentFlagId)
 
         } else {
-            // TODO: consider -> display SummaryScreen, remove view.showSummaryDialog()
             view.showSummaryDialog(score, amountOfLoadedCountries)
         }
     }
 
-    private fun getURLFromName(countryName: String): String{
+    override fun answerTimerFinished() {
+        val correctCountry = model.flagList[currentFlagId]
+
+        view.animateCorrectAnswer(correctCountry, false)
+        view.setButtonsClickability(false)
+    }
+
+    private fun getURLFromName(countryName: String): String {
         val validCountryName: String = countryName.replace("[ ]".toRegex(), "_")
         return "https://en.wikipedia.org/wiki/$validCountryName"
     }

@@ -6,6 +6,7 @@ import android.os.CountDownTimer
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.Button
 import com.olq.whatsthatflag.R
 import com.olq.whatsthatflag.injector.Injector
 import com.olq.whatsthatflag.screens.menu.MenuActivity
@@ -21,6 +22,23 @@ import org.jetbrains.anko.toast
 class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
     override lateinit var presenter: GameScreenContract.Presenter
+    private var isAnswerTimerInitialized = false
+    private var answerTimer: CountDownTimer? = null
+    private var animationTimer: CountDownTimer? = null
+
+
+    private fun createAnswerTimer(timeForAnswer: Int) : CountDownTimer {
+        return object : CountDownTimer(timeForAnswer.toLong(), 10) {
+            override fun onFinish() {
+                presenter.answerTimerFinished()
+            }
+
+            override fun onTick(timeTillFinished: Long) {
+                val progress = timeForAnswer - timeTillFinished
+                updateAnswerTimerProgressBar(progress.toInt())
+            }
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +56,31 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         presenter.start(Pair(selectedContinent, amountOfCountries))
 
         setupListeners()
+
+        val timeForAnswer = resources.getInteger(R.integer.answer_time)
+        answerTimer = createAnswerTimer(timeForAnswer)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (answerTimer != null && isAnswerTimerInitialized) {
+            presenter.redownloadImg(true) // prevents cheating
+        } else {
+            isAnswerTimerInitialized = true
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        answerTimer?.cancel()
+        animationTimer?.cancel()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        answerTimer?.cancel()
+        animationTimer?.cancel()
     }
 
 
@@ -93,25 +136,38 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         summaryDialog.show()
     }
 
-    override fun animateCorrectAnswer(btnName: String) {
+    override fun animateCorrectAnswer(btnName: String, staticAnimation: Boolean) {
         val buttons = listOf(myBtnA, myBtnB, myBtnC, myBtnD)
         val correctBtn = buttons.find { btn -> btn.text == btnName }!!
 
         val colorGreen = ContextCompat.getColor(this, R.color.green)
         val colorGray = ContextCompat.getColor(this, R.color.bluishGray)
+        var isGreenTinted = false
 
-        correctBtn.background.setColorFilter(colorGreen, PorterDuff.Mode.SRC)
+        if (staticAnimation) {
+            correctBtn.background.setColorFilter(colorGreen, PorterDuff.Mode.SRC)
 
-        val timer = object : CountDownTimer(1000, 1000) {
-            override fun onFinish() {
-                correctBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
-                presenter.timerFinished()
-            }
+            animationTimer = object : CountDownTimer(1000, 1000) {
+                override fun onFinish() {
+                    correctBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
+                    presenter.animationTimerFinished()
+                }
 
-            override fun onTick(p0: Long) {  }
+                override fun onTick(p0: Long) {}
+            }.start()
+
+        } else {
+            animationTimer = object : CountDownTimer(1200, 199) {
+                override fun onFinish() {
+                    correctBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
+                    presenter.animationTimerFinished()
+                }
+
+                override fun onTick(p0: Long) {
+                    isGreenTinted = blinkingAnimation(correctBtn, colorGray, colorGreen, isGreenTinted)
+                }
+            }.start()
         }
-
-        timer.start()
     }
 
     override fun animateWrongAnswer(btnSelectedName: String, btnCorrectName: String) {
@@ -126,26 +182,28 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
         wrongBtn.background.setColorFilter(colorRed, PorterDuff.Mode.SRC)
 
-        val timer = object : CountDownTimer(1200, 199) {
+        animationTimer = object : CountDownTimer(1200, 199) {
             override fun onFinish() {
                 wrongBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
                 correctBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
 
-                presenter.timerFinished()
+                presenter.animationTimerFinished()
             }
 
             override fun onTick(p0: Long) {
-                if (isGreenTinted) {
-                    correctBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
-                } else {
-                    correctBtn.background.setColorFilter(colorGreen, PorterDuff.Mode.SRC)
-                }
-
-                isGreenTinted = !isGreenTinted
+                isGreenTinted = blinkingAnimation(correctBtn, colorGray, colorGreen, isGreenTinted)
             }
+        }.start()
+    }
+
+    private fun blinkingAnimation(btn: Button, colorNormal: Int, colorTint: Int, isTinted: Boolean): Boolean {
+        if (isTinted) {
+            btn.background.setColorFilter(colorNormal, PorterDuff.Mode.SRC)
+        } else {
+            btn.background.setColorFilter(colorTint, PorterDuff.Mode.SRC)
         }
 
-        timer.start()
+        return !isTinted
     }
 
     override fun setButtonsClickability(enabled: Boolean) {
@@ -164,12 +222,25 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
             title = "Connection error!"
             message = "Make sure you are connected to Internet"
 
-            positiveButton("Refresh", { presenter.refreshConnection() })
+            positiveButton("Refresh", { presenter.redownloadImg() })
             negativeButton("Exit App", { finishAffinity() })
         }.build()
 
         internetErrorAlert.setCancelable(false)
         internetErrorAlert.setCanceledOnTouchOutside(false)
         internetErrorAlert.show()
+    }
+
+
+    override fun startAnswerTimer() {
+        answerTimer?.start()
+    }
+
+    override fun stopAnswerTimer() {
+        answerTimer?.cancel()
+    }
+
+    private fun updateAnswerTimerProgressBar(progress: Int) {
+        mTimerProgressBar.progress = progress
     }
 }
