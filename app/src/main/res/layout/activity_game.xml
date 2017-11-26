@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/category_text"
+        android:textColor="@color/colorTextDark"
         android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,8 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            android:background="@drawable/border_img"
-            android:src="@mipmap/ic_launcher" />
+            android:background="@drawable/border_img" />
 
         <ProgressBar
             android:id="@+id/myProgressBar"
@@ -50,6 +50,7 @@
             android:layout_gravity="center"
             android:visibility="invisible"
             tools:layout_editor_absoluteX="168dp" />
+
     </FrameLayout>
 
     <LinearLayout
@@ -64,52 +65,64 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/myBtnA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorText"
-            android:onClick="btnClicked"
             android:text="@string/button_text"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:theme="@style/DarkButtonTheme" />
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/myBtnB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorText"
-            android:onClick="btnClicked"
             android:text="@string/button_text"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:theme="@style/DarkButtonTheme" />
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/myBtnC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorText"
-            android:onClick="btnClicked"
             android:text="@string/button_text"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:theme="@style/DarkButtonTheme" />
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/myBtnD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorText"
-            android:onClick="btnClicked"
             android:text="@string/button_text"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:theme="@style/DarkButtonTheme" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/scoreTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/score_text"
+        android:textColor="@color/colorTextDark"
         android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/mTimerProgressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/mTimerProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:indeterminate="false"
+        android:max="@integer/answer_time"
+        android:progress="0"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

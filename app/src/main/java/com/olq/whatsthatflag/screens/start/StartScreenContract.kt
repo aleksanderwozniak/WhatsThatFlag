@@ -9,6 +9,8 @@ interface StartScreenContract {
 
     interface View: BaseView<Presenter> {
         fun startMenuActivity()
+        fun isConnectedToInternet(): Boolean
+        fun showNoConnectionAlert()
     }
 
     interface Presenter {

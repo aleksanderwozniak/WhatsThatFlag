@@ -67,7 +67,9 @@ class Model (private val downloader: Downloader) {
 
         Collections.shuffle(dupFlagList)
 
-        flagList = if (gameData.second != -1) dupFlagList.subList(0, gameData.second) else dupFlagList
+        // MARK: quickfix - Oceania has only 23 countries, while user can easily select 40 in menu
+        val totalAmountOfFlags = if (gameData.first == MenuActivity.CONTINENT.OCEANIA && gameData.second == 40) dupFlagList.size else gameData.second
+        flagList = if (totalAmountOfFlags != -1) dupFlagList.subList(0, totalAmountOfFlags) else dupFlagList
     }
 
 

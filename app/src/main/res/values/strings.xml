@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">What\'s That Flag?</string>
+    <string name="app_name">What\'s that Flag?</string>
     <string name="loading_text">Loading</string>
     <string name="category_text">Category: %1$s \</string>
     <string name="score_text">Score: %1$d \</string>

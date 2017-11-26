@@ -2,7 +2,6 @@ package com.olq.whatsthatflag.screens.menu
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.SeekBar
 import com.olq.whatsthatflag.screens.game.GameActivity
 import com.olq.whatsthatflag.R
@@ -27,19 +26,22 @@ class MenuActivity : AppCompatActivity() {
 
         mySeekBarText.text = getString(R.string.countries_amount, "20")
         setSeekBarListener()
+        setStartBtnListener()
 
         // Make one of radio buttons selected
         radioGlobal.callOnClick()
     }
 
 
-    fun onStartBtnClick(view: View) {
-        val amount = calculateAmountOfCountries(myCountriesSeekBar.progress)
-        val selectedContinent = getSelectedContinent((radioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
+    private fun setStartBtnListener() {
+        myStartBtn.setOnClickListener {
+            val amount = calculateAmountOfCountries(myCountriesSeekBar.progress)
+            val selectedContinent = getSelectedContinent((radioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
 
-        startActivity<GameActivity>(
-                "AMOUNT_OF_COUNTRIES" to amount,
-                "SELECTED_CONTINENT" to selectedContinent)
+            startActivity<GameActivity>(
+                    "AMOUNT_OF_COUNTRIES" to amount,
+                    "SELECTED_CONTINENT" to selectedContinent)
+        }
     }
 
 

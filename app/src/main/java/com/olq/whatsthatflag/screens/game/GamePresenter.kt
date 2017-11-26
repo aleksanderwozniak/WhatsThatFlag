@@ -21,17 +21,23 @@ class GamePresenter(private val view: GameScreenContract.View,
     override fun start(gameData: Pair<MenuActivity.CONTINENT, Int>) {
         score = 0
         currentFlagId = 0
-        amountOfLoadedCountries = gameData.second
 
         view.showScore(score)
 
         model.selectFlags(gameData)
+        amountOfLoadedCountries = model.flagList.size
 
+
+        if (gameData.first == MenuActivity.CONTINENT.OCEANIA && gameData.second == 40) {
+            view.displayMessage("There are only $amountOfLoadedCountries countries in Oceania")
+        }
+
+        view.setButtonsClickability(false)
         downloadImg(currentFlagId)
         renameBtns(currentFlagId)
     }
 
-    fun downloadImg(id: Int) {
+    private fun downloadImg(id: Int) {
         view.showProgressBar()
 
         doAsync {
@@ -39,41 +45,95 @@ class GamePresenter(private val view: GameScreenContract.View,
             val imgUrl = model.getImgUrl(getURLFromName(country))
 
             uiThread {
-                if (imgUrl != null) {
-                    view.loadImg(imgUrl)
-                }
+                when (imgUrl) {
+                    null -> {
+                        if (view.isConnectedToInternet()) {
+                            downloadImg(id)
+                            view.displayMessage("Reattempting download")
+                        } else {
+                            view.showNoConnectionAlert()
+                        }
+                    }
 
-                view.hideProgressBar()
+                    else -> {
+                        view.loadImg(imgUrl)
+
+                        view.hideProgressBar()
+                        view.setButtonsClickability(true)
+
+                        view.startAnswerTimer()
+                    }
+                }
             }
         }
     }
 
-    fun renameBtns(id: Int) {
+    override fun redownloadImg(goToNext: Boolean) {
+        if (!goToNext) {
+            downloadImg(currentFlagId)
+            renameBtns(currentFlagId)
+
+        } else {
+            manageFlagId()
+        }
+    }
+
+    private fun renameBtns(id: Int) {
         val btnNames = model.getButtonNames(id)
         view.renameButtons(btnNames)
     }
 
 
-    override fun answerBtnClicked(countryName: String) {
-        if (countryName == model.flagList[currentFlagId]) {
-            score++
-            view.showScore(score)
+    override fun answerBtnClicked(selectedCountry: String) {
+        view.stopAnswerTimer()
+
+        val correctCountry = model.flagList[currentFlagId]
+        val success = isAnswerCorrect(selectedCountry, correctCountry)
+
+        if (!success) {
+            view.animateWrongAnswer(selectedCountry, correctCountry)
+        } else {
+            view.animateCorrectAnswer(correctCountry)
         }
 
+        view.setButtonsClickability(false)
+    }
 
+    private fun isAnswerCorrect(selectedCountry: String, correctCountry: String): Boolean {
+        if (selectedCountry == correctCountry) {
+            score++
+            view.showScore(score)
+
+            return true
+        }
+
+        return false
+    }
+
+    override fun animationTimerFinished() {
+        manageFlagId()
+    }
+
+    private fun manageFlagId() {
         if (currentFlagId < amountOfLoadedCountries - 1) {
             currentFlagId++
             downloadImg(currentFlagId)
             renameBtns(currentFlagId)
 
         } else {
-            // TODO: consider -> display SummaryScreen, remove view.showSummaryDialog()
             view.showSummaryDialog(score, amountOfLoadedCountries)
         }
     }
 
+    override fun answerTimerFinished() {
+        val correctCountry = model.flagList[currentFlagId]
 
-    fun getURLFromName(countryName: String): String{
-        return "https://en.wikipedia.org/wiki/$countryName"
+        view.animateCorrectAnswer(correctCountry, false)
+        view.setButtonsClickability(false)
+    }
+
+    private fun getURLFromName(countryName: String): String {
+        val validCountryName: String = countryName.replace("[ ]".toRegex(), "_")
+        return "https://en.wikipedia.org/wiki/$validCountryName"
     }
 }

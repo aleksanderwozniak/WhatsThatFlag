@@ -149,6 +149,7 @@ class Downloader {
     private fun removeInvalidFlagsFromAsia(list: MutableList<String>) {
         list.remove("Akrotiri and Dhekelia")
         list.remove("British Indian Ocean Territory")
+        list.remove("Abkhazia")
         continentIds[1] = list.size
     }
 
@@ -222,14 +223,13 @@ class Downloader {
     private fun extractImgURL(inputStream: InputStream): String? {
         val reader: BufferedReader = inputStream.bufferedReader()
         var dataLine: String? = reader.readLine()
-        val content: String
 
         while (dataLine != null && !dataLine.contains("og:image")) {
             dataLine = reader.readLine()
         }
 
         if (dataLine != null) {
-            content = dataLine
+            val content = dataLine
 
             val p = Pattern.compile("\"og:image\" content=\"(.*?)\"")
             val m = p.matcher(content)
