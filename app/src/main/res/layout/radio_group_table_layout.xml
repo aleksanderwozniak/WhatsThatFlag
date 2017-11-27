@@ -12,8 +12,9 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:textColor="@color/colorText"
-            android:theme="@style/CustomRadioButtonTheme"
-            android:text="Global" />
+            android:text="Global"
+            android:textSize="16sp"
+            android:theme="@style/CustomRadioButtonTheme" />
 
         <RadioButton
             android:id="@+id/radioEurope"
@@ -22,8 +23,10 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:textColor="@color/colorText"
+            android:text="Europe"
+            android:textSize="16sp"
             android:theme="@style/CustomRadioButtonTheme"
-            android:text="Europe" />
+            />
 
         <RadioButton
             android:id="@+id/radioAsia"
@@ -32,8 +35,10 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:textColor="@color/colorText"
+            android:text="Asia"
+            android:textSize="16sp"
             android:theme="@style/CustomRadioButtonTheme"
-            android:text="Asia" />
+            />
     </TableRow>
 
     <TableRow>
@@ -46,8 +51,10 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:textColor="@color/colorText"
+            android:text="Americas"
+            android:textSize="16sp"
             android:theme="@style/CustomRadioButtonTheme"
-            android:text="Americas" />
+            />
 
         <RadioButton
             android:id="@+id/radioAfrica"
@@ -57,8 +64,10 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:textColor="@color/colorText"
+            android:text="Africa"
+            android:textSize="16sp"
             android:theme="@style/CustomRadioButtonTheme"
-            android:text="Africa" />
+            />
 
         <RadioButton
             android:id="@+id/radioOceania"
@@ -68,8 +77,10 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:textColor="@color/colorText"
+            android:text="Oceania"
+            android:textSize="16sp"
             android:theme="@style/CustomRadioButtonTheme"
-            android:text="Oceania" />
+            />
     </TableRow>
 
 </com.olq.whatsthatflag.screens.menu.RadioGroupTableLayout>

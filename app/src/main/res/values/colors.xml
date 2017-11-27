@@ -9,4 +9,5 @@
     <color name="red">#a43741</color>
     <color name="blackSubtle">#0d0d0f</color>
     <color name="colorAccent">#00a0ce</color>
+    <color name="blackPure">#000000</color>
 </resources>

@@ -9,4 +9,5 @@
     <string name="start_btn_text">Start</string>
     <string name="title_text">What\'s that Flag?</string>
     <string name="logo_text">W T F</string>
+    <string name="select_continent_text">Select a continent</string>
 </resources>

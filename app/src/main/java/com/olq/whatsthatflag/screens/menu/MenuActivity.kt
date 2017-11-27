@@ -2,12 +2,17 @@ package com.olq.whatsthatflag.screens.menu
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.SeekBar
 import com.olq.whatsthatflag.screens.game.GameActivity
 import com.olq.whatsthatflag.R
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.radio_group_table_layout.*
 import org.jetbrains.anko.startActivity
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
+import android.graphics.Color
+import android.support.v4.content.ContextCompat
 
 class MenuActivity : AppCompatActivity() {
 
@@ -23,6 +28,7 @@ class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+        window.decorView.setBackgroundColor(Color.BLACK)
 
         mySeekBarText.text = getString(R.string.countries_amount, "20")
         setSeekBarListener()
@@ -30,13 +36,59 @@ class MenuActivity : AppCompatActivity() {
 
         // Make one of radio buttons selected
         radioGlobal.callOnClick()
+
+        // Setup for globe animation
+        mRadioGroupContinents.animate()
+                .alpha(0f)
+                .scaleX(0.01f)
+                .scaleY(0.01f)
+                .start()
     }
 
+    fun onGlobeClicked(view: View) {
+        animateGlobe()
+        animateBackgroundColor()
+    }
+
+    private fun animateGlobe() {
+        mGlobeGif.animate()
+                .alpha(0f)
+                .scaleX(0.01f)
+                .scaleY(0.01f)
+                .setDuration(2000)
+                .start()
+
+        mRadioGroupContinents.animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(2000)
+                .start()
+
+
+        val heightOffset = 12
+        val offsetFromMiddleOfRadioGroup = (mRadioGroupContinents.height / 2) + heightOffset
+
+        mContinentSelTextView.animate()
+                .setStartDelay(900)
+                .translationYBy(-offsetFromMiddleOfRadioGroup.toFloat())
+                .setDuration(1100)
+                .start()
+    }
+
+    private fun animateBackgroundColor() {
+        val colorFrom = ContextCompat.getColor(this, R.color.blackPure)
+        val colorTo = ContextCompat.getColor(this, R.color.blackSubtle)
+        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
+        colorAnimation.duration = 2000
+        colorAnimation.addUpdateListener { animator -> window.decorView.setBackgroundColor(animator.animatedValue as Int) }
+        colorAnimation.start()
+    }
 
     private fun setStartBtnListener() {
         myStartBtn.setOnClickListener {
             val amount = calculateAmountOfCountries(myCountriesSeekBar.progress)
-            val selectedContinent = getSelectedContinent((radioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
+            val selectedContinent = getSelectedContinent((mRadioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
 
             startActivity<GameActivity>(
                     "AMOUNT_OF_COUNTRIES" to amount,

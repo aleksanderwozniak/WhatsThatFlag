@@ -30,11 +30,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/advent_pro_thin"
+        android:fontFamily="@font/antic"
         android:text="@string/title_text"
         android:textColor="@color/colorText"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wtfTextView" />
@@ -72,12 +71,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/advent_pro_thin"
             android:text="@string/countries_amount"
             android:textAlignment="center"
             android:textColor="@color/colorText"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
 
         <SeekBar
             android:id="@+id/myCountriesSeekBar"
@@ -92,14 +89,64 @@
             app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
 
-    <include
-        android:id="@+id/radioGroupContinents"
-        layout="@layout/radio_group_table_layout"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/frameLayout2"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="48dp"
         app:layout_constraintBottom_toTopOf="@+id/seekBarLinearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/startTextView">
+
+
+        <TextView
+            android:id="@+id/mContinentSelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:elevation="2dp"
+            android:text="@string/select_continent_text"
+            android:textColor="@color/colorText"
+            android:textSize="18sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/mRadioGroupContinents"
+            layout="@layout/radio_group_table_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <pl.droidsonroids.gif.GifImageButton
+            android:id="@+id/mGlobeGif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/blackSubtle"
+            android:onClick="onGlobeClicked"
+            android:scaleType="centerInside"
+            android:src="@drawable/earth_spin"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
