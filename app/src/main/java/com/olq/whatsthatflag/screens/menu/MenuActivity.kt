@@ -30,27 +30,37 @@ class MenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_menu)
         window.decorView.setBackgroundColor(Color.BLACK)
 
-        mySeekBarText.text = getString(R.string.countries_amount, "20")
+        mSeekBarText.text = getString(R.string.countries_amount, "20")
         setSeekBarListener()
         setStartBtnListener()
 
         // Make one of radio buttons selected
-        radioGlobal.callOnClick()
+        mRadioGlobal.callOnClick()
 
-        // Setup for globe animation
+        setupGlobeAnimation()
+    }
+
+    private fun setupGlobeAnimation() {
         mRadioGroupContinents.animate()
                 .alpha(0f)
                 .scaleX(0.01f)
                 .scaleY(0.01f)
+                .setDuration(0)
+                .start()
+
+        mWtfDividerView.animate()
+                .alpha(0f)
+                .scaleX(2f)
+                .setDuration(0)
                 .start()
     }
 
     fun onGlobeClicked(view: View) {
-        animateGlobe()
+        compoundGlobeAnimation()
         animateBackgroundColor()
     }
 
-    private fun animateGlobe() {
+    private fun compoundGlobeAnimation() {
         mGlobeGif.animate()
                 .alpha(0f)
                 .scaleX(0.01f)
@@ -58,21 +68,30 @@ class MenuActivity : AppCompatActivity() {
                 .setDuration(2000)
                 .start()
 
+
+        val customOffset = 24f
+        val totalOffsetY = (mRadioGroupContinents.height / 2) + customOffset
+
         mRadioGroupContinents.animate()
                 .alpha(1f)
                 .scaleX(1f)
                 .scaleY(1f)
+                .translationYBy(totalOffsetY / 2)
                 .setDuration(2000)
                 .start()
 
-
-        val heightOffset = 12
-        val offsetFromMiddleOfRadioGroup = (mRadioGroupContinents.height / 2) + heightOffset
-
         mContinentSelTextView.animate()
-                .setStartDelay(900)
-                .translationYBy(-offsetFromMiddleOfRadioGroup.toFloat())
-                .setDuration(1100)
+                .setStartDelay(1200)
+                .translationYBy(-totalOffsetY / 2)
+                .setDuration(800)
+                .start()
+
+
+        mWtfDividerView.animate()
+                .setStartDelay(1600)
+                .alpha(1f)
+                .scaleX(1f)
+                .setDuration(800)
                 .start()
     }
 
@@ -86,8 +105,8 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun setStartBtnListener() {
-        myStartBtn.setOnClickListener {
-            val amount = calculateAmountOfCountries(myCountriesSeekBar.progress)
+        mStartBtn.setOnClickListener {
+            val amount = calculateAmountOfCountries(mCountriesSeekBar.progress)
             val selectedContinent = getSelectedContinent((mRadioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
 
             startActivity<GameActivity>(
@@ -117,12 +136,12 @@ class MenuActivity : AppCompatActivity() {
 
     private fun getSelectedContinent(radioBtnId: Int): CONTINENT {
         when (radioBtnId) {
-            radioGlobal.id -> return CONTINENT.GLOBAL
-            radioEurope.id -> return CONTINENT.EUROPE
-            radioAsia.id -> return CONTINENT.ASIA
-            radioAmericas.id -> return CONTINENT.AMERICAS
-            radioAfrica.id -> return CONTINENT.AFRICA
-            radioOceania.id -> return CONTINENT.OCEANIA
+            mRadioGlobal.id -> return CONTINENT.GLOBAL
+            mRadioEurope.id -> return CONTINENT.EUROPE
+            mRadioAsia.id -> return CONTINENT.ASIA
+            mRadioAmericas.id -> return CONTINENT.AMERICAS
+            mRadioAfrica.id -> return CONTINENT.AFRICA
+            mRadioOceania.id -> return CONTINENT.OCEANIA
 
             else -> {
                 return CONTINENT.GLOBAL
@@ -132,14 +151,14 @@ class MenuActivity : AppCompatActivity() {
 
 
     private fun setSeekBarListener() {
-        myCountriesSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        mCountriesSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar, p1: Int, p2: Boolean) {
                 val amount = calculateAmountOfCountries(p1)
 
                 if (amount == -1) {
-                    mySeekBarText.text = getString(R.string.countries_amount, getString(R.string.countries_all))
+                    mSeekBarText.text = getString(R.string.countries_amount, getString(R.string.countries_all))
                 } else {
-                    mySeekBarText.text = getString(R.string.countries_amount, amount.toString())
+                    mSeekBarText.text = getString(R.string.countries_amount, amount.toString())
                 }
             }
 

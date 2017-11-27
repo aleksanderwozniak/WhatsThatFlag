@@ -9,7 +9,7 @@
     tools:layout_editor_absoluteY="73dp">
 
     <TextView
-        android:id="@+id/categoryTextView"
+        android:id="@+id/mCategoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -25,17 +25,17 @@
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/scoreTextView"
+        android:layout_marginTop="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/mScoreTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoryTextView">
+        app:layout_constraintTop_toBottomOf="@+id/mCategoryTextView">
 
         <ImageView
-            android:id="@+id/myImgView"
+            android:id="@+id/mImgView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -43,7 +43,7 @@
             android:background="@drawable/border_img" />
 
         <ProgressBar
-            android:id="@+id/myProgressBar"
+            android:id="@+id/mProgressBar"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,50 +56,56 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mTimerProgressBar">
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/myBtnA"
+            android:id="@+id/mBtnA"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/button_text"
             android:textAllCaps="false"
             android:theme="@style/DarkButtonTheme" />
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/myBtnB"
+            android:id="@+id/mBtnB"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/button_text"
             android:textAllCaps="false"
             android:theme="@style/DarkButtonTheme" />
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/myBtnC"
+            android:id="@+id/mBtnC"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/button_text"
             android:textAllCaps="false"
             android:theme="@style/DarkButtonTheme" />
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/myBtnD"
+            android:id="@+id/mBtnD"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/button_text"
             android:textAllCaps="false"
             android:theme="@style/DarkButtonTheme" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/scoreTextView"
+        android:id="@+id/mScoreTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -121,11 +127,14 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:indeterminate="false"
         android:max="@integer/answer_time"
         android:progress="0"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6" />
 
 </android.support.constraint.ConstraintLayout>

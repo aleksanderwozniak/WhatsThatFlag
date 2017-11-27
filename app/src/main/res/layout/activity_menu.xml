@@ -9,23 +9,23 @@
     tools:layout_editor_absoluteY="0dp">
 
     <TextView
-        android:id="@+id/wtfTextView"
+        android:id="@+id/mWtfLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/advent_pro_thin"
         android:text="@string/logo_text"
         android:textAlignment="center"
         android:textColor="@color/colorText"
-        android:textSize="90sp"
+        android:textSize="120sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/startTextView"
+        android:id="@+id/mWtfLogoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -33,13 +33,13 @@
         android:fontFamily="@font/antic"
         android:text="@string/title_text"
         android:textColor="@color/colorText"
-        android:textSize="24sp"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wtfTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/mWtfLogo" />
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/myStartBtn"
+        android:id="@+id/mStartBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -60,24 +60,25 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/myStartBtn"
+        app:layout_constraintBottom_toTopOf="@+id/mStartBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startTextView"
+        app:layout_constraintTop_toBottomOf="@+id/mWtfLogoText"
         app:layout_constraintVertical_bias="1.0">
 
         <TextView
-            android:id="@+id/mySeekBarText"
+            android:id="@+id/mSeekBarText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/countries_amount"
             android:textAlignment="center"
             android:textColor="@color/colorText"
-            android:textSize="18sp" />
+            android:textSize="20sp"
+            android:textStyle="italic" />
 
         <SeekBar
-            android:id="@+id/myCountriesSeekBar"
+            android:id="@+id/mCountriesSeekBar"
             style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,41 +91,25 @@
     </LinearLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/frameLayout2"
+        android:id="@+id/globeConstraintLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toTopOf="@+id/seekBarLinearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startTextView">
+        app:layout_constraintTop_toBottomOf="@+id/mWtfLogoText">
 
-
-        <TextView
-            android:id="@+id/mContinentSelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:elevation="2dp"
-            android:text="@string/select_continent_text"
-            android:textColor="@color/colorText"
-            android:textSize="18sp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <include
             android:id="@+id/mRadioGroupContinents"
             layout="@layout/radio_group_table_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -147,6 +132,39 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/mContinentSelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/select_continent_text"
+            android:textColor="@color/colorText"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:id="@+id/mWtfDividerView"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mWtfLogoText" />
+
+    <!--app:layout_constraintEnd_toEndOf="@+id/mWtfLogo"-->
+    <!--app:layout_constraintStart_toStartOf="@+id/mWtfLogo"-->
 
 </android.support.constraint.ConstraintLayout>
