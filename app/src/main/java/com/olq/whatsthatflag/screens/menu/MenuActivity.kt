@@ -12,7 +12,6 @@ import org.jetbrains.anko.startActivity
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.graphics.Color
-import android.os.CountDownTimer
 import android.os.Handler
 import android.support.v4.content.ContextCompat
 
@@ -42,6 +41,21 @@ class MenuActivity : AppCompatActivity() {
         mRadioGlobal.callOnClick()
 
         setupGlobeAnimation()
+        animateViewsAlpha(0.2f, 0)
+    }
+
+    private fun animateViewsAlpha(alphaValue: Float, duration: Long) {
+        val views = listOf(mWtfLogo, mWtfLogoText, mSeekBarText, mCountriesSeekBar, mStartBtn)
+
+        val enabled = (alphaValue == 1f)
+
+        views.forEach {
+            it.isEnabled = enabled
+            it.animate()
+                    .alpha(alphaValue)
+                    .setDuration(duration)
+                    .start()
+        }
     }
 
     private fun setupGlobeAnimation() {
@@ -61,6 +75,7 @@ class MenuActivity : AppCompatActivity() {
 
     fun onGlobeClicked(view: View) {
         if (isGlobeOnClickEnabled) {
+            animateViewsAlpha(1f, 2000)
             compoundGlobeAnimation()
             animateBackgroundColor()
             isGlobeOnClickEnabled = false

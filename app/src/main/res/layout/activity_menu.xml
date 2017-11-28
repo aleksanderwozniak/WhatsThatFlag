@@ -74,7 +74,7 @@
             android:text="@string/countries_amount"
             android:textAlignment="center"
             android:textColor="@color/colorText"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="italic" />
 
         <SeekBar
@@ -143,7 +143,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/select_continent_text"
             android:textColor="@color/colorText"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="italic"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
