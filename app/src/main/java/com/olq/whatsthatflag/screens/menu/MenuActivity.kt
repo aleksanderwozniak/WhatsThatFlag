@@ -12,6 +12,8 @@ import org.jetbrains.anko.startActivity
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.graphics.Color
+import android.os.CountDownTimer
+import android.os.Handler
 import android.support.v4.content.ContextCompat
 
 class MenuActivity : AppCompatActivity() {
@@ -112,13 +114,34 @@ class MenuActivity : AppCompatActivity() {
 
     private fun setStartBtnListener() {
         mStartBtn.setOnClickListener {
-            val amount = calculateAmountOfCountries(mCountriesSeekBar.progress)
-            val selectedContinent = getSelectedContinent((mRadioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
 
-            startActivity<GameActivity>(
-                    "AMOUNT_OF_COUNTRIES" to amount,
-                    "SELECTED_CONTINENT" to selectedContinent)
+            if (mWtfDividerView.alpha != 0f) {
+                mWtfDividerView.animate()
+                        .setStartDelay(0)
+                        .alpha(0f)
+                        .scaleX(2f)
+                        .setDuration(800)
+                        .start()
+
+                Handler().postDelayed({
+                    startGameActivity()
+                }, 800)
+
+            } else {
+                startGameActivity()
+            }
         }
+    }
+
+    private fun startGameActivity() {
+        val amount = calculateAmountOfCountries(mCountriesSeekBar.progress)
+        val selectedContinent = getSelectedContinent((mRadioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
+
+        startActivity<GameActivity>(
+                "AMOUNT_OF_COUNTRIES" to amount,
+                "SELECTED_CONTINENT" to selectedContinent)
+
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
     }
 
 

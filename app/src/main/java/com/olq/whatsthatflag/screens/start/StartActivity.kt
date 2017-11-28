@@ -27,6 +27,7 @@ class StartActivity : AppCompatActivity(), StartScreenContract.View {
 
     override fun startMenuActivity() {
         startActivity<MenuActivity>()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
     override fun isConnectedToInternet(): Boolean {

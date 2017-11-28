@@ -79,6 +79,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
     override fun onBackPressed() {
         super.onBackPressed()
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
         answerTimer?.cancel()
         animationTimer?.cancel()
     }
@@ -128,7 +129,10 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
             title = "Summary"
             message = "You scored $score out of $totalFlagAmount ($percent%)"
 
-            positiveButton("Continue", { startActivity<MenuActivity>() })
+            positiveButton("Continue", {
+                startActivity<MenuActivity>()
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+            })
         }.build()
 
         summaryDialog.setCancelable(false)
