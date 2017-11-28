@@ -9,11 +9,8 @@ import com.olq.whatsthatflag.R
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.radio_group_table_layout.*
 import org.jetbrains.anko.startActivity
-import android.animation.ArgbEvaluator
-import android.animation.ValueAnimator
 import android.graphics.Color
 import android.os.Handler
-import android.support.v4.content.ContextCompat
 
 class MenuActivity : AppCompatActivity() {
 
@@ -25,6 +22,8 @@ class MenuActivity : AppCompatActivity() {
         AFRICA,
         OCEANIA
     }
+
+    private val animManager by lazy { AnimationManager(this) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,110 +38,30 @@ class MenuActivity : AppCompatActivity() {
         // Make one of radio buttons selected
         mRadioGlobal.callOnClick()
 
-        setupGlobeAnimation()
-        animateViewsAlpha(0.2f, 0)
+        animManager.setupGlobeAnimation()
+        animManager.animateViewsAlpha(0.2f, 0)
     }
 
     override fun onResume() {
         super.onResume()
 
         if (mGlobeGif.alpha != 1f) {
-            showWtfDivider(800, 200)
+            animManager.hideWtfDivider()
+            animManager.showWtfDivider(800, 200)
         }
     }
 
-    private fun animateViewsAlpha(alphaValue: Float, duration: Long) {
-        val views = listOf(mWtfLogo, mWtfLogoText, mSeekBarText, mCountriesSeekBar, mStartBtn)
-
-        val enabled = (alphaValue == 1f)
-
-        views.forEach {
-            it.isEnabled = enabled
-            it.animate()
-                    .alpha(alphaValue)
-                    .setDuration(duration)
-                    .start()
-        }
-    }
-
-    private fun setupGlobeAnimation() {
-        mRadioGroupContinents.animate()
-                .alpha(0f)
-                .scaleX(0.01f)
-                .scaleY(0.01f)
-                .setDuration(0)
-                .start()
-
-        hideWtfDivider()
-    }
-
-    private fun showWtfDivider(duration: Long = 0, delay: Long = 0) {
-        animateWtfDivider(1f, 1f, duration, delay)
-    }
-
-    private fun hideWtfDivider(duration: Long = 0, delay: Long = 0) {
-        animateWtfDivider(0f, 2f, duration, delay)
-    }
-
-    private fun animateWtfDivider(alphaValue: Float, scaleValue: Float,
-                                  duration: Long, delay: Long) {
-        mWtfDividerView.animate()
-                .setStartDelay(delay)
-                .alpha(alphaValue)
-                .scaleX(scaleValue)
-                .setDuration(duration)
-                .start()
-    }
 
     fun onGlobeClicked(view: View) {
-        animateViewsAlpha(1f, 1200)
-        compoundGlobeAnimation()
-        animateBackgroundColor()
+        animManager.animateViewsAlpha(1f, 1200)
+        animManager.compoundGlobeAnimation()
+        animManager.animateBackgroundColor()
     }
 
-    private fun compoundGlobeAnimation() {
-        mGlobeGif.animate()
-                .alpha(0f)
-                .scaleX(0.01f)
-                .scaleY(0.01f)
-                .setDuration(1200)
-                .start()
-
-
-        val customOffset = 24f
-        val totalOffsetY = (mRadioGroupContinents.height / 2) + customOffset
-
-        mRadioGroupContinents.animate()
-                .alpha(1f)
-                .scaleX(1f)
-                .scaleY(1f)
-                .translationYBy(totalOffsetY / 2)
-                .setDuration(1200)
-                .start()
-
-        mContinentSelTextView.animate()
-                .setStartDelay(800)
-                .translationYBy(-totalOffsetY / 2)
-                .setDuration(600)
-                .start()
-
-
-        showWtfDivider(800, 1200)
-    }
-
-    private fun animateBackgroundColor() {
-        val colorFrom = ContextCompat.getColor(this, R.color.blackPure)
-        val colorTo = ContextCompat.getColor(this, R.color.blackSubtle)
-        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
-        colorAnimation.startDelay = 1250
-        colorAnimation.duration = 700
-        colorAnimation.addUpdateListener { animator -> window.decorView.setBackgroundColor(animator.animatedValue as Int) }
-        colorAnimation.start()
-    }
 
     private fun setStartBtnListener() {
         mStartBtn.setOnClickListener {
-            hideWtfDivider(600)
+            animManager.hideWtfDivider(600)
 
             Handler().postDelayed({
                 startGameActivity()
