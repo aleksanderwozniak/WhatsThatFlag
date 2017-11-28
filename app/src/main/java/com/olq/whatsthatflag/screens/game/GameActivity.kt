@@ -130,7 +130,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
             message = "You scored $score out of $totalFlagAmount ($percent%)"
 
             positiveButton("Continue", {
-                startActivity<MenuActivity>()
+                finish()
                 overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
             })
         }.build()

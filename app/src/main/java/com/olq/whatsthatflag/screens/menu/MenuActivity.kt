@@ -26,7 +26,6 @@ class MenuActivity : AppCompatActivity() {
         OCEANIA
     }
 
-    private var isGlobeOnClickEnabled = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +41,14 @@ class MenuActivity : AppCompatActivity() {
 
         setupGlobeAnimation()
         animateViewsAlpha(0.2f, 0)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (mGlobeGif.alpha != 1f) {
+            showWtfDivider(800, 200)
+        }
     }
 
     private fun animateViewsAlpha(alphaValue: Float, duration: Long) {
@@ -66,20 +73,31 @@ class MenuActivity : AppCompatActivity() {
                 .setDuration(0)
                 .start()
 
+        hideWtfDivider()
+    }
+
+    private fun showWtfDivider(duration: Long = 0, delay: Long = 0) {
+        animateWtfDivider(1f, 1f, duration, delay)
+    }
+
+    private fun hideWtfDivider(duration: Long = 0, delay: Long = 0) {
+        animateWtfDivider(0f, 2f, duration, delay)
+    }
+
+    private fun animateWtfDivider(alphaValue: Float, scaleValue: Float,
+                                  duration: Long, delay: Long) {
         mWtfDividerView.animate()
-                .alpha(0f)
-                .scaleX(2f)
-                .setDuration(0)
+                .setStartDelay(delay)
+                .alpha(alphaValue)
+                .scaleX(scaleValue)
+                .setDuration(duration)
                 .start()
     }
 
     fun onGlobeClicked(view: View) {
-        if (isGlobeOnClickEnabled) {
-            animateViewsAlpha(1f, 2000)
-            compoundGlobeAnimation()
-            animateBackgroundColor()
-            isGlobeOnClickEnabled = false
-        }
+        animateViewsAlpha(1f, 1200)
+        compoundGlobeAnimation()
+        animateBackgroundColor()
     }
 
     private fun compoundGlobeAnimation() {
@@ -87,7 +105,7 @@ class MenuActivity : AppCompatActivity() {
                 .alpha(0f)
                 .scaleX(0.01f)
                 .scaleY(0.01f)
-                .setDuration(2000)
+                .setDuration(1200)
                 .start()
 
 
@@ -99,52 +117,36 @@ class MenuActivity : AppCompatActivity() {
                 .scaleX(1f)
                 .scaleY(1f)
                 .translationYBy(totalOffsetY / 2)
-                .setDuration(2000)
+                .setDuration(1200)
                 .start()
 
         mContinentSelTextView.animate()
-                .setStartDelay(1200)
+                .setStartDelay(800)
                 .translationYBy(-totalOffsetY / 2)
-                .setDuration(800)
+                .setDuration(600)
                 .start()
 
 
-        mWtfDividerView.animate()
-                .setStartDelay(1600)
-                .alpha(1f)
-                .scaleX(1f)
-                .setDuration(800)
-                .start()
+        showWtfDivider(800, 1200)
     }
 
     private fun animateBackgroundColor() {
         val colorFrom = ContextCompat.getColor(this, R.color.blackPure)
         val colorTo = ContextCompat.getColor(this, R.color.blackSubtle)
         val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
-        colorAnimation.startDelay = 1800
-        colorAnimation.duration = 600
+        colorAnimation.startDelay = 1250
+        colorAnimation.duration = 700
         colorAnimation.addUpdateListener { animator -> window.decorView.setBackgroundColor(animator.animatedValue as Int) }
         colorAnimation.start()
     }
 
     private fun setStartBtnListener() {
         mStartBtn.setOnClickListener {
+            hideWtfDivider(600)
 
-            if (mWtfDividerView.alpha != 0f) {
-                mWtfDividerView.animate()
-                        .setStartDelay(0)
-                        .alpha(0f)
-                        .scaleX(2f)
-                        .setDuration(800)
-                        .start()
-
-                Handler().postDelayed({
-                    startGameActivity()
-                }, 800)
-
-            } else {
+            Handler().postDelayed({
                 startGameActivity()
-            }
+            }, 400)
         }
     }
 
