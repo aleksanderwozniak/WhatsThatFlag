@@ -1,5 +1,6 @@
 package com.olq.whatsthatflag.screens.start
 
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.olq.whatsthatflag.R
@@ -17,6 +18,7 @@ class StartActivity : AppCompatActivity(), StartScreenContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
+        window.decorView.setBackgroundColor(Color.BLACK)
 
         presenter = StartPresenter(this, Injector.provideModel())
         presenter.start()
@@ -25,6 +27,7 @@ class StartActivity : AppCompatActivity(), StartScreenContract.View {
 
     override fun startMenuActivity() {
         startActivity<MenuActivity>()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
     override fun isConnectedToInternet(): Boolean {

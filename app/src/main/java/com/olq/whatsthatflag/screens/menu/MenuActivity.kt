@@ -2,12 +2,15 @@ package com.olq.whatsthatflag.screens.menu
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.SeekBar
 import com.olq.whatsthatflag.screens.game.GameActivity
 import com.olq.whatsthatflag.R
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.radio_group_table_layout.*
 import org.jetbrains.anko.startActivity
+import android.graphics.Color
+import android.os.Handler
 
 class MenuActivity : AppCompatActivity() {
 
@@ -20,28 +23,61 @@ class MenuActivity : AppCompatActivity() {
         OCEANIA
     }
 
+    private val animManager by lazy { AnimationManager(this) }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+        window.decorView.setBackgroundColor(Color.BLACK)
 
-        mySeekBarText.text = getString(R.string.countries_amount, "20")
+        mSeekBarText.text = getString(R.string.countries_amount, "20")
         setSeekBarListener()
         setStartBtnListener()
 
         // Make one of radio buttons selected
-        radioGlobal.callOnClick()
+        mRadioGlobal.callOnClick()
+
+        animManager.setupGlobeAnimation()
+        animManager.animateViewsAlpha(0.2f, 0)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (mGlobeGif.alpha != 1f) {
+            animManager.hideWtfDivider()
+            animManager.showWtfDivider(800, 200)
+        }
+    }
+
+
+    fun onGlobeClicked(view: View) {
+        animManager.animateViewsAlpha(1f, 1200)
+        animManager.compoundGlobeAnimation()
+        animManager.animateBackgroundColor()
     }
 
 
     private fun setStartBtnListener() {
-        myStartBtn.setOnClickListener {
-            val amount = calculateAmountOfCountries(myCountriesSeekBar.progress)
-            val selectedContinent = getSelectedContinent((radioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
+        mStartBtn.setOnClickListener {
+            animManager.hideWtfDivider(600)
 
-            startActivity<GameActivity>(
-                    "AMOUNT_OF_COUNTRIES" to amount,
-                    "SELECTED_CONTINENT" to selectedContinent)
+            Handler().postDelayed({
+                startGameActivity()
+            }, 400)
         }
+    }
+
+    private fun startGameActivity() {
+        val amount = calculateAmountOfCountries(mCountriesSeekBar.progress)
+        val selectedContinent = getSelectedContinent((mRadioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
+
+        startActivity<GameActivity>(
+                "AMOUNT_OF_COUNTRIES" to amount,
+                "SELECTED_CONTINENT" to selectedContinent)
+
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
     }
 
 
@@ -65,12 +101,12 @@ class MenuActivity : AppCompatActivity() {
 
     private fun getSelectedContinent(radioBtnId: Int): CONTINENT {
         when (radioBtnId) {
-            radioGlobal.id -> return CONTINENT.GLOBAL
-            radioEurope.id -> return CONTINENT.EUROPE
-            radioAsia.id -> return CONTINENT.ASIA
-            radioAmericas.id -> return CONTINENT.AMERICAS
-            radioAfrica.id -> return CONTINENT.AFRICA
-            radioOceania.id -> return CONTINENT.OCEANIA
+            mRadioGlobal.id -> return CONTINENT.GLOBAL
+            mRadioEurope.id -> return CONTINENT.EUROPE
+            mRadioAsia.id -> return CONTINENT.ASIA
+            mRadioAmericas.id -> return CONTINENT.AMERICAS
+            mRadioAfrica.id -> return CONTINENT.AFRICA
+            mRadioOceania.id -> return CONTINENT.OCEANIA
 
             else -> {
                 return CONTINENT.GLOBAL
@@ -80,14 +116,14 @@ class MenuActivity : AppCompatActivity() {
 
 
     private fun setSeekBarListener() {
-        myCountriesSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        mCountriesSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar, p1: Int, p2: Boolean) {
                 val amount = calculateAmountOfCountries(p1)
 
                 if (amount == -1) {
-                    mySeekBarText.text = getString(R.string.countries_amount, getString(R.string.countries_all))
+                    mSeekBarText.text = getString(R.string.countries_amount, getString(R.string.countries_all))
                 } else {
-                    mySeekBarText.text = getString(R.string.countries_amount, amount.toString())
+                    mSeekBarText.text = getString(R.string.countries_amount, amount.toString())
                 }
             }
 

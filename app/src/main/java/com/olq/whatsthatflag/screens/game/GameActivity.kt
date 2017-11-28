@@ -50,7 +50,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
         val categoryText = selectedContinent.toString().toLowerCase().capitalize()
 
-        categoryTextView.text = getString(R.string.category_text, categoryText)
+        mCategoryTextView.text = getString(R.string.category_text, categoryText)
 
         presenter = GamePresenter(this, Injector.provideModel())
         presenter.start(Pair(selectedContinent, amountOfCountries))
@@ -79,42 +79,43 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
     override fun onBackPressed() {
         super.onBackPressed()
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
         answerTimer?.cancel()
         animationTimer?.cancel()
     }
 
 
     private fun setupListeners() {
-        myBtnA.setOnClickListener { presenter.answerBtnClicked(myBtnA.text.toString()) }
-        myBtnB.setOnClickListener { presenter.answerBtnClicked(myBtnB.text.toString()) }
-        myBtnC.setOnClickListener { presenter.answerBtnClicked(myBtnC.text.toString()) }
-        myBtnD.setOnClickListener { presenter.answerBtnClicked(myBtnD.text.toString()) }
+        mBtnA.setOnClickListener { presenter.answerBtnClicked(mBtnA.text.toString()) }
+        mBtnB.setOnClickListener { presenter.answerBtnClicked(mBtnB.text.toString()) }
+        mBtnC.setOnClickListener { presenter.answerBtnClicked(mBtnC.text.toString()) }
+        mBtnD.setOnClickListener { presenter.answerBtnClicked(mBtnD.text.toString()) }
     }
 
 
     override fun loadImg(currentUrl: String){
-        myImgView.loadUrl(currentUrl)
+        mImgView.loadUrl(currentUrl)
     }
 
     override fun renameButtons(btnNames: List<String>) {
-        myBtnA.text = btnNames[0]
-        myBtnB.text = btnNames[1]
-        myBtnC.text = btnNames[2]
-        myBtnD.text = btnNames[3]
+        mBtnA.text = btnNames[0]
+        mBtnB.text = btnNames[1]
+        mBtnC.text = btnNames[2]
+        mBtnD.text = btnNames[3]
     }
 
     override fun showScore(score: Int) {
-        scoreTextView.text = getString(R.string.score_text, score)
+        mScoreTextView.text = getString(R.string.score_text, score)
     }
 
     override fun showProgressBar() {
-        myProgressBar.visibility = View.VISIBLE
-        myImgView.visibility = View.INVISIBLE
+        mProgressBar.visibility = View.VISIBLE
+        mImgView.visibility = View.INVISIBLE
     }
 
     override fun hideProgressBar() {
-        myProgressBar.visibility = View.INVISIBLE
-        myImgView.visibility = View.VISIBLE
+        mProgressBar.visibility = View.INVISIBLE
+        mImgView.visibility = View.VISIBLE
     }
 
     override fun displayMessage(msg: String) {
@@ -128,7 +129,10 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
             title = "Summary"
             message = "You scored $score out of $totalFlagAmount ($percent%)"
 
-            positiveButton("Continue", { startActivity<MenuActivity>() })
+            positiveButton("Continue", {
+                finish()
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+            })
         }.build()
 
         summaryDialog.setCancelable(false)
@@ -137,7 +141,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     }
 
     override fun animateCorrectAnswer(btnName: String, staticAnimation: Boolean) {
-        val buttons = listOf(myBtnA, myBtnB, myBtnC, myBtnD)
+        val buttons = listOf(mBtnA, mBtnB, mBtnC, mBtnD)
         val correctBtn = buttons.find { btn -> btn.text == btnName }!!
 
         val colorGreen = ContextCompat.getColor(this, R.color.green)
@@ -171,7 +175,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     }
 
     override fun animateWrongAnswer(btnSelectedName: String, btnCorrectName: String) {
-        val buttons = listOf(myBtnA, myBtnB, myBtnC, myBtnD)
+        val buttons = listOf(mBtnA, mBtnB, mBtnC, mBtnD)
         val correctBtn = buttons.find { btn -> btn.text == btnCorrectName }!!
         val wrongBtn = buttons.find { btn -> btn.text == btnSelectedName }!!
 
@@ -207,10 +211,10 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     }
 
     override fun setButtonsClickability(enabled: Boolean) {
-        myBtnA.isClickable = enabled
-        myBtnB.isClickable = enabled
-        myBtnC.isClickable = enabled
-        myBtnD.isClickable = enabled
+        mBtnA.isClickable = enabled
+        mBtnB.isClickable = enabled
+        mBtnC.isClickable = enabled
+        mBtnD.isClickable = enabled
     }
 
     override fun isConnectedToInternet(): Boolean {

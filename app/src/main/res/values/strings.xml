@@ -4,9 +4,10 @@
     <string name="category_text">Category: %1$s \</string>
     <string name="score_text">Score: %1$d \</string>
     <string name="button_text">%1$s</string>
-    <string name="countries_amount">Countries: %1$s</string>
+    <string name="countries_amount">Countries: %1$s \</string>
     <string name="countries_all">All</string>
     <string name="start_btn_text">Start</string>
     <string name="title_text">What\'s that Flag?</string>
     <string name="logo_text">W T F</string>
+    <string name="select_continent_text">Select a continent \</string>
 </resources>
