@@ -25,6 +25,8 @@ class MenuActivity : AppCompatActivity() {
         OCEANIA
     }
 
+    private var isGlobeOnClickEnabled = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -56,8 +58,11 @@ class MenuActivity : AppCompatActivity() {
     }
 
     fun onGlobeClicked(view: View) {
-        compoundGlobeAnimation()
-        animateBackgroundColor()
+        if (isGlobeOnClickEnabled) {
+            compoundGlobeAnimation()
+            animateBackgroundColor()
+            isGlobeOnClickEnabled = false
+        }
     }
 
     private fun compoundGlobeAnimation() {
@@ -99,7 +104,8 @@ class MenuActivity : AppCompatActivity() {
         val colorFrom = ContextCompat.getColor(this, R.color.blackPure)
         val colorTo = ContextCompat.getColor(this, R.color.blackSubtle)
         val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
-        colorAnimation.duration = 2000
+        colorAnimation.startDelay = 1800
+        colorAnimation.duration = 600
         colorAnimation.addUpdateListener { animator -> window.decorView.setBackgroundColor(animator.animatedValue as Int) }
         colorAnimation.start()
     }
