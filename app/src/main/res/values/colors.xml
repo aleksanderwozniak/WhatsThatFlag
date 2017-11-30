@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <color name="primary_material_dark" tools:override="true">#212121</color>
+<resources>
+    <color name="materialDark">#212121</color>
     <color name="bluishGray">#455a64</color>
     <color name="bluishGrayBright">#607d8b</color>
     <color name="colorText">#dddddd</color>
