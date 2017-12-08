@@ -12,6 +12,7 @@ interface GameScreenContract {
         fun loadImg(currentUrl: String)
         fun renameButtons(btnNames: List<String>)
         fun showScore(score: Int)
+        fun showRemainingQuestions(amount: Int)
         fun showProgressBar()
         fun hideProgressBar()
         fun showSummaryDialog(score: Int, totalFlagAmount: Int)
@@ -23,6 +24,7 @@ interface GameScreenContract {
         fun showNoConnectionAlert()
         fun startAnswerTimer()
         fun stopAnswerTimer()
+        fun displayFlagInfoInBrowser(url: String)
     }
 
 
@@ -32,5 +34,6 @@ interface GameScreenContract {
         fun animationTimerFinished()
         fun redownloadImg(goToNext: Boolean = false)
         fun answerTimerFinished()
+        fun btnWTFclicked()
     }
 }

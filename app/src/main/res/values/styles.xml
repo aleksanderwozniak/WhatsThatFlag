@@ -9,7 +9,7 @@
         <item name="android:windowFullscreen">true</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="alertDialogTheme">@style/DarkAlertTheme</item>
-        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimary">@color/materialDark</item>
     </style>
 
 
@@ -18,7 +18,7 @@
     </style>
 
     <style name="DarkAlertTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
-        <item name="android:background">@color/black</item>
+        <item name="android:background">@color/materialDark</item>
         <item name="android:textColor">@color/colorText</item>
         <item name="android:textColorPrimary">@color/colorText</item>
     </style>

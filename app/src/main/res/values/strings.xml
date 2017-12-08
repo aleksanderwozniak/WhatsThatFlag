@@ -2,7 +2,8 @@
     <string name="app_name">What\'s that Flag?</string>
     <string name="loading_text">Loading</string>
     <string name="category_text">Category: %1$s \</string>
-    <string name="score_text">Score: %1$d \</string>
+    <string name="score_text">%1$d</string>
+    <string name="questions_text">%1$d</string>
     <string name="button_text">%1$s</string>
     <string name="countries_amount">Countries: %1$s \</string>
     <string name="countries_all">All</string>
