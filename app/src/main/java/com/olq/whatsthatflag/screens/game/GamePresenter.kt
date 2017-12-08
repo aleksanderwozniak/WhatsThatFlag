@@ -82,7 +82,7 @@ class GamePresenter(private val view: GameScreenContract.View,
         val btnNames = model.getButtonNames(id)
         view.renameButtons(btnNames)
 
-        view.showRemainingQuestions(amountOfLoadedCountries - (currentFlagId + 1))
+        view.showRemainingQuestions(amountOfLoadedCountries - currentFlagId)
     }
 
 
@@ -123,6 +123,7 @@ class GamePresenter(private val view: GameScreenContract.View,
             renameBtns(currentFlagId)
 
         } else {
+            view.showRemainingQuestions(0)
             view.showSummaryDialog(score, amountOfLoadedCountries)
         }
     }
@@ -132,6 +133,14 @@ class GamePresenter(private val view: GameScreenContract.View,
 
         view.animateCorrectAnswer(correctCountry, false)
         view.setButtonsClickability(false)
+    }
+
+
+    override fun btnWTFclicked() {
+        view.stopAnswerTimer()
+
+        val url = getURLFromName(model.flagList[currentFlagId])
+        view.displayFlagInfoInBrowser(url)
     }
 
     private fun getURLFromName(countryName: String): String {

@@ -24,6 +24,7 @@ interface GameScreenContract {
         fun showNoConnectionAlert()
         fun startAnswerTimer()
         fun stopAnswerTimer()
+        fun displayFlagInfoInBrowser(url: String)
     }
 
 
@@ -33,5 +34,6 @@ interface GameScreenContract {
         fun animationTimerFinished()
         fun redownloadImg(goToNext: Boolean = false)
         fun answerTimerFinished()
+        fun btnWTFclicked()
     }
 }

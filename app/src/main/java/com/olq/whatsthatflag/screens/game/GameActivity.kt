@@ -15,6 +15,7 @@ import com.olq.whatsthatflag.utils.loadUrl
 import kotlinx.android.synthetic.main.activity_game.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
+import org.jetbrains.anko.browse
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
@@ -85,7 +86,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     }
 
     fun onWTFclick(view: View) {
-
+        presenter.btnWTFclicked()
     }
 
     private fun setupListeners() {
@@ -123,6 +124,10 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     override fun hideProgressBar() {
         mProgressBar.visibility = View.INVISIBLE
         mImgView.visibility = View.VISIBLE
+    }
+
+    override fun displayFlagInfoInBrowser(url: String) {
+        browse(url)
     }
 
     override fun displayMessage(msg: String) {
