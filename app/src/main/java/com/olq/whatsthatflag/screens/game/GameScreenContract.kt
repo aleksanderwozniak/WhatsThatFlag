@@ -12,6 +12,7 @@ interface GameScreenContract {
         fun loadImg(currentUrl: String)
         fun renameButtons(btnNames: List<String>)
         fun showScore(score: Int)
+        fun showRemainingQuestions(amount: Int)
         fun showProgressBar()
         fun hideProgressBar()
         fun showSummaryDialog(score: Int, totalFlagAmount: Int)

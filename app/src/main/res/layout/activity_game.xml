@@ -29,7 +29,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/mScoreTextView"
+        app:layout_constraintBottom_toTopOf="@+id/mTimerProgressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mCategoryTextView">
@@ -57,15 +57,16 @@
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/mWTFbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mTimerProgressBar">
+        app:layout_constraintTop_toBottomOf="@+id/mTimerProgressBar"
+        app:layout_constraintVertical_bias="0.5">
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/mBtnA"
@@ -106,18 +107,38 @@
 
     <TextView
         android:id="@+id/mScoreTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/wtf_number"
+        android:fontFamily="@font/antic"
+        android:gravity="center"
         android:text="@string/score_text"
+        android:textAlignment="center"
         android:textColor="@color/colorTextDark"
         android:textSize="16sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/mTimerProgressBar"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/mWTFbtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/mWTFbtn"
+        app:layout_constraintTop_toTopOf="@+id/mWTFbtn" />
+
+    <TextView
+        android:id="@+id/mQuestionsTextView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/wtf_number"
+        android:fontFamily="@font/antic"
+        android:gravity="center"
+        android:text="@string/questions_text"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextDark"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/mWTFbtn"
+        app:layout_constraintEnd_toStartOf="@+id/mWTFbtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/mWTFbtn"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ProgressBar
         android:id="@+id/mTimerProgressBar"
@@ -135,6 +156,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintVertical_bias="0.48000002" />
+
+    <Button
+        android:id="@+id/mWTFbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/wtf_btn"
+        android:fontFamily="@font/antic"
+        android:onClick="onWTFclick"
+        android:text="W T F"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

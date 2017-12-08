@@ -81,6 +81,8 @@ class GamePresenter(private val view: GameScreenContract.View,
     private fun renameBtns(id: Int) {
         val btnNames = model.getButtonNames(id)
         view.renameButtons(btnNames)
+
+        view.showRemainingQuestions(amountOfLoadedCountries - (currentFlagId + 1))
     }
 
 

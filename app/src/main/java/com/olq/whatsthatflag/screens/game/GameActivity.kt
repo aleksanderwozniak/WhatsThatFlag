@@ -84,6 +84,9 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         animationTimer?.cancel()
     }
 
+    fun onWTFclick(view: View) {
+
+    }
 
     private fun setupListeners() {
         mBtnA.setOnClickListener { presenter.answerBtnClicked(mBtnA.text.toString()) }
@@ -106,6 +109,10 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
     override fun showScore(score: Int) {
         mScoreTextView.text = getString(R.string.score_text, score)
+    }
+
+    override fun showRemainingQuestions(amount: Int) {
+        mQuestionsTextView.text = getString(R.string.questions_text, amount)
     }
 
     override fun showProgressBar() {
