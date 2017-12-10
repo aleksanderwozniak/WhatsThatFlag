@@ -30,8 +30,33 @@ class MenuPresenter(private val view: MenuScreenContract.View)
     }
 
     override fun btnStartClicked() {
+        val amount = calculateAmountOfCountries(view.getFlagSeekbarProgress())
+        val continent = view.getSelectedContinent()
+
         // starting a new activity has some lag to it, thus durations below are not equal
         animManager.hideWtfDivider(600)
-        view.startGameActivityWithDelay(400)
+        view.startGameActivityWithDelay(amount, continent, 400)
+    }
+
+    private fun calculateAmountOfCountries(seekbarProgress: Int): Int {
+        when (seekbarProgress) {
+            0 -> return 5
+            1 -> return 10
+            2 -> return 20
+            3 -> return 40
+            4 -> return -1 // ALL = -1
+
+            else -> { return -1 }
+        }
+    }
+
+    override fun flagSeekbarProgressChanged(progress: Int) {
+        val amount = calculateAmountOfCountries(progress)
+
+        if (amount == -1) {
+            view.showFlagSeekbarLabelAll()
+        } else {
+            view.showFlagSeekbarLabel(amount)
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.olq.whatsthatflag.screens.game
 
 import com.olq.whatsthatflag.data.Model
-import com.olq.whatsthatflag.screens.menu.MenuActivity
+import com.olq.whatsthatflag.screens.menu.CONTINENT
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.Ref
@@ -21,7 +21,7 @@ class GamePresenter(private val view: GameScreenContract.View,
     var amountOfLoadedCountries = 0
 
 
-    override fun start(gameData: Pair<MenuActivity.CONTINENT, Int>) {
+    override fun start(gameData: Pair<CONTINENT, Int>) {
         score = 0
         currentFlagId = 0
 
@@ -31,7 +31,7 @@ class GamePresenter(private val view: GameScreenContract.View,
         amountOfLoadedCountries = model.flagList.size
 
 
-        if (gameData.first == MenuActivity.CONTINENT.OCEANIA && gameData.second == 40) {
+        if (gameData.first == CONTINENT.OCEANIA && gameData.second == 40) {
             view.displayMessage("There are only $amountOfLoadedCountries countries in Oceania")
         }
 

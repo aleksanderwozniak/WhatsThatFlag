@@ -14,15 +14,6 @@ import android.os.Handler
 
 class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
-    enum class CONTINENT {
-        GLOBAL,
-        EUROPE,
-        ASIA,
-        AMERICAS,
-        AFRICA,
-        OCEANIA
-    }
-
     override lateinit var presenter: MenuScreenContract.Presenter
 
 
@@ -38,7 +29,7 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
     }
 
     private fun setupUiElements() {
-        mSeekBarText.text = getString(R.string.countries_amount, "20")
+        showFlagSeekbarLabel(20)
         setSeekBarListener()
         setStartBtnListener()
 
@@ -54,11 +45,9 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
         }
     }
 
-
     fun onGlobeClicked(view: View) {
         presenter.startGlobeAnimation()
     }
-
 
     private fun setStartBtnListener() {
         mStartBtn.setOnClickListener {
@@ -66,16 +55,13 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
         }
     }
 
-    override fun startGameActivityWithDelay(duration: Long) {
+    override fun startGameActivityWithDelay(amount: Int, selectedContinent: CONTINENT, duration: Long) {
         Handler().postDelayed({
-            startGameActivity()
+            startGameActivity(amount, selectedContinent)
         }, duration)
     }
 
-    private fun startGameActivity() {
-        val amount = calculateAmountOfCountries(mCountriesSeekBar.progress)
-        val selectedContinent = getSelectedContinent((mRadioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
-
+    private fun startGameActivity(amount: Int, selectedContinent: CONTINENT) {
         startActivity<GameActivity>(
                 "AMOUNT_OF_COUNTRIES" to amount,
                 "SELECTED_CONTINENT" to selectedContinent)
@@ -83,6 +69,9 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
     }
 
+    override fun getFlagSeekbarProgress(): Int {
+        return mCountriesSeekBar.progress
+    }
 
     override fun onBackPressed() {
         // Prevents going back to StartScreen
@@ -90,19 +79,12 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
     }
 
 
-    private fun calculateAmountOfCountries(progress: Int): Int {
-        when (progress) {
-            0 -> return 5
-            1 -> return 10
-            2 -> return 20
-            3 -> return 40
-            4 -> return -1 // ALL = -1
-
-            else -> { return -1 }
-        }
+    override fun getSelectedContinent(): CONTINENT {
+        val id = (mRadioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId()
+        return getContinentFromId(id)
     }
 
-    private fun getSelectedContinent(radioBtnId: Int): CONTINENT {
+    private fun getContinentFromId(radioBtnId: Int): CONTINENT {
         when (radioBtnId) {
             mRadioGlobal.id -> return CONTINENT.GLOBAL
             mRadioEurope.id -> return CONTINENT.EUROPE
@@ -117,17 +99,18 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
         }
     }
 
+    override fun showFlagSeekbarLabel(amount: Int) {
+        mSeekBarText.text = getString(R.string.countries_amount, amount.toString())
+    }
+
+    override fun showFlagSeekbarLabelAll() {
+        mSeekBarText.text = getString(R.string.countries_amount, getString(R.string.countries_all))
+    }
 
     private fun setSeekBarListener() {
         mCountriesSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar, p1: Int, p2: Boolean) {
-                val amount = calculateAmountOfCountries(p1)
-
-                if (amount == -1) {
-                    mSeekBarText.text = getString(R.string.countries_amount, getString(R.string.countries_all))
-                } else {
-                    mSeekBarText.text = getString(R.string.countries_amount, amount.toString())
-                }
+                presenter.flagSeekbarProgressChanged(p1)
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}

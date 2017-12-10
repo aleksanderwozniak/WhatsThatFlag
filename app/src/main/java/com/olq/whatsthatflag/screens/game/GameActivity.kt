@@ -9,14 +9,13 @@ import android.view.View
 import android.widget.Button
 import com.olq.whatsthatflag.R
 import com.olq.whatsthatflag.injector.Injector
-import com.olq.whatsthatflag.screens.menu.MenuActivity
+import com.olq.whatsthatflag.screens.menu.CONTINENT
 import com.olq.whatsthatflag.utils.checkInternetConnection
 import com.olq.whatsthatflag.utils.loadUrl
 import kotlinx.android.synthetic.main.activity_game.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.browse
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 
@@ -47,7 +46,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         setContentView(R.layout.activity_game)
 
         val amountOfCountries = intent.getIntExtra("AMOUNT_OF_COUNTRIES", 20)
-        val selectedContinent = intent.getSerializableExtra("SELECTED_CONTINENT") as MenuActivity.CONTINENT
+        val selectedContinent = intent.getSerializableExtra("SELECTED_CONTINENT") as CONTINENT
 
         val categoryText = selectedContinent.toString().toLowerCase().capitalize()
 

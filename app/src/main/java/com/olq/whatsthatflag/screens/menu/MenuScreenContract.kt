@@ -8,7 +8,11 @@ import com.olq.whatsthatflag.screens.BaseView
 interface MenuScreenContract {
 
     interface View: BaseView<Presenter> {
-        fun startGameActivityWithDelay(duration: Long)
+        fun startGameActivityWithDelay(amount: Int, selectedContinent: CONTINENT, duration: Long)
+        fun getSelectedContinent(): CONTINENT
+        fun getFlagSeekbarProgress(): Int
+        fun showFlagSeekbarLabel(amount: Int)
+        fun showFlagSeekbarLabelAll()
     }
 
     interface Presenter {
@@ -17,5 +21,6 @@ interface MenuScreenContract {
         fun startGlobeAnimation()
         fun hideWtfDivider(duration: Long)
         fun btnStartClicked()
+        fun flagSeekbarProgressChanged(progress: Int)
     }
 }

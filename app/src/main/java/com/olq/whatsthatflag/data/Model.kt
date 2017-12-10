@@ -1,6 +1,6 @@
 package com.olq.whatsthatflag.data
 
-import com.olq.whatsthatflag.screens.menu.MenuActivity
+import com.olq.whatsthatflag.screens.menu.CONTINENT
 import java.util.*
 
 /**
@@ -54,10 +54,10 @@ class Model (private val downloader: Downloader) {
     }
 
 
-    fun selectFlags(gameData: Pair<MenuActivity.CONTINENT, Int>) {
+    fun selectFlags(gameData: Pair<CONTINENT, Int>) {
         var dupFlagList = totalFlagList.toMutableList() // duplicate contents of totalFlagList
 
-        if (gameData.first != MenuActivity.CONTINENT.GLOBAL) {
+        if (gameData.first != CONTINENT.GLOBAL) {
             val id = calculateContinentId(gameData.first)
             val from = if (id == 0) 0 else downloader.continentIds[id - 1]
             val to = downloader.continentIds[id]
@@ -68,18 +68,18 @@ class Model (private val downloader: Downloader) {
         Collections.shuffle(dupFlagList)
 
         // MARK: quickfix - Oceania has only 23 countries, while user can easily select 40 in menu
-        val totalAmountOfFlags = if (gameData.first == MenuActivity.CONTINENT.OCEANIA && gameData.second == 40) dupFlagList.size else gameData.second
+        val totalAmountOfFlags = if (gameData.first == CONTINENT.OCEANIA && gameData.second == 40) dupFlagList.size else gameData.second
         flagList = if (totalAmountOfFlags != -1) dupFlagList.subList(0, totalAmountOfFlags) else dupFlagList
     }
 
 
-    private fun calculateContinentId(continent: MenuActivity.CONTINENT): Int {
+    private fun calculateContinentId(continent: CONTINENT): Int {
         when (continent) {
-            MenuActivity.CONTINENT.AFRICA -> return 0
-            MenuActivity.CONTINENT.ASIA -> return 1
-            MenuActivity.CONTINENT.EUROPE -> return 2
-            MenuActivity.CONTINENT.AMERICAS -> return 3
-            MenuActivity.CONTINENT.OCEANIA -> return 4
+            CONTINENT.AFRICA -> return 0
+            CONTINENT.ASIA -> return 1
+            CONTINENT.EUROPE -> return 2
+            CONTINENT.AMERICAS -> return 3
+            CONTINENT.OCEANIA -> return 4
             else -> return 0 // can't happen
         }
     }

@@ -1,7 +1,7 @@
 package com.olq.whatsthatflag.screens.game
 
 import com.olq.whatsthatflag.screens.BaseView
-import com.olq.whatsthatflag.screens.menu.MenuActivity
+import com.olq.whatsthatflag.screens.menu.CONTINENT
 
 /**
  * Created by olq on 20.11.17.
@@ -29,7 +29,7 @@ interface GameScreenContract {
 
 
     interface Presenter {
-        fun start(gameData: Pair<MenuActivity.CONTINENT, Int>)
+        fun start(gameData: Pair<CONTINENT, Int>)
         fun answerBtnClicked(selectedCountry: String)
         fun animationTimerFinished()
         fun redownloadImg(goToNext: Boolean = false)
