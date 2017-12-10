@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_menu.*
 /**
  * Created by olq on 28.11.17.
  */
-class AnimationManager(private val menuActivity: MenuActivity) {
+class MenuAnimationManager(private val menuActivity: MenuActivity) {
 
 
     fun animateViewsAlpha(alphaValue: Float, duration: Long) {

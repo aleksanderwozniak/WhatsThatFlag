@@ -12,7 +12,7 @@ import org.jetbrains.anko.startActivity
 import android.graphics.Color
 import android.os.Handler
 
-class MenuActivity : AppCompatActivity() {
+class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
     enum class CONTINENT {
         GLOBAL,
@@ -23,7 +23,7 @@ class MenuActivity : AppCompatActivity() {
         OCEANIA
     }
 
-    private val animManager by lazy { AnimationManager(this) }
+    override lateinit var presenter: MenuScreenContract.Presenter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,42 +31,45 @@ class MenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_menu)
         window.decorView.setBackgroundColor(Color.BLACK)
 
+        setupUiElements()
+
+        presenter = MenuPresenter(this)
+        presenter.start()
+    }
+
+    private fun setupUiElements() {
         mSeekBarText.text = getString(R.string.countries_amount, "20")
         setSeekBarListener()
         setStartBtnListener()
 
         // Make one of radio buttons selected
         mRadioGlobal.callOnClick()
-
-        animManager.setupGlobeAnimation()
-        animManager.animateViewsAlpha(0.2f, 0)
     }
 
     override fun onResume() {
         super.onResume()
 
         if (mGlobeGif.alpha != 1f) {
-            animManager.hideWtfDivider()
-            animManager.showWtfDivider(800, 200)
+            presenter.restartWtfDividerAnimation()
         }
     }
 
 
     fun onGlobeClicked(view: View) {
-        animManager.animateViewsAlpha(1f, 1200)
-        animManager.compoundGlobeAnimation()
-        animManager.animateBackgroundColor()
+        presenter.startGlobeAnimation()
     }
 
 
     private fun setStartBtnListener() {
         mStartBtn.setOnClickListener {
-            animManager.hideWtfDivider(600)
-
-            Handler().postDelayed({
-                startGameActivity()
-            }, 400)
+            presenter.btnStartClicked()
         }
+    }
+
+    override fun startGameActivityWithDelay(duration: Long) {
+        Handler().postDelayed({
+            startGameActivity()
+        }, duration)
     }
 
     private fun startGameActivity() {
