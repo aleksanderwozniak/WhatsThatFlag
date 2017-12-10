@@ -10,9 +10,18 @@ import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.radio_group_table_layout.*
 import org.jetbrains.anko.startActivity
 import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.Typeface.BOLD
 import android.os.Handler
+import android.support.v4.content.res.ResourcesCompat
+import android.support.v7.app.AlertDialog
+import android.support.v7.widget.AppCompatButton
+import android.widget.Button
+import android.widget.TextView
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
+import org.jetbrains.anko.browse
+import org.jetbrains.anko.find
 
 class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
@@ -86,14 +95,32 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
 
     override fun showAppInfo() {
-        alert (Appcompat) {
+        val alertLayout = layoutInflater.inflate(R.layout.dialog_info, null)
+        val mSourceBtn = alertLayout.find<AppCompatButton>(R.id.mDialogBtnSource)
+
+        val infoDialog = alert (Appcompat) {
             title = "What's that Flag?"
-            message = "Developed by Aleksander Wozniak"
+            customView = alertLayout
 
             positiveButton("Back") {  }
         }.show()
+
+        val infoTitle = infoDialog.find<TextView>(android.support.v7.appcompat.R.id.alertTitle)
+        val typeface = ResourcesCompat.getFont(this, R.font.antic)
+        infoTitle.setTypeface(typeface, BOLD)
+
+        // MARK: uncomment these, if you want to change `positiveButton's` font
+//        val infoBackBtn = infoDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+//        infoBackBtn.setTypeface(typeface, BOLD)
+
+
+        mSourceBtn.setOnClickListener { presenter.btnSourceClicked() }
     }
 
+    override fun showGitHubSourceInBrowser() {
+        val url = "https://github.com/aleksanderwozniak/WhatsThatFlag"
+        browse(url)
+    }
 
     override fun getSelectedContinent(): CONTINENT {
         val id = (mRadioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId()

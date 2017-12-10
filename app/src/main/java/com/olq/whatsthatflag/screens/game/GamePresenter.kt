@@ -65,6 +65,8 @@ class GamePresenter(private val view: GameScreenContract.View,
                     viewRef.invoke().loadImg(imgUrl.getCompleted() as String, object : Callback {
                         override fun onSuccess() {
                             view.startAnswerTimer()
+                            view.hideProgressBar()
+                            view.setButtonsClickability(true)
                         }
 
                         override fun onError() {
@@ -72,11 +74,6 @@ class GamePresenter(private val view: GameScreenContract.View,
                             downloadImg(id)
                         }
                     })
-
-                    viewRef.invoke().hideProgressBar()
-                    viewRef.invoke().setButtonsClickability(true)
-
-
                 }
             }
         }
