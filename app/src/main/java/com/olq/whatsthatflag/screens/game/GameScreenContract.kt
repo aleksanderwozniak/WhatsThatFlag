@@ -2,6 +2,7 @@ package com.olq.whatsthatflag.screens.game
 
 import com.olq.whatsthatflag.screens.BaseView
 import com.olq.whatsthatflag.screens.menu.CONTINENT
+import com.squareup.picasso.Callback
 
 /**
  * Created by olq on 20.11.17.
@@ -9,7 +10,7 @@ import com.olq.whatsthatflag.screens.menu.CONTINENT
 interface GameScreenContract {
 
     interface View: BaseView<Presenter> {
-        fun loadImg(currentUrl: String)
+        fun loadImg(currentUrl: String, callback: Callback)
         fun renameButtons(btnNames: List<String>)
         fun showScore(score: Int)
         fun showRemainingQuestions(amount: Int)

@@ -2,6 +2,7 @@ package com.olq.whatsthatflag.screens.game
 
 import com.olq.whatsthatflag.data.Model
 import com.olq.whatsthatflag.screens.menu.CONTINENT
+import com.squareup.picasso.Callback
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.Ref
@@ -61,12 +62,21 @@ class GamePresenter(private val view: GameScreenContract.View,
                 }
 
                 else -> {
-                    viewRef.invoke().loadImg(imgUrl.getCompleted() as String)
+                    viewRef.invoke().loadImg(imgUrl.getCompleted() as String, object : Callback {
+                        override fun onSuccess() {
+                            view.startAnswerTimer()
+                        }
+
+                        override fun onError() {
+                            view.displayMessage("Reattempting loading img")
+                            downloadImg(id)
+                        }
+                    })
 
                     viewRef.invoke().hideProgressBar()
                     viewRef.invoke().setButtonsClickability(true)
 
-                    viewRef.invoke().startAnswerTimer()
+
                 }
             }
         }
@@ -78,7 +88,7 @@ class GamePresenter(private val view: GameScreenContract.View,
             renameBtns(currentFlagId)
 
         } else {
-            view.displayMessage("Skipped a flag")
+            view.displayMessage("Skipped a flag - ${model.flagList[currentFlagId]}")
             goToNextFlag()
         }
     }
