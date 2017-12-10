@@ -25,8 +25,12 @@ class MenuPresenter(private val view: MenuScreenContract.View)
         animManager.animateBackgroundColor()
     }
 
-    override fun hideWtfDivider(duration: Long) {
-        animManager.hideWtfDivider(duration)
+//    override fun hideWtfDivider(duration: Long) {
+//        animManager.hideWtfDivider(duration)
+//    }
+
+    override fun btnInfoClicked() {
+        view.showAppInfo()
     }
 
     override fun btnStartClicked() {

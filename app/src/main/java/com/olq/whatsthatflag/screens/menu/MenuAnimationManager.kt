@@ -15,7 +15,8 @@ class MenuAnimationManager(private val menuActivity: MenuActivity) {
 
     fun animateViewsAlpha(alphaValue: Float, duration: Long) {
         val views = listOf(menuActivity.mWtfLogo, menuActivity.mWtfLogoText,
-                menuActivity.mSeekBarText, menuActivity.mCountriesSeekBar, menuActivity.mStartBtn)
+                menuActivity.mSeekBarText, menuActivity.mCountriesSeekBar,
+                menuActivity.mStartBtn, menuActivity.mInfoBtn)
 
         val enabled = (alphaValue == 1f)
 

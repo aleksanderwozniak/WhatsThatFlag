@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.radio_group_table_layout.*
 import org.jetbrains.anko.startActivity
 import android.graphics.Color
 import android.os.Handler
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.appcompat.v7.Appcompat
 
 class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
@@ -49,6 +51,10 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
         presenter.startGlobeAnimation()
     }
 
+    fun onInfoClicked(view: View) {
+        presenter.btnInfoClicked()
+    }
+
     private fun setStartBtnListener() {
         mStartBtn.setOnClickListener {
             presenter.btnStartClicked()
@@ -76,6 +82,16 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
     override fun onBackPressed() {
         // Prevents going back to StartScreen
         moveTaskToBack(true)
+    }
+
+
+    override fun showAppInfo() {
+        alert (Appcompat) {
+            title = "What's that Flag?"
+            message = "Developed by Aleksander Wozniak"
+
+            positiveButton("Back") {  }
+        }.show()
     }
 
 

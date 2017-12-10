@@ -13,14 +13,16 @@ interface MenuScreenContract {
         fun getFlagSeekbarProgress(): Int
         fun showFlagSeekbarLabel(amount: Int)
         fun showFlagSeekbarLabelAll()
+        fun showAppInfo()
     }
 
     interface Presenter {
         fun start()
         fun restartWtfDividerAnimation()
         fun startGlobeAnimation()
-        fun hideWtfDivider(duration: Long)
+//        fun hideWtfDivider(duration: Long)
         fun btnStartClicked()
         fun flagSeekbarProgressChanged(progress: Int)
+        fun btnInfoClicked()
     }
 }
