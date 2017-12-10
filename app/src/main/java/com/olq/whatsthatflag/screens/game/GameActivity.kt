@@ -67,6 +67,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
         if (answerTimer != null && isAnswerTimerInitialized) {
             presenter.redownloadImg(true) // prevents cheating
+            resetAnswerButtonsColor()
         } else {
             isAnswerTimerInitialized = true
         }
@@ -220,6 +221,14 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         }
 
         return !isTinted
+    }
+
+    private fun resetAnswerButtonsColor() {
+        val colorGray = ContextCompat.getColor(this, R.color.bluishGray)
+        mBtnA.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
+        mBtnB.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
+        mBtnC.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
+        mBtnD.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
     }
 
     override fun setButtonsClickability(enabled: Boolean) {

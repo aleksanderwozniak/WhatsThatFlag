@@ -58,6 +58,8 @@ class MenuAnimationManager(private val menuActivity: MenuActivity) {
     }
 
     fun compoundGlobeAnimation() {
+        menuActivity.mGlobeGif.isClickable = false
+
         menuActivity.mGlobeGif.animate()
                 .alpha(0f)
                 .scaleX(0.01f)
