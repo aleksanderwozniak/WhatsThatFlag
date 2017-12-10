@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/mCategoryTextView">
 
         <ImageView
-            android:id="@+id/mImgView"
+            android:id="@+id/mFlagImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -109,7 +109,7 @@
         android:id="@+id/mScoreTextView"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="@drawable/wtf_number"
+        android:background="@drawable/wtf_circle"
         android:fontFamily="@font/antic"
         android:gravity="center"
         android:text="@string/score_text"
@@ -126,7 +126,7 @@
         android:id="@+id/mQuestionsTextView"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="@drawable/wtf_number"
+        android:background="@drawable/wtf_circle"
         android:fontFamily="@font/antic"
         android:gravity="center"
         android:text="@string/questions_text"

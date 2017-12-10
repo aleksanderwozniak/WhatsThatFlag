@@ -11,19 +11,12 @@ import kotlinx.android.synthetic.main.radio_group_table_layout.*
 import org.jetbrains.anko.startActivity
 import android.graphics.Color
 import android.os.Handler
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.appcompat.v7.Appcompat
 
-class MenuActivity : AppCompatActivity() {
+class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
-    enum class CONTINENT {
-        GLOBAL,
-        EUROPE,
-        ASIA,
-        AMERICAS,
-        AFRICA,
-        OCEANIA
-    }
-
-    private val animManager by lazy { AnimationManager(this) }
+    override lateinit var presenter: MenuScreenContract.Presenter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,48 +24,50 @@ class MenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_menu)
         window.decorView.setBackgroundColor(Color.BLACK)
 
-        mSeekBarText.text = getString(R.string.countries_amount, "20")
+        setupUiElements()
+
+        presenter = MenuPresenter(this)
+        presenter.start()
+    }
+
+    private fun setupUiElements() {
+        showFlagSeekbarLabel(20)
         setSeekBarListener()
         setStartBtnListener()
 
         // Make one of radio buttons selected
         mRadioGlobal.callOnClick()
-
-        animManager.setupGlobeAnimation()
-        animManager.animateViewsAlpha(0.2f, 0)
     }
 
     override fun onResume() {
         super.onResume()
 
         if (mGlobeGif.alpha != 1f) {
-            animManager.hideWtfDivider()
-            animManager.showWtfDivider(800, 200)
+            presenter.restartWtfDividerAnimation()
         }
     }
 
-
     fun onGlobeClicked(view: View) {
-        animManager.animateViewsAlpha(1f, 1200)
-        animManager.compoundGlobeAnimation()
-        animManager.animateBackgroundColor()
+        presenter.startGlobeAnimation()
     }
 
+    fun onInfoClicked(view: View) {
+        presenter.btnInfoClicked()
+    }
 
     private fun setStartBtnListener() {
         mStartBtn.setOnClickListener {
-            animManager.hideWtfDivider(600)
-
-            Handler().postDelayed({
-                startGameActivity()
-            }, 400)
+            presenter.btnStartClicked()
         }
     }
 
-    private fun startGameActivity() {
-        val amount = calculateAmountOfCountries(mCountriesSeekBar.progress)
-        val selectedContinent = getSelectedContinent((mRadioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId())
+    override fun startGameActivityWithDelay(amount: Int, selectedContinent: CONTINENT, duration: Long) {
+        Handler().postDelayed({
+            startGameActivity(amount, selectedContinent)
+        }, duration)
+    }
 
+    private fun startGameActivity(amount: Int, selectedContinent: CONTINENT) {
         startActivity<GameActivity>(
                 "AMOUNT_OF_COUNTRIES" to amount,
                 "SELECTED_CONTINENT" to selectedContinent)
@@ -80,6 +75,9 @@ class MenuActivity : AppCompatActivity() {
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
     }
 
+    override fun getFlagSeekbarProgress(): Int {
+        return mCountriesSeekBar.progress
+    }
 
     override fun onBackPressed() {
         // Prevents going back to StartScreen
@@ -87,19 +85,22 @@ class MenuActivity : AppCompatActivity() {
     }
 
 
-    private fun calculateAmountOfCountries(progress: Int): Int {
-        when (progress) {
-            0 -> return 5
-            1 -> return 10
-            2 -> return 20
-            3 -> return 40
-            4 -> return -1 // ALL = -1
+    override fun showAppInfo() {
+        alert (Appcompat) {
+            title = "What's that Flag?"
+            message = "Developed by Aleksander Wozniak"
 
-            else -> { return -1 }
-        }
+            positiveButton("Back") {  }
+        }.show()
     }
 
-    private fun getSelectedContinent(radioBtnId: Int): CONTINENT {
+
+    override fun getSelectedContinent(): CONTINENT {
+        val id = (mRadioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId()
+        return getContinentFromId(id)
+    }
+
+    private fun getContinentFromId(radioBtnId: Int): CONTINENT {
         when (radioBtnId) {
             mRadioGlobal.id -> return CONTINENT.GLOBAL
             mRadioEurope.id -> return CONTINENT.EUROPE
@@ -114,17 +115,18 @@ class MenuActivity : AppCompatActivity() {
         }
     }
 
+    override fun showFlagSeekbarLabel(amount: Int) {
+        mSeekBarText.text = getString(R.string.countries_amount, amount.toString())
+    }
+
+    override fun showFlagSeekbarLabelAll() {
+        mSeekBarText.text = getString(R.string.countries_amount, getString(R.string.countries_all))
+    }
 
     private fun setSeekBarListener() {
         mCountriesSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar, p1: Int, p2: Boolean) {
-                val amount = calculateAmountOfCountries(p1)
-
-                if (amount == -1) {
-                    mSeekBarText.text = getString(R.string.countries_amount, getString(R.string.countries_all))
-                } else {
-                    mSeekBarText.text = getString(R.string.countries_amount, amount.toString())
-                }
+                presenter.flagSeekbarProgressChanged(p1)
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}

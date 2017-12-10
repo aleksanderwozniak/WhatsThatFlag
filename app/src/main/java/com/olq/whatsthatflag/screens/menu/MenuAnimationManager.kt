@@ -10,12 +10,13 @@ import kotlinx.android.synthetic.main.activity_menu.*
 /**
  * Created by olq on 28.11.17.
  */
-class AnimationManager(private val menuActivity: MenuActivity) {
+class MenuAnimationManager(private val menuActivity: MenuActivity) {
 
 
     fun animateViewsAlpha(alphaValue: Float, duration: Long) {
         val views = listOf(menuActivity.mWtfLogo, menuActivity.mWtfLogoText,
-                menuActivity.mSeekBarText, menuActivity.mCountriesSeekBar, menuActivity.mStartBtn)
+                menuActivity.mSeekBarText, menuActivity.mCountriesSeekBar,
+                menuActivity.mStartBtn, menuActivity.mInfoBtn)
 
         val enabled = (alphaValue == 1f)
 
@@ -58,6 +59,8 @@ class AnimationManager(private val menuActivity: MenuActivity) {
     }
 
     fun compoundGlobeAnimation() {
+        menuActivity.mGlobeGif.isClickable = false
+
         menuActivity.mGlobeGif.animate()
                 .alpha(0f)
                 .scaleX(0.01f)

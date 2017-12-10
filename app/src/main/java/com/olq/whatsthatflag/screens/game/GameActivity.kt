@@ -9,14 +9,15 @@ import android.view.View
 import android.widget.Button
 import com.olq.whatsthatflag.R
 import com.olq.whatsthatflag.injector.Injector
-import com.olq.whatsthatflag.screens.menu.MenuActivity
+import com.olq.whatsthatflag.screens.menu.CONTINENT
 import com.olq.whatsthatflag.utils.checkInternetConnection
 import com.olq.whatsthatflag.utils.loadUrl
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_game.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.browse
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 
@@ -47,7 +48,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         setContentView(R.layout.activity_game)
 
         val amountOfCountries = intent.getIntExtra("AMOUNT_OF_COUNTRIES", 20)
-        val selectedContinent = intent.getSerializableExtra("SELECTED_CONTINENT") as MenuActivity.CONTINENT
+        val selectedContinent = intent.getSerializableExtra("SELECTED_CONTINENT") as CONTINENT
 
         val categoryText = selectedContinent.toString().toLowerCase().capitalize()
 
@@ -67,12 +68,14 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
         if (answerTimer != null && isAnswerTimerInitialized) {
             presenter.redownloadImg(true) // prevents cheating
+            resetAnswerButtonsColor()
         } else {
             isAnswerTimerInitialized = true
         }
     }
 
     override fun onStop() {
+        Picasso.with(this).cancelRequest(mFlagImg)
         super.onStop()
         answerTimer?.cancel()
         animationTimer?.cancel()
@@ -97,8 +100,8 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     }
 
 
-    override fun loadImg(currentUrl: String){
-        mImgView.loadUrl(currentUrl)
+    override fun loadImg(currentUrl: String, callback: Callback) {
+        mFlagImg.loadUrl(currentUrl, callback)
     }
 
     override fun renameButtons(btnNames: List<String>) {
@@ -118,12 +121,12 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
     override fun showProgressBar() {
         mProgressBar.visibility = View.VISIBLE
-        mImgView.visibility = View.INVISIBLE
+        mFlagImg.visibility = View.INVISIBLE
     }
 
     override fun hideProgressBar() {
         mProgressBar.visibility = View.INVISIBLE
-        mImgView.visibility = View.VISIBLE
+        mFlagImg.visibility = View.VISIBLE
     }
 
     override fun displayFlagInfoInBrowser(url: String) {
@@ -220,6 +223,14 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         }
 
         return !isTinted
+    }
+
+    private fun resetAnswerButtonsColor() {
+        val colorGray = ContextCompat.getColor(this, R.color.bluishGray)
+        mBtnA.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
+        mBtnB.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
+        mBtnC.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
+        mBtnD.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
     }
 
     override fun setButtonsClickability(enabled: Boolean) {

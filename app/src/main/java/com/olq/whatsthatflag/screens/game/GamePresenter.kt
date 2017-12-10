@@ -1,9 +1,13 @@
 package com.olq.whatsthatflag.screens.game
 
 import com.olq.whatsthatflag.data.Model
-import com.olq.whatsthatflag.screens.menu.MenuActivity
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import com.olq.whatsthatflag.screens.menu.CONTINENT
+import com.squareup.picasso.Callback
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.Ref
+import org.jetbrains.anko.coroutines.experimental.asReference
+import org.jetbrains.anko.coroutines.experimental.bg
 
 /**
  * Created by olq on 20.11.17.
@@ -18,7 +22,7 @@ class GamePresenter(private val view: GameScreenContract.View,
     var amountOfLoadedCountries = 0
 
 
-    override fun start(gameData: Pair<MenuActivity.CONTINENT, Int>) {
+    override fun start(gameData: Pair<CONTINENT, Int>) {
         score = 0
         currentFlagId = 0
 
@@ -28,7 +32,7 @@ class GamePresenter(private val view: GameScreenContract.View,
         amountOfLoadedCountries = model.flagList.size
 
 
-        if (gameData.first == MenuActivity.CONTINENT.OCEANIA && gameData.second == 40) {
+        if (gameData.first == CONTINENT.OCEANIA && gameData.second == 40) {
             view.displayMessage("There are only $amountOfLoadedCountries countries in Oceania")
         }
 
@@ -40,29 +44,39 @@ class GamePresenter(private val view: GameScreenContract.View,
     private fun downloadImg(id: Int) {
         view.showProgressBar()
 
-        doAsync {
-            val country = model.flagList[id]
-            val imgUrl = model.getImgUrl(getURLFromName(country))
+        val viewRef: Ref<GameScreenContract.View> = view.asReference()
 
-            uiThread {
-                when (imgUrl) {
-                    null -> {
-                        if (view.isConnectedToInternet()) {
-                            downloadImg(id)
-                            view.displayMessage("Reattempting download")
-                        } else {
-                            view.showNoConnectionAlert()
+
+        async(UI) {
+            val country = bg { model.flagList[id] }
+            val imgUrl = bg { model.getImgUrl(getURLFromName(country.getCompleted())) }
+
+            when (imgUrl.await()) {
+                null -> {
+                    if (viewRef.invoke().isConnectedToInternet()) {
+                        downloadImg(id)
+                        viewRef.invoke().displayMessage("Reattempting download")
+                    } else {
+                        viewRef.invoke().showNoConnectionAlert()
+                    }
+                }
+
+                else -> {
+                    viewRef.invoke().loadImg(imgUrl.getCompleted() as String, object : Callback {
+                        override fun onSuccess() {
+                            view.startAnswerTimer()
                         }
-                    }
 
-                    else -> {
-                        view.loadImg(imgUrl)
+                        override fun onError() {
+                            view.displayMessage("Reattempting loading img")
+                            downloadImg(id)
+                        }
+                    })
 
-                        view.hideProgressBar()
-                        view.setButtonsClickability(true)
+                    viewRef.invoke().hideProgressBar()
+                    viewRef.invoke().setButtonsClickability(true)
 
-                        view.startAnswerTimer()
-                    }
+
                 }
             }
         }
@@ -74,7 +88,8 @@ class GamePresenter(private val view: GameScreenContract.View,
             renameBtns(currentFlagId)
 
         } else {
-            manageFlagId()
+            view.displayMessage("Skipped a flag - ${model.flagList[currentFlagId]}")
+            goToNextFlag()
         }
     }
 
@@ -113,10 +128,10 @@ class GamePresenter(private val view: GameScreenContract.View,
     }
 
     override fun animationTimerFinished() {
-        manageFlagId()
+        goToNextFlag()
     }
 
-    private fun manageFlagId() {
+    private fun goToNextFlag() {
         if (currentFlagId < amountOfLoadedCountries - 1) {
             currentFlagId++
             downloadImg(currentFlagId)
