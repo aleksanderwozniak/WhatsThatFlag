@@ -74,7 +74,8 @@ class GamePresenter(private val view: GameScreenContract.View,
             renameBtns(currentFlagId)
 
         } else {
-            manageFlagId()
+            view.displayMessage("Skipped a flag")
+            goToNextFlag()
         }
     }
 
@@ -113,10 +114,10 @@ class GamePresenter(private val view: GameScreenContract.View,
     }
 
     override fun animationTimerFinished() {
-        manageFlagId()
+        goToNextFlag()
     }
 
-    private fun manageFlagId() {
+    private fun goToNextFlag() {
         if (currentFlagId < amountOfLoadedCountries - 1) {
             currentFlagId++
             downloadImg(currentFlagId)
