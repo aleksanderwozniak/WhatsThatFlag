@@ -2,8 +2,11 @@ package com.olq.whatsthatflag.screens.game
 
 import com.olq.whatsthatflag.data.Model
 import com.olq.whatsthatflag.screens.menu.MenuActivity
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.Ref
+import org.jetbrains.anko.coroutines.experimental.asReference
+import org.jetbrains.anko.coroutines.experimental.bg
 
 /**
  * Created by olq on 20.11.17.
@@ -40,29 +43,30 @@ class GamePresenter(private val view: GameScreenContract.View,
     private fun downloadImg(id: Int) {
         view.showProgressBar()
 
-        doAsync {
-            val country = model.flagList[id]
-            val imgUrl = model.getImgUrl(getURLFromName(country))
+        val viewRef: Ref<GameScreenContract.View> = view.asReference()
 
-            uiThread {
-                when (imgUrl) {
-                    null -> {
-                        if (view.isConnectedToInternet()) {
-                            downloadImg(id)
-                            view.displayMessage("Reattempting download")
-                        } else {
-                            view.showNoConnectionAlert()
-                        }
+
+        async(UI) {
+            val country = bg { model.flagList[id] }
+            val imgUrl = bg { model.getImgUrl(getURLFromName(country.getCompleted())) }
+
+            when (imgUrl.await()) {
+                null -> {
+                    if (viewRef.invoke().isConnectedToInternet()) {
+                        downloadImg(id)
+                        viewRef.invoke().displayMessage("Reattempting download")
+                    } else {
+                        viewRef.invoke().showNoConnectionAlert()
                     }
+                }
 
-                    else -> {
-                        view.loadImg(imgUrl)
+                else -> {
+                    viewRef.invoke().loadImg(imgUrl.getCompleted() as String)
 
-                        view.hideProgressBar()
-                        view.setButtonsClickability(true)
+                    viewRef.invoke().hideProgressBar()
+                    viewRef.invoke().setButtonsClickability(true)
 
-                        view.startAnswerTimer()
-                    }
+                    viewRef.invoke().startAnswerTimer()
                 }
             }
         }
