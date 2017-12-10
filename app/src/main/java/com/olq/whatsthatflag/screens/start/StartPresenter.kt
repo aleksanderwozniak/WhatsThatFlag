@@ -1,8 +1,11 @@
 package com.olq.whatsthatflag.screens.start
 
 import com.olq.whatsthatflag.data.Model
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.onComplete
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.Ref
+import org.jetbrains.anko.coroutines.experimental.asReference
+import org.jetbrains.anko.coroutines.experimental.bg
 
 /**
  * Created by olq on 20.11.17.
@@ -14,12 +17,15 @@ class StartPresenter(private val view: StartScreenContract.View,
 
     override fun start() {
         if (view.isConnectedToInternet()) {
-            doAsync {
-                model.downloadAllFlags()
 
-                onComplete {
-                    view.startMenuActivity()
-                }
+            val viewRef: Ref<StartScreenContract.View> = view.asReference()
+
+            async(UI) {
+                bg {
+                    model.downloadAllFlags()
+                }.await()
+
+                viewRef.invoke().startMenuActivity()
             }
 
         } else {

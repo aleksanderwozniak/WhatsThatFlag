@@ -17,9 +17,9 @@ class GamePresenter(private val view: GameScreenContract.View,
     : GameScreenContract.Presenter {
 
 
-    var score = 0
-    var currentFlagId = 0
-    var amountOfLoadedCountries = 0
+    private var score = 0
+    private var currentFlagId = 0
+    private var amountOfLoadedCountries = 0
 
 
     override fun start(gameData: Pair<CONTINENT, Int>) {
