@@ -3,12 +3,16 @@ package com.olq.whatsthatflag.screens.start
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.res.ResourcesCompat
+import android.support.v7.app.AlertDialog
+import android.widget.TextView
 import com.olq.whatsthatflag.R
 import com.olq.whatsthatflag.injector.Injector
 import com.olq.whatsthatflag.screens.menu.MenuActivity
 import com.olq.whatsthatflag.utils.checkInternetConnection
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
+import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
 
 class StartActivity : AppCompatActivity(), StartScreenContract.View {
@@ -45,5 +49,16 @@ class StartActivity : AppCompatActivity(), StartScreenContract.View {
         internetErrorAlert.setCancelable(false)
         internetErrorAlert.setCanceledOnTouchOutside(false)
         internetErrorAlert.show()
+
+        val typeface = ResourcesCompat.getFont(this, R.font.lato)
+
+        val netErrorTitle = internetErrorAlert.find<TextView>(android.support.v7.appcompat.R.id.alertTitle)
+        netErrorTitle.typeface = typeface
+
+        val netErrorMessage = internetErrorAlert.find<TextView>(android.R.id.message)
+        netErrorMessage.typeface = typeface
+
+        val netErrorExitBtn = internetErrorAlert.getButton(AlertDialog.BUTTON_NEGATIVE)
+        netErrorExitBtn.typeface = typeface
     }
 }

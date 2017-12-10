@@ -4,9 +4,12 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.res.ResourcesCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import com.olq.whatsthatflag.R
 import com.olq.whatsthatflag.injector.Injector
 import com.olq.whatsthatflag.screens.menu.CONTINENT
@@ -18,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_game.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.browse
+import org.jetbrains.anko.find
 import org.jetbrains.anko.toast
 
 
@@ -153,6 +157,17 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         summaryDialog.setCancelable(false)
         summaryDialog.setCanceledOnTouchOutside(false)
         summaryDialog.show()
+
+        val typeface = ResourcesCompat.getFont(this, R.font.lato)
+
+        val summaryTitle = summaryDialog.find<TextView>(android.support.v7.appcompat.R.id.alertTitle)
+        summaryTitle.typeface = typeface
+
+        val summaryMessage = summaryDialog.find<TextView>(android.R.id.message)
+        summaryMessage.typeface = typeface
+
+        val summaryContinueBtn = summaryDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        summaryContinueBtn.typeface = typeface
     }
 
     override fun animateCorrectAnswer(btnName: String, staticAnimation: Boolean) {
@@ -256,6 +271,20 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         internetErrorAlert.setCancelable(false)
         internetErrorAlert.setCanceledOnTouchOutside(false)
         internetErrorAlert.show()
+
+        val typeface = ResourcesCompat.getFont(this, R.font.lato)
+
+        val netErrorTitle = internetErrorAlert.find<TextView>(android.support.v7.appcompat.R.id.alertTitle)
+        netErrorTitle.typeface = typeface
+
+        val netErrorMessage = internetErrorAlert.find<TextView>(android.R.id.message)
+        netErrorMessage.typeface = typeface
+
+        val netErrorPosBtn = internetErrorAlert.getButton(AlertDialog.BUTTON_POSITIVE)
+        netErrorPosBtn.typeface = typeface
+
+        val netErrorNegBtn = internetErrorAlert.getButton(AlertDialog.BUTTON_NEGATIVE)
+        netErrorNegBtn.typeface = typeface
     }
 
 

@@ -10,13 +10,10 @@ import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.radio_group_table_layout.*
 import org.jetbrains.anko.startActivity
 import android.graphics.Color
-import android.graphics.Typeface
-import android.graphics.Typeface.BOLD
 import android.os.Handler
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.AppCompatButton
-import android.widget.Button
 import android.widget.TextView
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
@@ -105,13 +102,14 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
             positiveButton("Back") {  }
         }.show()
 
-        val infoTitle = infoDialog.find<TextView>(android.support.v7.appcompat.R.id.alertTitle)
-        val typeface = ResourcesCompat.getFont(this, R.font.antic)
-        infoTitle.setTypeface(typeface, BOLD)
 
-        // MARK: uncomment these, if you want to change `positiveButton's` font
-//        val infoBackBtn = infoDialog.getButton(AlertDialog.BUTTON_POSITIVE)
-//        infoBackBtn.setTypeface(typeface, BOLD)
+        val typeface = ResourcesCompat.getFont(this, R.font.lato)
+
+        val infoTitle = infoDialog.find<TextView>(android.support.v7.appcompat.R.id.alertTitle)
+        infoTitle.typeface = typeface
+
+        val infoBackBtn = infoDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        infoBackBtn.typeface = typeface
 
 
         mSourceBtn.setOnClickListener { presenter.btnSourceClicked() }
