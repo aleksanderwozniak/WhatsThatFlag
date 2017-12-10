@@ -99,7 +99,7 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
             title = "What's that Flag?"
             customView = alertLayout
 
-            positiveButton("Back") {  }
+            positiveButton(getString(R.string.alert_menu_info_btn_pos)) {  }
         }.show()
 
 

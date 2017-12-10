@@ -33,7 +33,7 @@ class GamePresenter(private val view: GameScreenContract.View,
 
 
         if (gameData.first == CONTINENT.OCEANIA && gameData.second == 40) {
-            view.displayMessage("There are only $amountOfLoadedCountries countries in Oceania")
+            view.displayMessageOceaniaMaxFlags(amountOfLoadedCountries)
         }
 
         view.setButtonsClickability(false)
@@ -55,7 +55,7 @@ class GamePresenter(private val view: GameScreenContract.View,
                 null -> {
                     if (viewRef.invoke().isConnectedToInternet()) {
                         downloadImg(id)
-                        viewRef.invoke().displayMessage("Reattempting download")
+                        viewRef.invoke().displayMessageRedownload()
                     } else {
                         viewRef.invoke().showNoConnectionAlert()
                     }
@@ -70,7 +70,7 @@ class GamePresenter(private val view: GameScreenContract.View,
                         }
 
                         override fun onError() {
-                            view.displayMessage("Reattempting loading img")
+                            view.displayMessageReloadImg()
                             downloadImg(id)
                         }
                     })
@@ -85,7 +85,7 @@ class GamePresenter(private val view: GameScreenContract.View,
             renameBtns(currentFlagId)
 
         } else {
-            view.displayMessage("Skipped a flag - ${model.flagList[currentFlagId]}")
+            view.displayMessageFlagSkipped(model.flagList[currentFlagId])
             goToNextFlag()
         }
     }

@@ -40,10 +40,10 @@ class StartActivity : AppCompatActivity(), StartScreenContract.View {
 
     override fun showNoConnectionAlert() {
         val internetErrorAlert = alert (Appcompat) {
-            title = "Connection error!"
-            message = "Make sure you are connected to Internet, then restart the App"
+            title = getString(R.string.alert_start_internet_error_title)
+            message = getString(R.string.alert_start_internet_error_msg)
 
-            negativeButton("Exit", { finishAffinity() })
+            negativeButton(getString(R.string.alert_start_internet_error_btn_neg), { finishAffinity() })
         }.build()
 
         internetErrorAlert.setCancelable(false)

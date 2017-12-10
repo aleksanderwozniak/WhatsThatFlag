@@ -1,14 +1,37 @@
 <resources>
-    <string name="app_name">What\'s that Flag?</string>
+    <string name="app_name" translatable="false">What\'s that Flag?</string>
     <string name="loading_text">Loading</string>
     <string name="category_text">Category: %1$s \</string>
-    <string name="score_text">%1$d</string>
-    <string name="questions_text">%1$d</string>
-    <string name="button_text">%1$s</string>
+    <string name="score_text" translatable="false">%1$d</string>
+    <string name="questions_text" translatable="false">%1$d</string>
+    <string name="button_text" translatable="false">%1$s</string>
     <string name="countries_amount">Countries: %1$s \</string>
-    <string name="countries_all">All</string>
-    <string name="start_btn_text">Start</string>
-    <string name="title_text">What\'s that Flag?</string>
-    <string name="logo_text">W T F</string>
+    <string name="countries_all">all</string>
+    <string name="start_btn_text" translatable="false">Start</string>
+    <string name="title_text" translatable="false">What\'s that Flag?</string>
+    <string name="logo_text" translatable="false">W T F</string>
     <string name="select_continent_text">Select a continent \</string>
+    <string name="radio_text_global">Global</string>
+    <string name="radio_text_asia">Asia</string>
+    <string name="radio_text_europe">Europe</string>
+    <string name="radio_text_americas">Americas</string>
+    <string name="radio_text_africa">Africa</string>
+    <string name="radio_text_oceania">Oceania</string>
+    <string name="github_source_text">Source</string>
+    <string name="dialog_info_follow_text">Follow me on GitHub for more!</string>
+    <string name="dialog_info_author_text">Developed by Aleksander Wozniak</string>
+    <string name="alert_start_internet_error_title">Connection error!</string>
+    <string name="alert_start_internet_error_msg">Make sure you are connected to Internet, then restart the App</string>
+    <string name="alert_start_internet_error_btn_neg">Exit</string>
+    <string name="alert_menu_info_btn_pos">Back</string>
+    <string name="alert_game_summary_title">Summary</string>
+    <string name="alert_game_summary_message">You scored %1$d out of %2$d (%3$d%%)</string>
+    <string name="alert_game_summary_btn_pos">Continue</string>
+    <string name="alert_game_internet_error_msg">Make sure you are connected to Internet</string>
+    <string name="alert_game_internet_error_btn_pos">Refresh</string>
+    <string name="alert_game_internet_error_btn_neg">Exit App</string>
+    <string name="toast_game_oceania_max_flags">There are only %1$d countries in Oceania</string>
+    <string name="toast_game_redownload">Reattempting download</string>
+    <string name="toast_game_reload_img">Reattempting image loading</string>
+    <string name="toast_game_flag_skipped">Skipped a flag - %1$s</string>
 </resources>

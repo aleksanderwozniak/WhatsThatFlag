@@ -54,9 +54,12 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         val amountOfCountries = intent.getIntExtra("AMOUNT_OF_COUNTRIES", 20)
         val selectedContinent = intent.getSerializableExtra("SELECTED_CONTINENT") as CONTINENT
 
-        val categoryText = selectedContinent.toString().toLowerCase().capitalize()
+        val lowercaseContinent = selectedContinent.toString().toLowerCase()
+        val continentStringId = convertToRes(lowercaseContinent)
+        val continentResId = resources.getIdentifier(continentStringId, "string", packageName)
 
-        mCategoryTextView.text = getString(R.string.category_text, categoryText)
+        val continentText = getString(continentResId)
+        mCategoryTextView.text = getString(R.string.category_text, continentText)
 
         presenter = GamePresenter(this, Injector.provideModel())
         presenter.start(Pair(selectedContinent, amountOfCountries))
@@ -65,6 +68,10 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
         val timeForAnswer = resources.getInteger(R.integer.answer_time)
         answerTimer = createAnswerTimer(timeForAnswer)
+    }
+
+    private fun convertToRes(continentName: String): String {
+        return "radio_text_$continentName"
     }
 
     override fun onResume() {
@@ -137,18 +144,30 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         browse(url)
     }
 
-    override fun displayMessage(msg: String) {
-        toast(msg)
+    override fun displayMessageOceaniaMaxFlags(amount: Int) {
+        toast(getString(R.string.toast_game_oceania_max_flags, amount))
+    }
+
+    override fun displayMessageRedownload() {
+        toast(getString(R.string.toast_game_redownload))
+    }
+
+    override fun displayMessageReloadImg() {
+        toast(getString(R.string.toast_game_reload_img))
+    }
+
+    override fun displayMessageFlagSkipped(flagName: String) {
+        toast(getString(R.string.toast_game_flag_skipped, flagName))
     }
 
     override fun showSummaryDialog(score: Int, totalFlagAmount: Int) {
         val percent: Int = (score * 100) / totalFlagAmount
 
         val summaryDialog = alert (Appcompat) {
-            title = "Summary"
-            message = "You scored $score out of $totalFlagAmount ($percent%)"
+            title = getString(R.string.alert_game_summary_title)
+            message = getString(R.string.alert_game_summary_message, score, totalFlagAmount, percent)
 
-            positiveButton("Continue", {
+            positiveButton(getString(R.string.alert_game_summary_btn_pos), {
                 finish()
                 overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
             })
@@ -261,11 +280,11 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
     override fun showNoConnectionAlert() {
         val internetErrorAlert = alert (Appcompat) {
-            title = "Connection error!"
-            message = "Make sure you are connected to Internet"
+            title = getString(R.string.alert_start_internet_error_title)
+            message = getString(R.string.alert_game_internet_error_msg)
 
-            positiveButton("Refresh", { presenter.redownloadImg() })
-            negativeButton("Exit App", { finishAffinity() })
+            positiveButton(getString(R.string.alert_game_internet_error_btn_pos), { presenter.redownloadImg() })
+            negativeButton(getString(R.string.alert_game_internet_error_btn_neg), { finishAffinity() })
         }.build()
 
         internetErrorAlert.setCancelable(false)

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_continent_text">Wybierz kontynent \</string>
+    <string name="countries_all">wszystkie</string>
+    <string name="loading_text">Wczytywanie danych</string>
+    <string name="category_text">Kategoria: %1$s \</string>
+    <string name="countries_amount">Państwa: %1$s \</string>
+    <string name="radio_text_global">Cały świat</string>
+    <string name="radio_text_asia">Azja</string>
+    <string name="radio_text_europe">Europa</string>
+    <string name="radio_text_americas">Ameryki</string>
+    <string name="radio_text_africa">Afryka</string>
+    <string name="radio_text_oceania">Oceania</string>
+    <string name="github_source_text">Kod</string>
+    <string name="dialog_info_follow_text">Przejrzyj mój GitHub po więcej!</string>
+    <string name="dialog_info_author_text">Stworzył: Aleksander Woźniak</string>
+    <string name="toast_game_flag_skipped">Pominięto flagę - %1$s</string>
+    <string name="alert_start_internet_error_title">Błąd połączenia!</string>
+    <string name="alert_start_internet_error_msg">Upewnij się że posiadasz połączenie z internetem, a następnie zrestartuj aplikację</string>
+    <string name="alert_start_internet_error_btn_neg">Wyjdź</string>
+    <string name="alert_menu_info_btn_pos">Wstecz</string>
+    <string name="alert_game_summary_title">Wyniki</string>
+    <string name="alert_game_summary_message">Zdobyłeś %1$d punktów na %2$d możliwych (%3$d%%)</string>
+    <string name="alert_game_summary_btn_pos">Kontynuuj</string>
+    <string name="alert_game_internet_error_msg">Upewnij się że posiadasz połączenie z internetem</string>
+    <string name="alert_game_internet_error_btn_pos">Odśwież</string>
+    <string name="alert_game_internet_error_btn_neg">Wyjdź</string>
+    <string name="toast_game_oceania_max_flags">Oceania posiada jedynie %1$d państw</string>
+    <string name="toast_game_redownload">Ponawiam pobieranie</string>
+    <string name="toast_game_reload_img">Ponawiam wczytywanie flagi</string>
+</resources>

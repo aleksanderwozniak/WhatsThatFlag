@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="Global"
+            android:text="@string/radio_text_global"
             android:textColor="@color/colorText"
             android:theme="@style/CustomRadioButtonTheme" />
 
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="Europe"
+            android:text="@string/radio_text_europe"
             android:textColor="@color/colorText"
             android:theme="@style/CustomRadioButtonTheme" />
 
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="Asia"
+            android:text="@string/radio_text_asia"
             android:textColor="@color/colorText"
             android:theme="@style/CustomRadioButtonTheme" />
     </TableRow>
@@ -46,7 +46,7 @@
             android:layout_column="0"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="Americas"
+            android:text="@string/radio_text_americas"
             android:textColor="@color/colorText"
             android:theme="@style/CustomRadioButtonTheme" />
 
@@ -57,7 +57,7 @@
             android:layout_column="1"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="Africa"
+            android:text="@string/radio_text_africa"
             android:textColor="@color/colorText"
             android:theme="@style/CustomRadioButtonTheme" />
 
@@ -68,7 +68,7 @@
             android:layout_column="2"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="Oceania"
+            android:text="@string/radio_text_oceania"
             android:textColor="@color/colorText"
             android:theme="@style/CustomRadioButtonTheme" />
     </TableRow>
