@@ -61,7 +61,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         val continentText = getString(continentResId)
         mCategoryTextView.text = getString(R.string.category_text, continentText)
 
-        presenter = GamePresenter(this, Injector.provideModel())
+        presenter = GamePresenter(this, Injector.provideModel(applicationContext))
         presenter.start(Pair(selectedContinent, amountOfCountries))
 
         setupListeners()

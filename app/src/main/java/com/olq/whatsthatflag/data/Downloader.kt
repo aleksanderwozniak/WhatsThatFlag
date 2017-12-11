@@ -8,17 +8,20 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.regex.Pattern
 
-class Downloader {
-
-    lateinit var continentIds: IntArray
+class Downloader (private val ctx: Context) {
 
 
-    fun loadAllFlagsFromRes(ctx: Context): List<String> {
-        val listOfFlags = ctx.resources.getStringArray(R.array.list_of_countries).toList()
+    fun loadAllFlagsFromRes(): List<String> {
+        return ctx.resources.getStringArray(R.array.list_of_countries).toList()
+    }
 
-        continentIds = ctx.resources.getIntArray(R.array.continent_spliterator)
+    fun loadContinentSpliteratorFromRes(): IntArray {
+        return ctx.resources.getIntArray(R.array.continent_spliterator)
+    }
 
-        return listOfFlags
+
+    fun getWikipediaLink(validCountryName: String): String {
+        return ctx.getString(R.string.link_wikipedia, validCountryName)
     }
 
 

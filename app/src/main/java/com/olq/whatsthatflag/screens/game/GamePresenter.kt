@@ -1,7 +1,5 @@
 package com.olq.whatsthatflag.screens.game
 
-import android.content.Context
-import com.olq.whatsthatflag.R
 import com.olq.whatsthatflag.data.Model
 import com.olq.whatsthatflag.screens.menu.CONTINENT
 import com.squareup.picasso.Callback
@@ -50,8 +48,11 @@ class GamePresenter(private val view: GameScreenContract.View,
 
 
         async(UI) {
-            val country = bg { model.flagList[id] }
-            val imgUrl = bg { model.getImgUrl(getURLFromName(country.getCompleted())) }
+            val country = model.flagList[id]
+            val imgUrl = bg {
+                val url = model.getURLFromName(country)
+                model.getImgUrl(url)
+            }
 
             when (imgUrl.await()) {
                 null -> {
@@ -88,7 +89,8 @@ class GamePresenter(private val view: GameScreenContract.View,
             renameBtns(currentFlagId)
 
         } else {
-            view.displayMessageFlagSkipped(model.flagList[currentFlagId])
+            val currentFlag = model.flagList[currentFlagId]
+            view.displayMessageFlagSkipped(currentFlag)
             goToNextFlag()
         }
     }
@@ -154,12 +156,8 @@ class GamePresenter(private val view: GameScreenContract.View,
     override fun btnWTFclicked() {
         view.stopAnswerTimer()
 
-        val url = getURLFromName(model.flagList[currentFlagId])
+        val currentFlag = model.flagList[currentFlagId]
+        val url = model.getURLFromName(currentFlag)
         view.displayFlagInfoInBrowser(url)
-    }
-
-    private fun getURLFromName(countryName: String): String {
-        val validCountryName: String = countryName.replace("[ ]".toRegex(), "_")
-        return (view as Context).getString(R.string.link_wikipedia, validCountryName)
     }
 }

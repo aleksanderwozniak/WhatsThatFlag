@@ -1,5 +1,6 @@
 package com.olq.whatsthatflag.injector
 
+import android.content.Context
 import com.olq.whatsthatflag.data.Downloader
 import com.olq.whatsthatflag.data.Model
 
@@ -9,7 +10,7 @@ import com.olq.whatsthatflag.data.Model
 
 object Injector {
 
-    fun provideModel(): Model {
-        return Model.getInstance(Downloader())
+    fun provideModel(ctx: Context): Model {
+        return Model.getInstance(Downloader(ctx))
     }
 }
