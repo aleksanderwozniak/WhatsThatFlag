@@ -1,5 +1,7 @@
 package com.olq.whatsthatflag.screens.game
 
+import android.content.Context
+import com.olq.whatsthatflag.R
 import com.olq.whatsthatflag.data.Model
 import com.olq.whatsthatflag.screens.menu.CONTINENT
 import com.squareup.picasso.Callback
@@ -54,8 +56,9 @@ class GamePresenter(private val view: GameScreenContract.View,
             when (imgUrl.await()) {
                 null -> {
                     if (viewRef.invoke().isConnectedToInternet()) {
-                        downloadImg(id)
-                        viewRef.invoke().displayMessageRedownload()
+                        viewRef.invoke().hideProgressBar()
+                        goToNextFlag()
+                        viewRef.invoke().displayMessageErrorLoadNextFlag()
                     } else {
                         viewRef.invoke().showNoConnectionAlert()
                     }
@@ -157,6 +160,6 @@ class GamePresenter(private val view: GameScreenContract.View,
 
     private fun getURLFromName(countryName: String): String {
         val validCountryName: String = countryName.replace("[ ]".toRegex(), "_")
-        return "https://en.wikipedia.org/wiki/$validCountryName"
+        return (view as Context).getString(R.string.link_wikipedia, validCountryName)
     }
 }

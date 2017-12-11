@@ -1,5 +1,6 @@
 package com.olq.whatsthatflag.data
 
+import android.content.Context
 import com.olq.whatsthatflag.screens.menu.CONTINENT
 import java.util.*
 
@@ -28,8 +29,8 @@ class Model (private val downloader: Downloader) {
 
 
 
-    fun downloadAllFlags() {
-        totalFlagList = downloader.downloadAllFlags()
+    fun loadAllFlagsFromRes(ctx: Context) {
+        totalFlagList = downloader.loadAllFlagsFromRes(ctx)
     }
 
 

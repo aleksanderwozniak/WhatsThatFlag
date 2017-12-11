@@ -1,5 +1,6 @@
 package com.olq.whatsthatflag.screens.start
 
+import android.content.Context
 import com.olq.whatsthatflag.data.Model
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -22,7 +23,7 @@ class StartPresenter(private val view: StartScreenContract.View,
 
             async(UI) {
                 bg {
-                    model.downloadAllFlags()
+                    model.loadAllFlagsFromRes(view as Context)
                 }.await()
 
                 viewRef.invoke().startMenuActivity()

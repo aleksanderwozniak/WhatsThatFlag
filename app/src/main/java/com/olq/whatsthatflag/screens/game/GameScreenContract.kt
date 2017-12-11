@@ -18,7 +18,7 @@ interface GameScreenContract {
         fun hideProgressBar()
         fun showSummaryDialog(score: Int, totalFlagAmount: Int)
         fun displayMessageOceaniaMaxFlags(amount: Int)
-        fun displayMessageRedownload()
+        fun displayMessageErrorLoadNextFlag()
         fun displayMessageReloadImg()
         fun displayMessageFlagSkipped(flagName: String)
         fun animateCorrectAnswer(btnName: String, staticAnimation: Boolean = true)
