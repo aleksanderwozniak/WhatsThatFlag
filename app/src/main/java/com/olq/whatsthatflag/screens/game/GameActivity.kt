@@ -61,7 +61,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         val continentText = getString(continentResId)
         mCategoryTextView.text = getString(R.string.category_text, continentText)
 
-        presenter = GamePresenter(this, Injector.provideModel())
+        presenter = GamePresenter(this, Injector.provideModel(applicationContext))
         presenter.start(Pair(selectedContinent, amountOfCountries))
 
         setupListeners()
@@ -148,8 +148,8 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         toast(getString(R.string.toast_game_oceania_max_flags, amount))
     }
 
-    override fun displayMessageRedownload() {
-        toast(getString(R.string.toast_game_redownload))
+    override fun displayMessageErrorLoadNextFlag() {
+        toast(getString(R.string.toast_game_error_load_next_flag))
     }
 
     override fun displayMessageReloadImg() {

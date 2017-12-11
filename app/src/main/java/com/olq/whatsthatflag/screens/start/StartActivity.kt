@@ -24,7 +24,7 @@ class StartActivity : AppCompatActivity(), StartScreenContract.View {
         setContentView(R.layout.activity_start)
         window.decorView.setBackgroundColor(Color.BLACK)
 
-        presenter = StartPresenter(this, Injector.provideModel())
+        presenter = StartPresenter(this, Injector.provideModel(applicationContext))
         presenter.start()
     }
 

@@ -22,7 +22,7 @@ class StartPresenter(private val view: StartScreenContract.View,
 
             async(UI) {
                 bg {
-                    model.downloadAllFlags()
+                    model.loadTotalFlagList()
                 }.await()
 
                 viewRef.invoke().startMenuActivity()
