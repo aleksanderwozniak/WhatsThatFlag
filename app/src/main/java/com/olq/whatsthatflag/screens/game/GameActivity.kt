@@ -268,10 +268,11 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     }
 
     override fun setButtonsClickability(enabled: Boolean) {
-        mBtnA.isClickable = enabled
-        mBtnB.isClickable = enabled
-        mBtnC.isClickable = enabled
-        mBtnD.isClickable = enabled
+        mBtnA.isEnabled = enabled
+        mBtnB.isEnabled = enabled
+        mBtnC.isEnabled = enabled
+        mBtnD.isEnabled = enabled
+        mWTFbtn.isEnabled = enabled
     }
 
     override fun isConnectedToInternet(): Boolean {

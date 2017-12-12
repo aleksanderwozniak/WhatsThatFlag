@@ -13,7 +13,7 @@
     <string name="radio_text_africa">Afryka</string>
     <string name="radio_text_oceania">Oceania</string>
     <string name="github_source_text">Kod</string>
-    <string name="dialog_info_follow_text">Przejrzyj mój GitHub po więcej!</string>
+    <string name="dialog_info_follow_text">Zobacz więcej na GitHub!</string>
     <string name="dialog_info_author_text">Stworzył: Aleksander Woźniak</string>
     <string name="toast_game_flag_skipped">Pominięto flagę - %1$s</string>
     <string name="alert_start_internet_error_title">Błąd połączenia!</string>
@@ -21,12 +21,12 @@
     <string name="alert_start_internet_error_btn_neg">Wyjdź</string>
     <string name="alert_menu_info_btn_pos">Wstecz</string>
     <string name="alert_game_summary_title">Wyniki</string>
-    <string name="alert_game_summary_message">Zdobyłeś %1$d punktów na %2$d możliwych (%3$d%%)</string>
+    <string name="alert_game_summary_message">Udało ci się zdobyć %1$d z %2$d możliwych punktów (%3$d%%)</string>
     <string name="alert_game_summary_btn_pos">Kontynuuj</string>
     <string name="alert_game_internet_error_msg">Upewnij się że posiadasz połączenie z internetem</string>
     <string name="alert_game_internet_error_btn_pos">Odśwież</string>
     <string name="alert_game_internet_error_btn_neg">Wyjdź</string>
-    <string name="toast_game_oceania_max_flags">Oceania posiada jedynie %1$d państw</string>
+    <string name="toast_game_oceania_max_flags">Oceania posiada jedynie %1$d państwa</string>
     <string name="toast_game_error_load_next_flag">Ładuję nastepną flagę z powodu błędu</string>
     <string name="toast_game_reload_img">Ponawiam wczytywanie flagi</string>
 
