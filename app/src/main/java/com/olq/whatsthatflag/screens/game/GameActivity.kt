@@ -1,8 +1,10 @@
 package com.olq.whatsthatflag.screens.game
 
 import android.graphics.PorterDuff
+import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.support.customtabs.CustomTabsIntent
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
@@ -20,7 +22,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_game.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
-import org.jetbrains.anko.browse
 import org.jetbrains.anko.find
 import org.jetbrains.anko.toast
 
@@ -141,7 +142,8 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     }
 
     override fun displayFlagInfoInBrowser(url: String) {
-        browse(url)
+        val customTabsIntent = CustomTabsIntent.Builder().build()
+        customTabsIntent.launchUrl(this, Uri.parse(url))
     }
 
     override fun displayMessageOceaniaMaxFlags(amount: Int) {

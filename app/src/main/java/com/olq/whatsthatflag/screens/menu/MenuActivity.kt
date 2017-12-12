@@ -10,14 +10,15 @@ import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.radio_group_table_layout.*
 import org.jetbrains.anko.startActivity
 import android.graphics.Color
+import android.net.Uri
 import android.os.Handler
+import android.support.customtabs.CustomTabsIntent
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.AppCompatButton
 import android.widget.TextView
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
-import org.jetbrains.anko.browse
 import org.jetbrains.anko.find
 
 class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
@@ -117,7 +118,8 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
     override fun showGitHubSourceInBrowser() {
         val url = "https://github.com/aleksanderwozniak/WhatsThatFlag"
-        browse(url)
+        val customTabsIntent = CustomTabsIntent.Builder().build()
+        customTabsIntent.launchUrl(this, Uri.parse(url))
     }
 
     override fun getSelectedContinent(): CONTINENT {
