@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="answer_time">8000</integer>
+
+    <!-- Used for splitting list_of_countries into continents -->
+    <integer-array name="continent_spliterator">
+        <item>56</item>
+        <item>112</item>
+        <item>164</item>
+        <item>213</item>
+        <item>236</item>
+    </integer-array>
 </resources>

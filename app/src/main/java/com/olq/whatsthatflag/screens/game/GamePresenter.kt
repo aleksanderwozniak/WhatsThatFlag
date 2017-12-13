@@ -17,9 +17,9 @@ class GamePresenter(private val view: GameScreenContract.View,
     : GameScreenContract.Presenter {
 
 
-    var score = 0
-    var currentFlagId = 0
-    var amountOfLoadedCountries = 0
+    private var score = 0
+    private var currentFlagId = 0
+    private var amountOfLoadedCountries = 0
 
 
     override fun start(gameData: Pair<CONTINENT, Int>) {
@@ -33,7 +33,7 @@ class GamePresenter(private val view: GameScreenContract.View,
 
 
         if (gameData.first == CONTINENT.OCEANIA && gameData.second == 40) {
-            view.displayMessage("There are only $amountOfLoadedCountries countries in Oceania")
+            view.displayMessageOceaniaMaxFlags(amountOfLoadedCountries)
         }
 
         view.setButtonsClickability(false)
@@ -48,14 +48,18 @@ class GamePresenter(private val view: GameScreenContract.View,
 
 
         async(UI) {
-            val country = bg { model.flagList[id] }
-            val imgUrl = bg { model.getImgUrl(getURLFromName(country.getCompleted())) }
+            val country = model.flagList[id]
+            val imgUrl = bg {
+                val url = model.getURLFromName(country)
+                model.getImgUrl(url)
+            }
 
             when (imgUrl.await()) {
                 null -> {
                     if (viewRef.invoke().isConnectedToInternet()) {
-                        downloadImg(id)
-                        viewRef.invoke().displayMessage("Reattempting download")
+                        viewRef.invoke().hideProgressBar()
+                        goToNextFlag()
+                        viewRef.invoke().displayMessageErrorLoadNextFlag()
                     } else {
                         viewRef.invoke().showNoConnectionAlert()
                     }
@@ -65,18 +69,15 @@ class GamePresenter(private val view: GameScreenContract.View,
                     viewRef.invoke().loadImg(imgUrl.getCompleted() as String, object : Callback {
                         override fun onSuccess() {
                             view.startAnswerTimer()
+                            view.hideProgressBar()
+                            view.setButtonsClickability(true)
                         }
 
                         override fun onError() {
-                            view.displayMessage("Reattempting loading img")
+                            view.displayMessageReloadImg()
                             downloadImg(id)
                         }
                     })
-
-                    viewRef.invoke().hideProgressBar()
-                    viewRef.invoke().setButtonsClickability(true)
-
-
                 }
             }
         }
@@ -88,7 +89,8 @@ class GamePresenter(private val view: GameScreenContract.View,
             renameBtns(currentFlagId)
 
         } else {
-            view.displayMessage("Skipped a flag - ${model.flagList[currentFlagId]}")
+            val currentFlag = model.flagList[currentFlagId]
+            view.displayMessageFlagSkipped(currentFlag)
             goToNextFlag()
         }
     }
@@ -154,12 +156,8 @@ class GamePresenter(private val view: GameScreenContract.View,
     override fun btnWTFclicked() {
         view.stopAnswerTimer()
 
-        val url = getURLFromName(model.flagList[currentFlagId])
+        val currentFlag = model.flagList[currentFlagId]
+        val url = model.getURLFromName(currentFlag)
         view.displayFlagInfoInBrowser(url)
-    }
-
-    private fun getURLFromName(countryName: String): String {
-        val validCountryName: String = countryName.replace("[ ]".toRegex(), "_")
-        return "https://en.wikipedia.org/wiki/$validCountryName"
     }
 }

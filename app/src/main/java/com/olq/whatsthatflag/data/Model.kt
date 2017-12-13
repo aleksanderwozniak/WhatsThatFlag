@@ -23,13 +23,19 @@ class Model (private val downloader: Downloader) {
     }
 
 
+    lateinit private var continentSpliterator: IntArray
     private var totalFlagList = listOf<String>()
     var flagList = mutableListOf<String>()
 
 
 
-    fun downloadAllFlags() {
-        totalFlagList = downloader.downloadAllFlags()
+    fun loadTotalFlagList() {
+        totalFlagList = downloader.loadAllFlagsFromRes()
+        loadContinentSpliterator()
+    }
+
+    private fun loadContinentSpliterator() {
+        continentSpliterator = downloader.loadContinentSpliteratorFromRes()
     }
 
 
@@ -59,8 +65,8 @@ class Model (private val downloader: Downloader) {
 
         if (gameData.first != CONTINENT.GLOBAL) {
             val id = calculateContinentId(gameData.first)
-            val from = if (id == 0) 0 else downloader.continentIds[id - 1]
-            val to = downloader.continentIds[id]
+            val from = if (id == 0) 0 else continentSpliterator[id - 1]
+            val to = continentSpliterator[id]
 
             dupFlagList = dupFlagList.subList(from, to) // select a particular continent
         }
@@ -82,5 +88,10 @@ class Model (private val downloader: Downloader) {
             CONTINENT.OCEANIA -> return 4
             else -> return 0 // can't happen
         }
+    }
+
+    fun getURLFromName(countryName: String): String {
+        val validCountryName: String = countryName.replace("[ ]".toRegex(), "_")
+        return downloader.getWikipediaLink(validCountryName)
     }
 }

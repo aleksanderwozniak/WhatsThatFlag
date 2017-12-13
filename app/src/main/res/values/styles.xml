@@ -10,6 +10,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="alertDialogTheme">@style/DarkAlertTheme</item>
         <item name="colorPrimary">@color/materialDark</item>
+        <item name="android:fontFamily">@font/lato</item>
+        <item name="fontFamily">@font/lato</item>
     </style>
 
 
@@ -19,11 +21,10 @@
 
     <style name="DarkAlertTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
         <item name="android:background">@color/materialDark</item>
-        <item name="android:textColor">@color/colorText</item>
         <item name="android:textColorPrimary">@color/colorText</item>
     </style>
 
-    <style name="CustomRadioButtonTheme" parent="Widget.AppCompat.CompoundButton.RadioButton" >
+    <style name="CustomRadioButtonTheme" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textSize">14sp</item>
     </style>

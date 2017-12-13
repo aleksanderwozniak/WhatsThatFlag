@@ -2,8 +2,9 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="360dp"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
     tools:context="com.olq.whatsthatflag.screens.game.GameActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="73dp">
@@ -12,23 +13,25 @@
         android:id="@+id/mCategoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/category_text"
         android:textColor="@color/colorTextDark"
         android:textSize="20sp"
         android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.04000002" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/mTimerProgressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,22 +59,19 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/mWTFbtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mTimerProgressBar"
-        app:layout_constraintVertical_bias="0.5">
+        app:layout_constraintStart_toStartOf="parent">
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/mBtnA"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="56dp"
             android:layout_weight="1"
             android:text="@string/button_text"
             android:textAllCaps="false"
@@ -80,7 +80,7 @@
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/mBtnB"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="56dp"
             android:layout_weight="1"
             android:text="@string/button_text"
             android:textAllCaps="false"
@@ -89,7 +89,7 @@
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/mBtnC"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="56dp"
             android:layout_weight="1"
             android:text="@string/button_text"
             android:textAllCaps="false"
@@ -98,7 +98,7 @@
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/mBtnD"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="56dp"
             android:layout_weight="1"
             android:text="@string/button_text"
             android:textAllCaps="false"
@@ -116,7 +116,8 @@
         android:textColor="@color/colorTextDark"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/mWTFbtn"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintHorizontal_bias="0.62"
         app:layout_constraintStart_toEndOf="@+id/mWTFbtn"
         app:layout_constraintTop_toTopOf="@+id/mWTFbtn" />
 
@@ -124,6 +125,8 @@
         android:id="@+id/mQuestionsTextView"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:background="@drawable/wtf_circle"
         android:gravity="center"
         android:text="@string/questions_text"
@@ -132,7 +135,8 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/mWTFbtn"
         app:layout_constraintEnd_toStartOf="@+id/mWTFbtn"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="@+id/mWTFbtn"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -142,29 +146,31 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:indeterminate="false"
         android:max="@integer/answer_time"
         android:progress="0"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48000002" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/mWTFbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/wtf_btn"
         android:onClick="onWTFclick"
         android:text="W T F"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.96" />
 
 </android.support.constraint.ConstraintLayout>

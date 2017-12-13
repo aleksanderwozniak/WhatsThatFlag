@@ -14,15 +14,16 @@ interface MenuScreenContract {
         fun showFlagSeekbarLabel(amount: Int)
         fun showFlagSeekbarLabelAll()
         fun showAppInfo()
+        fun showGitHubSourceInBrowser()
     }
 
     interface Presenter {
         fun start()
         fun restartWtfDividerAnimation()
         fun startGlobeAnimation()
-//        fun hideWtfDivider(duration: Long)
         fun btnStartClicked()
         fun flagSeekbarProgressChanged(progress: Int)
         fun btnInfoClicked()
+        fun btnSourceClicked()
     }
 }
