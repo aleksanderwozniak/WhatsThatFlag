@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
     tools:context="com.olq.whatsthatflag.screens.menu.MenuActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
@@ -14,15 +15,16 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:fontFamily="@font/advent_pro_thin"
         android:text="@string/logo_text"
         android:textAlignment="center"
         android:textColor="@color/colorText"
         android:textSize="120sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.06999999" />
 
     <TextView
         android:id="@+id/mWtfLogoText"
@@ -43,22 +45,22 @@
         android:id="@+id/mStartBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/start_btn_text"
         android:theme="@style/DarkButtonTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/mInfoBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/seekBarLinearLayout"
-        android:layout_width="0dp"
+        android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/mStartBtn"
@@ -106,11 +108,12 @@
         <include
             android:id="@+id/mRadioGroupContinents"
             layout="@layout/radio_group_table_layout"
-            android:layout_width="0dp"
+            android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -155,10 +158,8 @@
 
     <View
         android:id="@+id/mWtfDividerView"
-        android:layout_width="0dp"
+        android:layout_width="260dp"
         android:layout_height="1dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginStart="52dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -169,9 +170,6 @@
         android:id="@+id/mInfoBtn"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
         android:background="@drawable/wtf_btn"
         android:gravity="center"
         android:onClick="onInfoClicked"
@@ -181,7 +179,11 @@
         android:textColor="@color/colorText"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.96" />
 
 
 </android.support.constraint.ConstraintLayout>
