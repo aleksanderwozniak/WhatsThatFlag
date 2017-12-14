@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="select_continent_text">Wybierz kontynent \</string>
+    <string name="select_continent_text">Wybierz region \</string>
     <string name="countries_all">wszystkie</string>
     <string name="loading_text">Wczytywanie danych</string>
     <string name="category_text">Kategoria: %1$s \</string>

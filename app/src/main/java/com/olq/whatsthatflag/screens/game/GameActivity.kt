@@ -10,6 +10,7 @@ import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import com.olq.whatsthatflag.R
@@ -51,6 +52,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         val amountOfCountries = intent.getIntExtra("AMOUNT_OF_COUNTRIES", 20)
         val selectedContinent = intent.getSerializableExtra("SELECTED_CONTINENT") as CONTINENT
