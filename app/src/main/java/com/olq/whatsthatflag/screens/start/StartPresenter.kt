@@ -3,6 +3,7 @@ package com.olq.whatsthatflag.screens.start
 import com.olq.whatsthatflag.data.Model
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.delay
 import org.jetbrains.anko.coroutines.experimental.Ref
 import org.jetbrains.anko.coroutines.experimental.asReference
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -25,6 +26,7 @@ class StartPresenter(private val view: StartScreenContract.View,
                     model.loadTotalFlagList()
                 }.await()
 
+                delay(1250)
                 viewRef.invoke().startMenuActivity()
             }
 

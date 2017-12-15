@@ -1,6 +1,7 @@
 package com.olq.whatsthatflag.screens.start
 
 import android.graphics.Color
+import android.graphics.drawable.Animatable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.res.ResourcesCompat
@@ -10,6 +11,7 @@ import com.olq.whatsthatflag.R
 import com.olq.whatsthatflag.injector.Injector
 import com.olq.whatsthatflag.screens.menu.MenuActivity
 import com.olq.whatsthatflag.utils.checkInternetConnection
+import kotlinx.android.synthetic.main.activity_start.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.find
@@ -26,6 +28,8 @@ class StartActivity : AppCompatActivity(), StartScreenContract.View {
 
         presenter = StartPresenter(this, Injector.provideModel(applicationContext))
         presenter.start()
+
+        (mTrgAnim.drawable as Animatable).start()
     }
 
 
