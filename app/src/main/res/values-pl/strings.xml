@@ -270,5 +270,9 @@
         <item>Tuvalu</item>
         <item>Vanuatu</item>
     </string-array>
+    <string name="alert_game_back_btn_pos">Tak</string>
+    <string name="alert_game_back_btn_neg">Nie</string>
+    <string name="alert_game_back_title">Powrót</string>
+    <string name="alert_game_back_message">Czy chcesz wrócić do menu?</string>
 
 </resources>

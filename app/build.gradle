@@ -41,8 +41,6 @@ dependencies {
     implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
-    implementation 'com.github.tajchert:WaitingDots:0.4.0'
-
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
