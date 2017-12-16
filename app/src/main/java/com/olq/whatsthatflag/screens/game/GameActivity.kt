@@ -52,6 +52,10 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
         setupListeners()
 
+        ShowcaseManager(this).showTutorial()
+    }
+
+    fun setupAnswerTimer() {
         val timeForAnswer = resources.getInteger(R.integer.answer_time)
         animationManager.createAnswerTimer(timeForAnswer)
     }
