@@ -38,6 +38,8 @@ class MenuPresenter(private val view: MenuScreenContract.View)
         val amount = calculateAmountOfCountries(view.getFlagSeekbarProgress())
         val continent = view.getSelectedContinent()
 
+        view.setStartButtonClickability(false)
+
         // starting a new activity has some lag to it, thus durations below are not equal
         animManager.hideWtfDivider(600)
         view.startGameActivityWithDelay(amount, continent, 400)

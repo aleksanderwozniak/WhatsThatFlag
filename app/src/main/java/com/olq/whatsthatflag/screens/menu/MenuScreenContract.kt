@@ -15,6 +15,7 @@ interface MenuScreenContract {
         fun showFlagSeekbarLabelAll()
         fun showAppInfo()
         fun showGitHubSourceInBrowser()
+        fun setStartButtonClickability(isClickable: Boolean)
     }
 
     interface Presenter {
