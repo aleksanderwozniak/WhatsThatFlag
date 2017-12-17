@@ -21,7 +21,9 @@
             android:name=".screens.menu.MenuActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".screens.start.StartActivity">
+        <activity
+            android:name=".screens.start.StartActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

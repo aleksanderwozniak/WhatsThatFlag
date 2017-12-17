@@ -52,6 +52,10 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
         if (mGlobeGif.alpha != 1f) {
             presenter.restartWtfDividerAnimation()
         }
+
+        if (!mStartBtn.isClickable) {
+            setStartButtonClickability(true)
+        }
     }
 
     fun onGlobeClicked(view: View) {
@@ -66,6 +70,10 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
         mStartBtn.setOnClickListener {
             presenter.btnStartClicked()
         }
+    }
+
+    override fun setStartButtonClickability(isClickable: Boolean) {
+        mStartBtn.isClickable = isClickable
     }
 
     override fun startGameActivityWithDelay(amount: Int, selectedContinent: CONTINENT, duration: Long) {

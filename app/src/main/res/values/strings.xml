@@ -11,7 +11,7 @@
     <string name="start_btn_text" translatable="false">Start</string>
     <string name="title_text" translatable="false">What\'s that Flag?</string>
     <string name="logo_text" translatable="false">W T F</string>
-    <string name="select_continent_text">Select a continent \</string>
+    <string name="select_continent_text">Select a region \</string>
     <string name="radio_text_global">Global</string>
     <string name="radio_text_asia">Asia</string>
     <string name="radio_text_europe">Europe</string>
@@ -28,6 +28,10 @@
     <string name="alert_game_summary_title">Summary</string>
     <string name="alert_game_summary_message">You scored %1$d out of %2$d (%3$d%%)</string>
     <string name="alert_game_summary_btn_pos">Continue</string>
+    <string name="alert_game_back_title">Return</string>
+    <string name="alert_game_back_message">Do you want to return to menu?</string>
+    <string name="alert_game_back_btn_pos">Yes</string>
+    <string name="alert_game_back_btn_neg">No</string>
     <string name="alert_game_internet_error_msg">Make sure you are connected to Internet</string>
     <string name="alert_game_internet_error_btn_pos">Refresh</string>
     <string name="alert_game_internet_error_btn_neg">Exit App</string>
@@ -35,6 +39,9 @@
     <string name="toast_game_error_load_next_flag">Loading new flag due to an error</string>
     <string name="toast_game_reload_img">Reattempting image loading</string>
     <string name="toast_game_flag_skipped">Skipped a flag - %1$s</string>
+    <string name="showcase_wtfbtn_title">Click for some magic!</string>
+    <string name="showcase_questions_title">Remaining flags</string>
+    <string name="showcase_score_title">Your score</string>
 
     <!-- Change `en` to other language, but prepare the whole string-array beforehand! -->
     <!-- This is done here rather than in code just to prevent using unfinished locales -->

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dots="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,38 +8,17 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
-    <TextView
-        android:id="@+id/mLoadingTextView"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/mTrgAnim"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:fontFamily="@font/lato_light"
-        android:text="@string/loading_text"
-        android:textAlignment="center"
-        android:textColor="@color/colorText"
-        android:textSize="45sp"
-        dots:layout_constraintBottom_toBottomOf="parent"
-        dots:layout_constraintEnd_toEndOf="parent"
-        dots:layout_constraintStart_toStartOf="parent"
-        dots:layout_constraintTop_toTopOf="parent"
-        dots:layout_constraintVertical_bias="0.45" />
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/avd_trg_logo" />
 
-    <pl.tajchert.waitingdots.DotsTextView
-        android:id="@+id/mLoadingDots"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/lato_light"
-        android:textAlignment="center"
-        android:textColor="@color/colorText"
-        android:textSize="45sp"
-        dots:autoplay="true"
-        dots:layout_constraintBottom_toBottomOf="parent"
-        dots:layout_constraintEnd_toEndOf="parent"
-        dots:layout_constraintStart_toStartOf="parent"
-        dots:layout_constraintTop_toBottomOf="@+id/mLoadingTextView"
-        dots:layout_constraintVertical_bias="0.0"
-        dots:period="1000" />
 
 </android.support.constraint.ConstraintLayout>

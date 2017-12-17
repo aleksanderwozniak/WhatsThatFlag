@@ -14,6 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -40,9 +41,9 @@ dependencies {
     implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
-    implementation 'com.github.tajchert:WaitingDots:0.4.0'
-
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
+
+    implementation 'com.github.faruktoptas:FancyShowCaseView:1.0.0'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'

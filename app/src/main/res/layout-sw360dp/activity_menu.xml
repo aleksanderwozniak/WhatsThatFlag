@@ -87,15 +87,17 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:max="4"
             android:progress="2"
+            android:progressDrawable="@drawable/progressbar_layers"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/globeConstraintLayout"
-        android:layout_width="0dp"
+        android:layout_width="360dp"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="32dp"
@@ -108,12 +110,11 @@
         <include
             android:id="@+id/mRadioGroupContinents"
             layout="@layout/radio_group_table_layout"
-            android:layout_width="360dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"

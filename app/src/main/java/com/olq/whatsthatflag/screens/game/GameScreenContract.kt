@@ -29,6 +29,7 @@ interface GameScreenContract {
         fun startAnswerTimer()
         fun stopAnswerTimer()
         fun displayFlagInfoInBrowser(url: String)
+        fun showBackToMenuDialog()
     }
 
 
@@ -39,5 +40,6 @@ interface GameScreenContract {
         fun redownloadImg(goToNext: Boolean = false)
         fun answerTimerFinished()
         fun btnWTFclicked()
+        fun backButtonClicked()
     }
 }

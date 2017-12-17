@@ -160,4 +160,8 @@ class GamePresenter(private val view: GameScreenContract.View,
         val url = model.getURLFromName(currentFlag)
         view.displayFlagInfoInBrowser(url)
     }
+
+    override fun backButtonClicked() {
+        view.showBackToMenuDialog()
+    }
 }
