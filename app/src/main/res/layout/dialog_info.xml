@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
     <View
         android:id="@+id/mTopDividerView"
-        android:layout_width="256dp"
+        android:layout_width="0dp"
         android:layout_height="1dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +24,7 @@
         android:id="@+id/mDialogAuthor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:text="@string/dialog_info_author_text"
         android:textAlignment="center"
         android:textColor="@color/colorText"
@@ -63,9 +66,11 @@
 
     <View
         android:id="@+id/mBottomDividerView"
-        android:layout_width="256dp"
+        android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
         android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
