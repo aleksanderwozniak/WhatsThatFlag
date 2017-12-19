@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.olq.whatsthatflag.screens.menu.RadioGroupTableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TableRow android:paddingBottom="12dp">
+
+        <RadioButton
+            android:id="@+id/mRadioGlobal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:paddingBottom="3dp"
+            android:paddingStart="6dp"
+            android:text="@string/radio_text_global"
+            android:textColor="@color/colorText"
+            android:textSize="26sp"
+            android:theme="@style/CustomRadioButtonTheme" />
+
+        <RadioButton
+            android:id="@+id/mRadioEurope"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:paddingBottom="3dp"
+            android:paddingStart="6dp"
+            android:text="@string/radio_text_europe"
+            android:textColor="@color/colorText"
+            android:textSize="26sp"
+            android:theme="@style/CustomRadioButtonTheme" />
+
+        <RadioButton
+            android:id="@+id/mRadioAsia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:paddingBottom="3dp"
+            android:paddingStart="6dp"
+            android:text="@string/radio_text_asia"
+            android:textColor="@color/colorText"
+            android:textSize="26sp"
+            android:theme="@style/CustomRadioButtonTheme" />
+    </TableRow>
+
+    <TableRow>
+
+        <RadioButton
+            android:id="@+id/mRadioAmericas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:paddingBottom="3dp"
+            android:paddingStart="6dp"
+            android:text="@string/radio_text_americas"
+            android:textColor="@color/colorText"
+            android:textSize="26sp"
+            android:theme="@style/CustomRadioButtonTheme" />
+
+        <RadioButton
+            android:id="@+id/mRadioAfrica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:paddingBottom="3dp"
+            android:paddingStart="6dp"
+            android:text="@string/radio_text_africa"
+            android:textColor="@color/colorText"
+            android:textSize="26sp"
+            android:theme="@style/CustomRadioButtonTheme" />
+
+        <RadioButton
+            android:id="@+id/mRadioOceania"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:paddingBottom="3dp"
+            android:paddingStart="6dp"
+            android:text="@string/radio_text_oceania"
+            android:textColor="@color/colorText"
+            android:textSize="26sp"
+            android:theme="@style/CustomRadioButtonTheme" />
+    </TableRow>
+
+</com.olq.whatsthatflag.screens.menu.RadioGroupTableLayout>

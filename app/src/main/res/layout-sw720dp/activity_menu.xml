@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:maxHeight="1000dp"
+    android:maxWidth="800dp"
     tools:context="com.olq.whatsthatflag.screens.menu.MenuActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
@@ -15,15 +17,16 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:fontFamily="@font/advent_pro_thin"
         android:text="@string/logo_text"
         android:textAlignment="center"
         android:textColor="@color/colorText"
-        android:textSize="120sp"
+        android:textSize="200sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.029999971" />
 
     <TextView
         android:id="@+id/mWtfLogoText"
@@ -35,7 +38,7 @@
         android:text="@string/title_text"
         android:textAllCaps="false"
         android:textColor="@color/colorText"
-        android:textSize="28sp"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mWtfLogo" />
@@ -47,20 +50,22 @@
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:paddingBottom="24dp"
+        android:paddingEnd="60dp"
+        android:paddingStart="60dp"
+        android:paddingTop="24dp"
         android:text="@string/start_btn_text"
+        android:textSize="30sp"
         android:theme="@style/DarkButtonTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/mInfoBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/seekBarLinearLayout"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginBottom="48dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/mStartBtn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,18 +81,21 @@
             android:text="@string/countries_amount"
             android:textAlignment="center"
             android:textColor="@color/colorText"
-            android:textSize="18sp"
+            android:textSize="32sp"
             android:textStyle="italic" />
 
         <SeekBar
             android:id="@+id/mCountriesSeekBar"
             style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
+            android:layout_width="600dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
+            android:fitsSystemWindows="false"
             android:max="4"
+            android:padding="4dp"
             android:progress="2"
             android:progressDrawable="@drawable/progressbar_layers"
             app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +104,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/globeConstraintLayout"
-        android:layout_width="0dp"
+        android:layout_width="640dp"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="32dp"
@@ -112,8 +120,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -125,11 +132,9 @@
         <pl.droidsonroids.gif.GifImageButton
             android:id="@+id/mGlobeGif"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
+            android:layout_height="0dp"
             android:background="@color/blackSubtle"
             android:onClick="onGlobeClicked"
-            android:scaleType="centerInside"
             android:src="@drawable/earth_spin"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -147,7 +152,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/select_continent_text"
             android:textColor="@color/colorText"
-            android:textSize="18sp"
+            android:textSize="32sp"
             android:textStyle="italic"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -158,11 +163,9 @@
 
     <View
         android:id="@+id/mWtfDividerView"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="480dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="12dp"
         android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -170,11 +173,8 @@
 
     <TextView
         android:id="@+id/mInfoBtn"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="@drawable/wtf_btn"
         android:gravity="center"
         android:onClick="onInfoClicked"
@@ -182,9 +182,13 @@
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/colorText"
-        android:textSize="20sp"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.96" />
 
 
 </android.support.constraint.ConstraintLayout>

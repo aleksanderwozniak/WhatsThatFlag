@@ -39,7 +39,7 @@
     <string name="toast_game_error_load_next_flag">Loading new flag due to an error</string>
     <string name="toast_game_reload_img">Reattempting image loading</string>
     <string name="toast_game_flag_skipped">Skipped a flag - %1$s</string>
-    <string name="showcase_wtfbtn_title">Click for some magic!</string>
+    <string name="showcase_wtfbtn_title">Detailed info</string>
     <string name="showcase_questions_title">Remaining flags</string>
     <string name="showcase_score_title">Your score</string>
 
