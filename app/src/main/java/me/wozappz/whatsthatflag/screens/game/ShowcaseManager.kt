@@ -12,7 +12,7 @@ import me.wozappz.whatsthatflag.R
 /**
  * Created by olq on 16.12.17.
  */
-class ShowcaseManager (private val gameActivity: me.wozappz.whatsthatflag.screens.game.GameActivity) {
+class ShowcaseManager (private val gameActivity: GameActivity) {
 
     private val maskColor = ContextCompat.getColor(gameActivity, R.color.colorAccentTransparent)
 

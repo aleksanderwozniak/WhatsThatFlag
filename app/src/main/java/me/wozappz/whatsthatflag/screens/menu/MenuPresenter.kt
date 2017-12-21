@@ -4,10 +4,10 @@ package me.wozappz.whatsthatflag.screens.menu
 /**
  * Created by olq on 10.12.17.
  */
-class MenuPresenter(private val view: me.wozappz.whatsthatflag.screens.menu.MenuScreenContract.View)
-    : me.wozappz.whatsthatflag.screens.menu.MenuScreenContract.Presenter {
+class MenuPresenter(private val view: MenuScreenContract.View)
+    : MenuScreenContract.Presenter {
 
-    private val animManager = me.wozappz.whatsthatflag.screens.menu.MenuAnimationManager(view as me.wozappz.whatsthatflag.screens.menu.MenuActivity)
+    private val animManager = MenuAnimationManager(view as MenuActivity)
 
     override fun start() {
         animManager.setupGlobeAnimation()

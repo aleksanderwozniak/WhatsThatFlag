@@ -10,7 +10,7 @@ import me.wozappz.whatsthatflag.R
 /**
  * Created by olq on 28.11.17.
  */
-class MenuAnimationManager(private val menuActivity: me.wozappz.whatsthatflag.screens.menu.MenuActivity) {
+class MenuAnimationManager(private val menuActivity: MenuActivity) {
 
 
     fun animateViewsAlpha(alphaValue: Float, duration: Long) {

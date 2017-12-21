@@ -15,6 +15,8 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_game.*
 import me.wozappz.whatsthatflag.R
+import me.wozappz.whatsthatflag.injector.Injector
+import me.wozappz.whatsthatflag.screens.menu.CONTINENT
 import me.wozappz.whatsthatflag.utils.checkInternetConnection
 import me.wozappz.whatsthatflag.utils.loadUrl
 import org.jetbrains.anko.alert
@@ -22,12 +24,12 @@ import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.find
 import org.jetbrains.anko.toast
 
-class GameActivity : AppCompatActivity(), me.wozappz.whatsthatflag.screens.game.GameScreenContract.View {
+class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
-    override lateinit var presenter: me.wozappz.whatsthatflag.screens.game.GameScreenContract.Presenter
+    override lateinit var presenter: GameScreenContract.Presenter
     private var isAnswerTimerInitialized = false
 
-    private val animationManager by lazy { me.wozappz.whatsthatflag.screens.game.AnswerAnimationManager(this) }
+    private val animationManager by lazy { AnswerAnimationManager(this) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +38,7 @@ class GameActivity : AppCompatActivity(), me.wozappz.whatsthatflag.screens.game.
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         val amountOfCountries = intent.getIntExtra("AMOUNT_OF_COUNTRIES", 20)
-        val selectedContinent = intent.getSerializableExtra("SELECTED_CONTINENT") as me.wozappz.whatsthatflag.screens.menu.CONTINENT
+        val selectedContinent = intent.getSerializableExtra("SELECTED_CONTINENT") as CONTINENT
 
         val lowercaseContinent = selectedContinent.toString().toLowerCase()
         val continentStringId = convertToRes(lowercaseContinent)
@@ -45,12 +47,12 @@ class GameActivity : AppCompatActivity(), me.wozappz.whatsthatflag.screens.game.
         val continentText = getString(continentResId)
         mCategoryTextView.text = getString(R.string.category_text, continentText)
 
-        presenter = me.wozappz.whatsthatflag.screens.game.GamePresenter(this, me.wozappz.whatsthatflag.injector.Injector.provideModel(applicationContext))
+        presenter = GamePresenter(this, Injector.provideModel(applicationContext))
         presenter.start(Pair(selectedContinent, amountOfCountries))
 
         setupListeners()
 
-        me.wozappz.whatsthatflag.screens.game.ShowcaseManager(this).showTutorial()
+        ShowcaseManager(this).showTutorial()
     }
 
     fun setupAnswerTimer() {

@@ -20,9 +20,9 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.find
 
-class MenuActivity : AppCompatActivity(), me.wozappz.whatsthatflag.screens.menu.MenuScreenContract.View {
+class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
-    override lateinit var presenter: me.wozappz.whatsthatflag.screens.menu.MenuScreenContract.Presenter
+    override lateinit var presenter: MenuScreenContract.Presenter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +32,7 @@ class MenuActivity : AppCompatActivity(), me.wozappz.whatsthatflag.screens.menu.
 
         setupUiElements()
 
-        presenter = me.wozappz.whatsthatflag.screens.menu.MenuPresenter(this)
+        presenter = MenuPresenter(this)
         presenter.start()
     }
 
@@ -75,13 +75,13 @@ class MenuActivity : AppCompatActivity(), me.wozappz.whatsthatflag.screens.menu.
         mStartBtn.isClickable = isClickable
     }
 
-    override fun startGameActivityWithDelay(amount: Int, selectedContinent: me.wozappz.whatsthatflag.screens.menu.CONTINENT, duration: Long) {
+    override fun startGameActivityWithDelay(amount: Int, selectedContinent: CONTINENT, duration: Long) {
         Handler().postDelayed({
             startGameActivity(amount, selectedContinent)
         }, duration)
     }
 
-    private fun startGameActivity(amount: Int, selectedContinent: me.wozappz.whatsthatflag.screens.menu.CONTINENT) {
+    private fun startGameActivity(amount: Int, selectedContinent: CONTINENT) {
         startActivity<me.wozappz.whatsthatflag.screens.game.GameActivity>(
                 "AMOUNT_OF_COUNTRIES" to amount,
                 "SELECTED_CONTINENT" to selectedContinent)
@@ -129,22 +129,22 @@ class MenuActivity : AppCompatActivity(), me.wozappz.whatsthatflag.screens.menu.
         customTabsIntent.launchUrl(this, Uri.parse(url))
     }
 
-    override fun getSelectedContinent(): me.wozappz.whatsthatflag.screens.menu.CONTINENT {
-        val id = (mRadioGroupContinents as me.wozappz.whatsthatflag.screens.menu.RadioGroupTableLayout).getCheckedRadioButtonId()
+    override fun getSelectedContinent(): CONTINENT {
+        val id = (mRadioGroupContinents as RadioGroupTableLayout).getCheckedRadioButtonId()
         return getContinentFromId(id)
     }
 
-    private fun getContinentFromId(radioBtnId: Int): me.wozappz.whatsthatflag.screens.menu.CONTINENT {
+    private fun getContinentFromId(radioBtnId: Int): CONTINENT {
         when (radioBtnId) {
-            mRadioGlobal.id -> return me.wozappz.whatsthatflag.screens.menu.CONTINENT.GLOBAL
-            mRadioEurope.id -> return me.wozappz.whatsthatflag.screens.menu.CONTINENT.EUROPE
-            mRadioAsia.id -> return me.wozappz.whatsthatflag.screens.menu.CONTINENT.ASIA
-            mRadioAmericas.id -> return me.wozappz.whatsthatflag.screens.menu.CONTINENT.AMERICAS
-            mRadioAfrica.id -> return me.wozappz.whatsthatflag.screens.menu.CONTINENT.AFRICA
-            mRadioOceania.id -> return me.wozappz.whatsthatflag.screens.menu.CONTINENT.OCEANIA
+            mRadioGlobal.id -> return CONTINENT.GLOBAL
+            mRadioEurope.id -> return CONTINENT.EUROPE
+            mRadioAsia.id -> return CONTINENT.ASIA
+            mRadioAmericas.id -> return CONTINENT.AMERICAS
+            mRadioAfrica.id -> return CONTINENT.AFRICA
+            mRadioOceania.id -> return CONTINENT.OCEANIA
 
             else -> {
-                return me.wozappz.whatsthatflag.screens.menu.CONTINENT.GLOBAL
+                return CONTINENT.GLOBAL
             }
         }
     }

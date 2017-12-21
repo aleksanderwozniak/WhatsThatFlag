@@ -3,6 +3,8 @@ package me.wozappz.whatsthatflag.screens.game
 import com.squareup.picasso.Callback
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
+import me.wozappz.whatsthatflag.data.Model
+import me.wozappz.whatsthatflag.screens.menu.CONTINENT
 import org.jetbrains.anko.coroutines.experimental.Ref
 import org.jetbrains.anko.coroutines.experimental.asReference
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -10,9 +12,9 @@ import org.jetbrains.anko.coroutines.experimental.bg
 /**
  * Created by olq on 20.11.17.
  */
-class GamePresenter(private val view: me.wozappz.whatsthatflag.screens.game.GameScreenContract.View,
-                    private val model: me.wozappz.whatsthatflag.data.Model)
-    : me.wozappz.whatsthatflag.screens.game.GameScreenContract.Presenter {
+class GamePresenter(private val view: GameScreenContract.View,
+                    private val model: Model)
+    : GameScreenContract.Presenter {
 
 
     private var score = 0
@@ -20,7 +22,7 @@ class GamePresenter(private val view: me.wozappz.whatsthatflag.screens.game.Game
     private var amountOfLoadedCountries = 0
 
 
-    override fun start(gameData: Pair<me.wozappz.whatsthatflag.screens.menu.CONTINENT, Int>) {
+    override fun start(gameData: Pair<CONTINENT, Int>) {
         score = 0
         currentFlagId = 0
 
@@ -30,7 +32,7 @@ class GamePresenter(private val view: me.wozappz.whatsthatflag.screens.game.Game
         amountOfLoadedCountries = model.flagList.size
 
 
-        if (gameData.first == me.wozappz.whatsthatflag.screens.menu.CONTINENT.OCEANIA && gameData.second == 40) {
+        if (gameData.first == CONTINENT.OCEANIA && gameData.second == 40) {
             view.displayMessageOceaniaMaxFlags(amountOfLoadedCountries)
         }
 
@@ -42,7 +44,7 @@ class GamePresenter(private val view: me.wozappz.whatsthatflag.screens.game.Game
     private fun downloadImg(id: Int) {
         view.showProgressBar()
 
-        val viewRef: Ref<me.wozappz.whatsthatflag.screens.game.GameScreenContract.View> = view.asReference()
+        val viewRef: Ref<GameScreenContract.View> = view.asReference()
 
 
         async(UI) {
