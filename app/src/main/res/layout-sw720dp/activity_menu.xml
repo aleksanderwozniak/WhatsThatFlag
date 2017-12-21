@@ -132,7 +132,7 @@
         <pl.droidsonroids.gif.GifImageButton
             android:id="@+id/mGlobeGif"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:background="@color/blackSubtle"
             android:onClick="onGlobeClicked"
             android:src="@drawable/earth_spin"

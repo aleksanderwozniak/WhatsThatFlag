@@ -28,7 +28,7 @@ class AnswerAnimationManager (private val gameActivity: GameActivity) {
         if (staticAnimation) {
             correctBtn.background.setColorFilter(colorGreen, PorterDuff.Mode.SRC)
 
-            animationTimer = object : CountDownTimer(1000, 1000) {
+            animationTimer = object : CountDownTimer(1500, 1500) {
                 override fun onFinish() {
                     correctBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
                     gameActivity.presenter.animationTimerFinished()
@@ -38,7 +38,7 @@ class AnswerAnimationManager (private val gameActivity: GameActivity) {
             }.start()
 
         } else {
-            animationTimer = object : CountDownTimer(1200, 199) {
+            animationTimer = object : CountDownTimer(1500, 250) {
                 override fun onFinish() {
                     correctBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
                     gameActivity.presenter.animationTimerFinished()
@@ -64,7 +64,7 @@ class AnswerAnimationManager (private val gameActivity: GameActivity) {
 
         wrongBtn.background.setColorFilter(colorRed, PorterDuff.Mode.SRC)
 
-        animationTimer = object : CountDownTimer(1200, 199) {
+        animationTimer = object : CountDownTimer(1500, 250) {
             override fun onFinish() {
                 wrongBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
                 correctBtn.background.setColorFilter(colorGray, PorterDuff.Mode.SRC)
