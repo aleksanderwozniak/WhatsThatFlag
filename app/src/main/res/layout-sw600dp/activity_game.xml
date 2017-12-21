@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    tools:context="com.olq.whatsthatflag.screens.game.GameActivity"
+    tools:context="me.wozappz.whatsthatflag.screens.game.GameActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="73dp">
 

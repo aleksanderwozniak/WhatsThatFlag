@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     android:maxHeight="1000dp"
     android:maxWidth="800dp"
-    tools:context="com.olq.whatsthatflag.screens.menu.MenuActivity"
+    tools:context="me.wozappz.whatsthatflag.screens.menu.MenuActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
