@@ -2,15 +2,16 @@
 
 A quiz, in which the player has to choose the correct country based on it's flag.
 
-## Install
+## Installation
 
 <a href='https://play.google.com/store/apps/details?id=me.wozappz.whatsthatflag&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height="140"/></a>
 
 ## Trailer
 
+###### *Click on image below to watch the trailer*
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=JDHypI8OBec
-" target="_blank"><img src="https://img.youtube.com/vi/JDHypI8OBec/maxresdefault.jpg" 
-alt="Official Trailer" width="854" height="480" border="10" /></a>
+" target="_blank"><img src="https://media.giphy.com/media/l4EoTXFYNouf9w0Ew/giphy.gif" 
+alt="Official Trailer" /></a>
 
 ## How to play
 
