@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
 
-    <TableRow>
+    <TableRow android:paddingBottom="12dp">
 
         <RadioButton
             android:id="@+id/mRadioGlobal"
@@ -12,8 +12,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
+            android:paddingBottom="3dp"
+            android:paddingStart="6dp"
             android:text="@string/radio_text_global"
             android:textColor="@color/colorText"
+            android:textSize="26sp"
             android:theme="@style/CustomRadioButtonTheme" />
 
         <RadioButton
@@ -22,8 +25,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
+            android:paddingBottom="3dp"
+            android:paddingStart="6dp"
             android:text="@string/radio_text_europe"
             android:textColor="@color/colorText"
+            android:textSize="26sp"
             android:theme="@style/CustomRadioButtonTheme" />
 
         <RadioButton
@@ -32,8 +38,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
+            android:paddingBottom="3dp"
+            android:paddingStart="6dp"
             android:text="@string/radio_text_asia"
             android:textColor="@color/colorText"
+            android:textSize="26sp"
             android:theme="@style/CustomRadioButtonTheme" />
     </TableRow>
 
@@ -46,8 +55,11 @@
             android:layout_column="0"
             android:layout_margin="10dp"
             android:layout_weight="1"
+            android:paddingBottom="3dp"
+            android:paddingStart="6dp"
             android:text="@string/radio_text_americas"
             android:textColor="@color/colorText"
+            android:textSize="26sp"
             android:theme="@style/CustomRadioButtonTheme" />
 
         <RadioButton
@@ -57,8 +69,11 @@
             android:layout_column="1"
             android:layout_margin="10dp"
             android:layout_weight="1"
+            android:paddingBottom="3dp"
+            android:paddingStart="6dp"
             android:text="@string/radio_text_africa"
             android:textColor="@color/colorText"
+            android:textSize="26sp"
             android:theme="@style/CustomRadioButtonTheme" />
 
         <RadioButton
@@ -68,8 +83,11 @@
             android:layout_column="2"
             android:layout_margin="10dp"
             android:layout_weight="1"
+            android:paddingBottom="3dp"
+            android:paddingStart="6dp"
             android:text="@string/radio_text_oceania"
             android:textColor="@color/colorText"
+            android:textSize="26sp"
             android:theme="@style/CustomRadioButtonTheme" />
     </TableRow>
 
