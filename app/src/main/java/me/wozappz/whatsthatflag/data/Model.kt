@@ -7,15 +7,15 @@ import java.util.*
  * Created by olq on 20.11.17.
  */
 
-class Model (private val downloader: Downloader) {
+class Model (private val dataLoader: DataLoader) {
 
     companion object {
         private var instance: Model? = null
 
         @Synchronized
-        fun getInstance(downloader: Downloader): Model {
+        fun getInstance(dataLoader: DataLoader): Model {
             if (instance == null) {
-                instance = Model(downloader)
+                instance = Model(dataLoader)
             }
 
             return instance!!
@@ -24,28 +24,25 @@ class Model (private val downloader: Downloader) {
 
 
     lateinit private var continentSpliterator: IntArray
-    private var totalFlagList = listOf<String>()
-    var flagList = mutableListOf<String>()
-
+    lateinit var totalFlagList: List<Pair<String, String>>
+    lateinit var flagList: List<Pair<String, String>>
 
 
     fun loadTotalFlagList() {
-        totalFlagList = downloader.loadAllFlagsFromRes()
+        totalFlagList = dataLoader.getWtfFlagList()
         loadContinentSpliterator()
     }
 
     private fun loadContinentSpliterator() {
-        continentSpliterator = downloader.loadContinentSpliteratorFromRes()
-    }
-
-
-    fun getImgUrl(urlString: String): String? {
-        return downloader.getImgURL(urlString)
+        continentSpliterator = dataLoader.loadContinentSpliteratorFromRes()
     }
 
 
     fun getButtonNames(flagId: Int): List<String> {
-        val dupFlagList = flagList.toMutableList()
+        val dupFlagList = flagList
+                .map { it.first }
+                .toMutableList()
+
         val currentFlagCountry = dupFlagList[flagId]
 
         dupFlagList.remove(currentFlagCountry)
@@ -92,6 +89,6 @@ class Model (private val downloader: Downloader) {
 
     fun getURLFromName(countryName: String): String {
         val validCountryName: String = countryName.replace("[ ]".toRegex(), "_")
-        return downloader.getWikipediaLink(validCountryName)
+        return dataLoader.getWikipediaLink(validCountryName)
     }
 }

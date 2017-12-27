@@ -2,7 +2,6 @@ package me.wozappz.whatsthatflag.screens.game
 
 import com.squareup.picasso.Callback
 import me.wozappz.whatsthatflag.screens.BaseView
-import me.wozappz.whatsthatflag.screens.menu.CONTINENT
 
 /**
  * Created by olq on 20.11.17.

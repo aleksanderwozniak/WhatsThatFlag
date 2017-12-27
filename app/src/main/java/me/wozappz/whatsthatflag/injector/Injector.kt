@@ -1,7 +1,7 @@
 package me.wozappz.whatsthatflag.injector
 
 import android.content.Context
-import me.wozappz.whatsthatflag.data.Downloader
+import me.wozappz.whatsthatflag.data.DataLoader
 import me.wozappz.whatsthatflag.data.Model
 
 /**
@@ -11,6 +11,6 @@ import me.wozappz.whatsthatflag.data.Model
 object Injector {
 
     fun provideModel(ctx: Context): Model {
-        return Model.getInstance(Downloader(ctx))
+        return Model.getInstance(DataLoader(ctx))
     }
 }

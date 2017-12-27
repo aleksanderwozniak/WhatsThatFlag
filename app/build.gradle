@@ -33,10 +33,19 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+        }
+
+        beta {
+            initWith release
+            applicationIdSuffix ".beta"
         }
     }
 }
@@ -58,5 +67,6 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
     implementation 'com.github.faruktoptas:FancyShowCaseView:1.0.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    betaImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }

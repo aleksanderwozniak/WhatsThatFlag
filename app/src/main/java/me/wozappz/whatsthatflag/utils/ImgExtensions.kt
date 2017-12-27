@@ -2,6 +2,7 @@ package me.wozappz.whatsthatflag.utils
 
 import android.widget.ImageView
 import com.squareup.picasso.Callback
+import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 
 /**
@@ -9,5 +10,13 @@ import com.squareup.picasso.Picasso
  */
 
 fun ImageView.loadUrl(url: String, callback: Callback) {
-    Picasso.with(context).load(url).into(this, callback)
+    val picasso = Picasso.with(context)
+
+    // for debugging
+//    picasso.setIndicatorsEnabled(true)
+
+    picasso.load(url)
+            .memoryPolicy(MemoryPolicy.NO_CACHE)
+            .noPlaceholder()
+            .into(this, callback)
 }
