@@ -17,7 +17,6 @@ interface GameScreenContract {
         fun showProgressBar()
         fun hideProgressBar()
         fun showSummaryDialog(score: Int, totalFlagAmount: Int)
-        fun displayMessageOceaniaMaxFlags(amount: Int)
         fun displayMessageErrorLoadNextFlag()
         fun displayMessageReloadImg()
         fun displayMessageFlagSkipped(flagName: String)
@@ -34,7 +33,7 @@ interface GameScreenContract {
 
 
     interface Presenter {
-        fun start(gameData: Pair<CONTINENT, Int>)
+        fun start()
         fun answerBtnClicked(selectedCountry: String)
         fun animationTimerFinished()
         fun redownloadImg(goToNext: Boolean = false)

@@ -16,9 +16,12 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.AppCompatButton
 import android.widget.TextView
 import me.wozappz.whatsthatflag.R
+import me.wozappz.whatsthatflag.injector.Injector
+import me.wozappz.whatsthatflag.screens.game.GameActivity
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.find
+import org.jetbrains.anko.toast
 
 class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
@@ -32,7 +35,7 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
         setupUiElements()
 
-        presenter = MenuPresenter(this)
+        presenter = MenuPresenter(this, Injector.provideModel(applicationContext))
         presenter.start()
     }
 
@@ -75,15 +78,14 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
         mStartBtn.isClickable = isClickable
     }
 
-    override fun startGameActivityWithDelay(amount: Int, selectedContinent: CONTINENT, duration: Long) {
+    override fun startGameActivityWithDelay(selectedContinent: CONTINENT, duration: Long) {
         Handler().postDelayed({
-            startGameActivity(amount, selectedContinent)
+            startGameActivity(selectedContinent)
         }, duration)
     }
 
-    private fun startGameActivity(amount: Int, selectedContinent: CONTINENT) {
-        startActivity<me.wozappz.whatsthatflag.screens.game.GameActivity>(
-                "AMOUNT_OF_COUNTRIES" to amount,
+    private fun startGameActivity(selectedContinent: CONTINENT) {
+        startActivity<GameActivity>(
                 "SELECTED_CONTINENT" to selectedContinent)
 
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
@@ -166,5 +168,9 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
         })
+    }
+
+    override fun displayMessageOceaniaMaxFlags(amount: Int) {
+        toast(getString(R.string.toast_game_oceania_max_flags, amount))
     }
 }

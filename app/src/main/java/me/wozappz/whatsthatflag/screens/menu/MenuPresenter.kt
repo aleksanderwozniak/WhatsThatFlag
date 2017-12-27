@@ -1,10 +1,13 @@
 package me.wozappz.whatsthatflag.screens.menu
 
+import me.wozappz.whatsthatflag.data.Model
+
 
 /**
  * Created by olq on 10.12.17.
  */
-class MenuPresenter(private val view: MenuScreenContract.View)
+class MenuPresenter(private val view: MenuScreenContract.View,
+                    private val model: Model)
     : MenuScreenContract.Presenter {
 
     private val animManager = MenuAnimationManager(view as MenuActivity)
@@ -40,9 +43,17 @@ class MenuPresenter(private val view: MenuScreenContract.View)
 
         view.setStartButtonClickability(false)
 
+        // prepare flaglist for game
+        model.selectFlags(Pair(continent, amount))
+
+        if (continent == CONTINENT.OCEANIA && amount == 40) {
+            val flagCount = model.flagList.size
+            view.displayMessageOceaniaMaxFlags(flagCount)
+        }
+
         // starting a new activity has some lag to it, thus durations below are not equal
         animManager.hideWtfDivider(600)
-        view.startGameActivityWithDelay(amount, continent, 400)
+        view.startGameActivityWithDelay(continent, 400)
     }
 
     private fun calculateAmountOfCountries(seekbarProgress: Int): Int {

@@ -4,7 +4,6 @@ import com.squareup.picasso.Callback
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import me.wozappz.whatsthatflag.data.Model
-import me.wozappz.whatsthatflag.screens.menu.CONTINENT
 import org.jetbrains.anko.coroutines.experimental.Ref
 import org.jetbrains.anko.coroutines.experimental.asReference
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -22,19 +21,13 @@ class GamePresenter(private val view: GameScreenContract.View,
     private var amountOfLoadedCountries = 0
 
 
-    override fun start(gameData: Pair<CONTINENT, Int>) {
+    override fun start() {
         score = 0
         currentFlagId = 0
 
         view.showScore(score)
 
-        model.selectFlags(gameData)
         amountOfLoadedCountries = model.flagList.size
-
-
-        if (gameData.first == CONTINENT.OCEANIA && gameData.second == 40) {
-            view.displayMessageOceaniaMaxFlags(amountOfLoadedCountries)
-        }
 
         view.setButtonsClickability(false)
         downloadImg(currentFlagId)
