@@ -1,6 +1,6 @@
 # What's that Flag?
 
-A quiz, in which the player has to choose the correct country based on it's flag.
+A quiz, in which the player has to choose the correct country based on its flag.
 
 ## Installation
 
@@ -15,13 +15,14 @@ alt="Official Trailer" /></a>
 
 ## How to play
 
-* Select the desired region and amount of countries - then press START.
-* You will be given a couple of second to think and answer.
-* After the last question, a small dialog will display your results.
+* Select the desired region and amount of countries - then press **START**.
+* You will be given a couple of seconds to think and answer.
+* Curious about the displayed flag? Click **WTF?** button to find out more info about it :)
+* After the last question, a small dialog will present your results.
 
 ## Info
 
-> Countries are no longer fetched from the Internet. In order to support translations, I've decided to move them to .xml file. If for some reason you still want to populate the list via Internet, then check ***countries-from-net*** branch.
+> Images of flags are fetched from the ***Internet***. List of countries and URLs to their flags are now hardcoded in .xml file (to support translations and offline mode). If for some reason you want to get ***all*** data from web (via HTML scanning), then ***countries-from-net*** branch is there for you.
 
 Game currently supports these languages:
 * English *[default]*
