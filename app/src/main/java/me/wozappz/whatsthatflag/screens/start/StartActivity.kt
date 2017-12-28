@@ -16,6 +16,7 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 class StartActivity : AppCompatActivity(), StartScreenContract.View {
 
@@ -40,6 +41,10 @@ class StartActivity : AppCompatActivity(), StartScreenContract.View {
 
     override fun isConnectedToInternet(): Boolean {
         return checkInternetConnection(applicationContext)
+    }
+
+    override fun displayOfflineModeMessage() {
+        toast(getString(R.string.toast_start_offline_mode_enabled))
     }
 
     override fun showNoConnectionAlert() {

@@ -8,7 +8,7 @@ import me.wozappz.whatsthatflag.screens.BaseView
 interface MenuScreenContract {
 
     interface View: BaseView<Presenter> {
-        fun startGameActivityWithDelay(amount: Int, selectedContinent: CONTINENT, duration: Long)
+        fun startGameActivityWithDelay(selectedContinent: CONTINENT, duration: Long)
         fun getSelectedContinent(): CONTINENT
         fun getFlagSeekbarProgress(): Int
         fun showFlagSeekbarLabel(amount: Int)
@@ -16,6 +16,7 @@ interface MenuScreenContract {
         fun showAppInfo()
         fun showGitHubSourceInBrowser()
         fun setStartButtonClickability(isClickable: Boolean)
+        fun displayMessageOceaniaMaxFlags(amount: Int)
     }
 
     interface Presenter {

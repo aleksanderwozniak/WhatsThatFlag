@@ -2,7 +2,6 @@ package me.wozappz.whatsthatflag.screens.game
 
 import com.squareup.picasso.Callback
 import me.wozappz.whatsthatflag.screens.BaseView
-import me.wozappz.whatsthatflag.screens.menu.CONTINENT
 
 /**
  * Created by olq on 20.11.17.
@@ -10,14 +9,13 @@ import me.wozappz.whatsthatflag.screens.menu.CONTINENT
 interface GameScreenContract {
 
     interface View: BaseView<Presenter> {
-        fun loadImg(currentUrl: String, callback: Callback)
+        fun loadImg(currentUrl: String, offline: Boolean = true, callback: Callback)
         fun renameButtons(btnNames: List<String>)
         fun showScore(score: Int)
         fun showRemainingQuestions(amount: Int)
         fun showProgressBar()
         fun hideProgressBar()
         fun showSummaryDialog(score: Int, totalFlagAmount: Int)
-        fun displayMessageOceaniaMaxFlags(amount: Int)
         fun displayMessageErrorLoadNextFlag()
         fun displayMessageReloadImg()
         fun displayMessageFlagSkipped(flagName: String)
@@ -34,7 +32,7 @@ interface GameScreenContract {
 
 
     interface Presenter {
-        fun start(gameData: Pair<CONTINENT, Int>)
+        fun start()
         fun answerBtnClicked(selectedCountry: String)
         fun animationTimerFinished()
         fun redownloadImg(goToNext: Boolean = false)

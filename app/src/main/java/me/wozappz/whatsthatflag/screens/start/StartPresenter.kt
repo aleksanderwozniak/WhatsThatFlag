@@ -1,12 +1,14 @@
 package me.wozappz.whatsthatflag.screens.start
 
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.delay
+import android.content.SharedPreferences
+import android.graphics.Bitmap
+import com.squareup.picasso.Picasso
 import me.wozappz.whatsthatflag.data.Model
-import org.jetbrains.anko.coroutines.experimental.Ref
-import org.jetbrains.anko.coroutines.experimental.asReference
-import org.jetbrains.anko.coroutines.experimental.bg
+import java.util.*
+import kotlin.concurrent.schedule
+import android.preference.PreferenceManager
+
+
 
 /**
  * Created by olq on 20.11.17.
@@ -16,20 +18,61 @@ class StartPresenter(private val view: StartScreenContract.View,
     : StartScreenContract.Presenter {
 
 
+    private val ctx by lazy { view as StartActivity }
+
+
     override fun start() {
+        model.loadTotalFlagList()
+
+        offlineModeSetup()
+    }
+
+
+    private fun offlineModeSetup() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
+        val isDataFetched = prefs.getBoolean("isDataFetched", false)
+
         if (view.isConnectedToInternet()) {
+            fetchFlagsForOfflineMode()
 
-            val viewRef: Ref<StartScreenContract.View> = view.asReference()
+            notifyUserOnce(isDataFetched, prefs)
 
-            async(UI) {
-                bg {
-                    model.loadTotalFlagList()
-                }.await()
+            startMenuActivityDelayed()
 
-                delay(1250)
-                viewRef.invoke().startMenuActivity()
-            }
+        } else {
+            manageOfflineModeAvailability(isDataFetched)
+        }
+    }
 
+    private fun fetchFlagsForOfflineMode() {
+        // loads images to disk cache
+        model.totalFlagList.forEach {
+            Picasso.with(ctx)
+                    .load(it.second)
+                    .config(Bitmap.Config.RGB_565)
+                    .fetch()
+        }
+    }
+
+    private fun notifyUserOnce(isDataFetched: Boolean, prefs: SharedPreferences) {
+        if (!isDataFetched) {
+            view.displayOfflineModeMessage()
+
+            val editor = prefs.edit()
+            editor.putBoolean("isDataFetched", true)
+            editor.apply()
+        }
+    }
+
+    private fun startMenuActivityDelayed() {
+        Timer().schedule(1250) {
+            view.startMenuActivity()
+        }
+    }
+
+    private fun manageOfflineModeAvailability(isDataFetched: Boolean) {
+        if (isDataFetched) {
+            startMenuActivityDelayed()
         } else {
             view.showNoConnectionAlert()
         }

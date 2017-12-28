@@ -11,6 +11,7 @@ interface StartScreenContract {
         fun startMenuActivity()
         fun isConnectedToInternet(): Boolean
         fun showNoConnectionAlert()
+        fun displayOfflineModeMessage()
     }
 
     interface Presenter {

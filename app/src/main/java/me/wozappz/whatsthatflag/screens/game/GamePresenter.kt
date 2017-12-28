@@ -1,13 +1,7 @@
 package me.wozappz.whatsthatflag.screens.game
 
 import com.squareup.picasso.Callback
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
 import me.wozappz.whatsthatflag.data.Model
-import me.wozappz.whatsthatflag.screens.menu.CONTINENT
-import org.jetbrains.anko.coroutines.experimental.Ref
-import org.jetbrains.anko.coroutines.experimental.asReference
-import org.jetbrains.anko.coroutines.experimental.bg
 
 /**
  * Created by olq on 20.11.17.
@@ -20,21 +14,17 @@ class GamePresenter(private val view: GameScreenContract.View,
     private var score = 0
     private var currentFlagId = 0
     private var amountOfLoadedCountries = 0
+    private var amountOfNetworkErrors = 0
 
 
-    override fun start(gameData: Pair<CONTINENT, Int>) {
+    override fun start() {
         score = 0
         currentFlagId = 0
+        amountOfNetworkErrors = 0
 
         view.showScore(score)
 
-        model.selectFlags(gameData)
         amountOfLoadedCountries = model.flagList.size
-
-
-        if (gameData.first == CONTINENT.OCEANIA && gameData.second == 40) {
-            view.displayMessageOceaniaMaxFlags(amountOfLoadedCountries)
-        }
 
         view.setButtonsClickability(false)
         downloadImg(currentFlagId)
@@ -42,55 +32,49 @@ class GamePresenter(private val view: GameScreenContract.View,
     }
 
     private fun downloadImg(id: Int) {
-        view.showProgressBar()
+        val imgUrl = model.flagList[id].second
 
-        val viewRef: Ref<GameScreenContract.View> = view.asReference()
-
-
-        async(UI) {
-            val country = model.flagList[id]
-            val imgUrl = bg {
-                val url = model.getURLFromName(country)
-                model.getImgUrl(url)
+        view.loadImg(imgUrl, callback = object : Callback {
+            override fun onSuccess() {
+                loadImgSuccess()
             }
 
-            when (imgUrl.await()) {
-                null -> {
-                    if (viewRef.invoke().isConnectedToInternet()) {
-                        viewRef.invoke().hideProgressBar()
-                        goToNextFlag()
-                        viewRef.invoke().displayMessageErrorLoadNextFlag()
-                    } else {
-                        viewRef.invoke().showNoConnectionAlert()
+            override fun onError() {
+                view.loadImg(imgUrl, false, object : Callback {
+                    override fun onSuccess() {
+                        loadImgSuccess()
                     }
-                }
 
-                else -> {
-                    viewRef.invoke().loadImg(imgUrl.getCompleted() as String, object : Callback {
-                        override fun onSuccess() {
-                            view.startAnswerTimer()
-                            view.hideProgressBar()
-                            view.setButtonsClickability(true)
-                        }
+                    override fun onError() {
+                        amountOfNetworkErrors++
 
-                        override fun onError() {
-                            view.displayMessageReloadImg()
-                            downloadImg(id)
+                        if (amountOfNetworkErrors < 3) {
+                            view.displayMessageErrorLoadNextFlag()
+//                        Log.d("loadImgError", "${model.flagList[id].first}, ${model.flagList[id].second}")
+                            goToNextFlag()
+                        } else {
+                            view.showNoConnectionAlert()
                         }
-                    })
-                }
+                    }
+                })
             }
-        }
+        })
+    }
+
+    private fun loadImgSuccess() {
+        renameBtns(currentFlagId)
+        view.startAnswerTimer()
+        view.setButtonsClickability(true)
     }
 
     override fun redownloadImg(goToNext: Boolean) {
         if (!goToNext) {
             downloadImg(currentFlagId)
-            renameBtns(currentFlagId)
 
         } else {
-            val currentFlag = model.flagList[currentFlagId]
+            val currentFlag = model.flagList[currentFlagId].first
             view.displayMessageFlagSkipped(currentFlag)
+//            Log.d("loadImgError", "[Flag Skipped]  ${model.flagList[currentFlagId].first}, ${model.flagList[currentFlagId].second}")
             goToNextFlag()
         }
     }
@@ -106,7 +90,7 @@ class GamePresenter(private val view: GameScreenContract.View,
     override fun answerBtnClicked(selectedCountry: String) {
         view.stopAnswerTimer()
 
-        val correctCountry = model.flagList[currentFlagId]
+        val correctCountry = model.flagList[currentFlagId].first
         val success = isAnswerCorrect(selectedCountry, correctCountry)
 
         if (!success) {
@@ -137,7 +121,6 @@ class GamePresenter(private val view: GameScreenContract.View,
         if (currentFlagId < amountOfLoadedCountries - 1) {
             currentFlagId++
             downloadImg(currentFlagId)
-            renameBtns(currentFlagId)
 
         } else {
             view.showRemainingQuestions(0)
@@ -146,7 +129,7 @@ class GamePresenter(private val view: GameScreenContract.View,
     }
 
     override fun answerTimerFinished() {
-        val correctCountry = model.flagList[currentFlagId]
+        val correctCountry = model.flagList[currentFlagId].first
 
         view.animateCorrectAnswer(correctCountry, false)
         view.setButtonsClickability(false)
@@ -156,7 +139,7 @@ class GamePresenter(private val view: GameScreenContract.View,
     override fun btnWTFclicked() {
         view.stopAnswerTimer()
 
-        val currentFlag = model.flagList[currentFlagId]
+        val currentFlag = model.flagList[currentFlagId].first
         val url = model.getURLFromName(currentFlag)
         view.displayFlagInfoInBrowser(url)
     }

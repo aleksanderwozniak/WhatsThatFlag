@@ -37,7 +37,6 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         setContentView(R.layout.activity_game)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-        val amountOfCountries = intent.getIntExtra("AMOUNT_OF_COUNTRIES", 20)
         val selectedContinent = intent.getSerializableExtra("SELECTED_CONTINENT") as CONTINENT
 
         val lowercaseContinent = selectedContinent.toString().toLowerCase()
@@ -48,7 +47,7 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         mCategoryTextView.text = getString(R.string.category_text, continentText)
 
         presenter = GamePresenter(this, Injector.provideModel(applicationContext))
-        presenter.start(Pair(selectedContinent, amountOfCountries))
+        presenter.start()
 
         setupListeners()
 
@@ -98,8 +97,8 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     }
 
 
-    override fun loadImg(currentUrl: String, callback: Callback) {
-        mFlagImg.loadUrl(currentUrl, callback)
+    override fun loadImg(currentUrl: String, offline: Boolean, callback: Callback) {
+        mFlagImg.loadUrl(currentUrl, offline, callback)
     }
 
     override fun renameButtons(btnNames: List<String>) {
@@ -130,10 +129,6 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     override fun displayFlagInfoInBrowser(url: String) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
         customTabsIntent.launchUrl(this, Uri.parse(url))
-    }
-
-    override fun displayMessageOceaniaMaxFlags(amount: Int) {
-        toast(getString(R.string.toast_game_oceania_max_flags, amount))
     }
 
     override fun displayMessageErrorLoadNextFlag() {
@@ -208,9 +203,9 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     override fun showNoConnectionAlert() {
         val internetErrorAlert = alert (Appcompat) {
             title = getString(R.string.alert_start_internet_error_title)
-            message = getString(R.string.alert_game_internet_error_msg)
+            message = getString(R.string.alert_game_internet_error_msg, getString(R.string.alert_game_internet_error_btn_pos))
 
-            positiveButton(getString(R.string.alert_game_internet_error_btn_pos), { presenter.redownloadImg() })
+            positiveButton(getString(R.string.alert_game_internet_error_btn_pos), {  })
             negativeButton(getString(R.string.alert_game_internet_error_btn_neg), { finishAffinity() })
         }.build()
 
