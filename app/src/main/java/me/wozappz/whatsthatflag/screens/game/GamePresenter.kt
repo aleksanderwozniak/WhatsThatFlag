@@ -14,11 +14,13 @@ class GamePresenter(private val view: GameScreenContract.View,
     private var score = 0
     private var currentFlagId = 0
     private var amountOfLoadedCountries = 0
+    private var amountOfNetworkErrors = 0
 
 
     override fun start() {
         score = 0
         currentFlagId = 0
+        amountOfNetworkErrors = 0
 
         view.showScore(score)
 
@@ -32,18 +34,37 @@ class GamePresenter(private val view: GameScreenContract.View,
     private fun downloadImg(id: Int) {
         val imgUrl = model.flagList[id].second
 
-        view.loadImg(imgUrl, object : Callback {
+        view.loadImg(imgUrl, callback = object : Callback {
             override fun onSuccess() {
-                renameBtns(currentFlagId)
-                view.startAnswerTimer()
-                view.setButtonsClickability(true)
+                loadImgSuccess()
             }
 
             override fun onError() {
-                view.displayMessageErrorLoadNextFlag()
-                goToNextFlag()
+                view.loadImg(imgUrl, false, object : Callback {
+                    override fun onSuccess() {
+                        loadImgSuccess()
+                    }
+
+                    override fun onError() {
+                        amountOfNetworkErrors++
+
+                        if (amountOfNetworkErrors < 3) {
+                            view.displayMessageErrorLoadNextFlag()
+//                        Log.d("loadImgError", "${model.flagList[id].first}, ${model.flagList[id].second}")
+                            goToNextFlag()
+                        } else {
+                            view.showNoConnectionAlert()
+                        }
+                    }
+                })
             }
         })
+    }
+
+    private fun loadImgSuccess() {
+        renameBtns(currentFlagId)
+        view.startAnswerTimer()
+        view.setButtonsClickability(true)
     }
 
     override fun redownloadImg(goToNext: Boolean) {
@@ -53,6 +74,7 @@ class GamePresenter(private val view: GameScreenContract.View,
         } else {
             val currentFlag = model.flagList[currentFlagId].first
             view.displayMessageFlagSkipped(currentFlag)
+//            Log.d("loadImgError", "[Flag Skipped]  ${model.flagList[currentFlagId].first}, ${model.flagList[currentFlagId].second}")
             goToNextFlag()
         }
     }

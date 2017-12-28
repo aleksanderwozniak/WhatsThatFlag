@@ -9,7 +9,7 @@ import me.wozappz.whatsthatflag.screens.BaseView
 interface GameScreenContract {
 
     interface View: BaseView<Presenter> {
-        fun loadImg(currentUrl: String, callback: Callback)
+        fun loadImg(currentUrl: String, offline: Boolean = true, callback: Callback)
         fun renameButtons(btnNames: List<String>)
         fun showScore(score: Int)
         fun showRemainingQuestions(amount: Int)

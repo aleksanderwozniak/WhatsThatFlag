@@ -32,13 +32,14 @@
     <string name="alert_game_back_message">Do you want to return to menu?</string>
     <string name="alert_game_back_btn_pos">Yes</string>
     <string name="alert_game_back_btn_neg">No</string>
-    <string name="alert_game_internet_error_msg">Make sure you are connected to Internet</string>
-    <string name="alert_game_internet_error_btn_pos">Refresh</string>
+    <string name="alert_game_internet_error_msg">Make sure you are connected to Internet, then press %1$s</string>
+    <string name="alert_game_internet_error_btn_pos">OK</string>
     <string name="alert_game_internet_error_btn_neg">Exit App</string>
     <string name="toast_game_oceania_max_flags">There are only %1$d countries in Oceania</string>
     <string name="toast_game_error_load_next_flag">Loading new flag due to an error</string>
     <string name="toast_game_reload_img">Reattempting image loading</string>
     <string name="toast_game_flag_skipped">Skipped a flag - %1$s</string>
+    <string name="toast_start_offline_mode_enabled">Downloaded flags, offline mode is now enabled</string>
     <string name="showcase_wtfbtn_title">Detailed info</string>
     <string name="showcase_questions_title">Remaining flags</string>
     <string name="showcase_score_title">Your score</string>
@@ -522,7 +523,7 @@
         <item>https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Flag_of_Tokelau.svg/960px-Flag_of_Tokelau.svg.png</item>
         <item>https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Tonga.svg/960px-Flag_of_Tonga.svg.png</item>
         <item>https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tuvalu.svg/960px-Flag_of_Tuvalu.svg.png</item>
-        <item>https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Flag_of_Vanuatu_%28official%29.svg/960px-Flag_of_Vanuatu_%28official%29.svg.png</item>
+        <item>https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Vanuatu.svg/960px-Flag_of_Vanuatu.svg.png</item>
     </string-array>
 
 </resources>

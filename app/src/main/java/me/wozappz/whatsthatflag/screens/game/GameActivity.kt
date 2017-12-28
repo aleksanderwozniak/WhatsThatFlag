@@ -97,8 +97,8 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     }
 
 
-    override fun loadImg(currentUrl: String, callback: Callback) {
-        mFlagImg.loadUrl(currentUrl, callback)
+    override fun loadImg(currentUrl: String, offline: Boolean, callback: Callback) {
+        mFlagImg.loadUrl(currentUrl, offline, callback)
     }
 
     override fun renameButtons(btnNames: List<String>) {
@@ -203,9 +203,9 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
     override fun showNoConnectionAlert() {
         val internetErrorAlert = alert (Appcompat) {
             title = getString(R.string.alert_start_internet_error_title)
-            message = getString(R.string.alert_game_internet_error_msg)
+            message = getString(R.string.alert_game_internet_error_msg, getString(R.string.alert_game_internet_error_btn_pos))
 
-            positiveButton(getString(R.string.alert_game_internet_error_btn_pos), { presenter.redownloadImg() })
+            positiveButton(getString(R.string.alert_game_internet_error_btn_pos), {  })
             negativeButton(getString(R.string.alert_game_internet_error_btn_neg), { finishAffinity() })
         }.build()
 
