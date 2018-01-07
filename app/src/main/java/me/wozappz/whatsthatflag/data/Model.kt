@@ -2,26 +2,13 @@ package me.wozappz.whatsthatflag.data
 
 import me.wozappz.whatsthatflag.screens.menu.CONTINENT
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Created by olq on 20.11.17.
  */
 
-class Model (private val dataLoader: DataLoader) {
-
-    companion object {
-        private var instance: Model? = null
-
-        @Synchronized
-        fun getInstance(dataLoader: DataLoader): Model {
-            if (instance == null) {
-                instance = Model(dataLoader)
-            }
-
-            return instance!!
-        }
-    }
-
+class Model @Inject constructor(private val dataLoader: DataLoader) {
 
     lateinit private var continentSpliterator: IntArray
     lateinit var totalFlagList: List<Pair<String, String>>

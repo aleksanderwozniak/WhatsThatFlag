@@ -36,6 +36,7 @@ Game currently supports these languages:
 * [Kotlin](https://kotlinlang.org/)
 * [Anko](https://github.com/Kotlin/anko)
 * [Picasso](https://github.com/square/picasso)
+* [Dagger2](https://github.com/google/dagger)
 
 ## Author
 

@@ -2,8 +2,9 @@ package me.wozappz.whatsthatflag.data
 
 import android.content.Context
 import me.wozappz.whatsthatflag.R
+import javax.inject.Inject
 
-class DataLoader(private val ctx: Context) {
+class DataLoader @Inject constructor(private val ctx: Context) {
 
 
     fun loadAllFlagsFromRes(): Array<String> {

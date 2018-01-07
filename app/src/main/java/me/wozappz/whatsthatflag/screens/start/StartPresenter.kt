@@ -7,14 +7,15 @@ import me.wozappz.whatsthatflag.data.Model
 import java.util.*
 import kotlin.concurrent.schedule
 import android.preference.PreferenceManager
-
+import javax.inject.Inject
 
 
 /**
  * Created by olq on 20.11.17.
  */
-class StartPresenter(private val view: StartScreenContract.View,
-                     private val model: Model)
+class StartPresenter @Inject constructor(
+        private val view: StartScreenContract.View,
+        private val model: Model)
     : StartScreenContract.Presenter {
 
 

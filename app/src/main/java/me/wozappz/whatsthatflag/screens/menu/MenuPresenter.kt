@@ -4,13 +4,15 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import me.wozappz.whatsthatflag.data.Model
 import org.jetbrains.anko.coroutines.experimental.bg
+import javax.inject.Inject
 
 
 /**
  * Created by olq on 10.12.17.
  */
-class MenuPresenter(private val view: MenuScreenContract.View,
-                    private val model: Model)
+class MenuPresenter @Inject constructor(
+        private val view: MenuScreenContract.View,
+        private val model: Model)
     : MenuScreenContract.Presenter {
 
     private val animManager = MenuAnimationManager(view as MenuActivity)
@@ -48,7 +50,7 @@ class MenuPresenter(private val view: MenuScreenContract.View,
 
         async(UI) {
             bg {
-                // setup list of flags for next quiz
+//                 setup list of flags for next quiz
                 model.selectFlags(Pair(continent, amount))
             }.await()
 

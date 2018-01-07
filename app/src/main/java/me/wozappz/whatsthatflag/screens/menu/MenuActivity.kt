@@ -16,16 +16,18 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.AppCompatButton
 import android.widget.TextView
 import me.wozappz.whatsthatflag.R
-import me.wozappz.whatsthatflag.injector.Injector
+import me.wozappz.whatsthatflag.app.App
+import me.wozappz.whatsthatflag.di.menu.MenuScreenModule
 import me.wozappz.whatsthatflag.screens.game.GameActivity
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.find
 import org.jetbrains.anko.toast
+import javax.inject.Inject
 
 class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
-    override lateinit var presenter: MenuScreenContract.Presenter
+    @Inject override lateinit var presenter: MenuScreenContract.Presenter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +37,11 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
         setupUiElements()
 
-        presenter = MenuPresenter(this, Injector.provideModel(applicationContext))
+        (application as App).daggerComponent
+                .plus(MenuScreenModule(this))
+                .injectTo(this)
+
+
         presenter.start()
     }
 
