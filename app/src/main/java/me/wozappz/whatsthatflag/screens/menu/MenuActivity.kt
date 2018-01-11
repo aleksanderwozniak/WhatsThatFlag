@@ -29,6 +29,8 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
     @Inject override lateinit var presenter: MenuScreenContract.Presenter
 
+    private val animManager by lazy { MenuAnimationManager(this) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -178,5 +180,29 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
     override fun displayMessageOceaniaMaxFlags(amount: Int) {
         toast(getString(R.string.toast_game_oceania_max_flags, amount))
+    }
+
+    override fun animateViewsAlpha(alphaValue: Float, duration: Long) {
+        animManager.animateViewsAlpha(alphaValue, duration)
+    }
+
+    override fun setupGlobeAnimation() {
+        animManager.setupGlobeAnimation()
+    }
+
+    override fun showWtfDivider(duration: Long, delay: Long) {
+        animManager.showWtfDivider(duration, delay)
+    }
+
+    override fun hideWtfDivider(duration: Long, delay: Long) {
+        animManager.hideWtfDivider(duration, delay)
+    }
+
+    override fun runCompoundGlobeAnimation() {
+        animManager.compoundGlobeAnimation()
+    }
+
+    override fun animateBackgroundColor() {
+        animManager.animateBackgroundColor()
     }
 }

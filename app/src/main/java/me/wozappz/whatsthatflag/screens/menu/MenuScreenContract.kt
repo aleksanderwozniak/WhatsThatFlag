@@ -17,6 +17,12 @@ interface MenuScreenContract {
         fun showGitHubSourceInBrowser()
         fun setStartButtonClickability(isClickable: Boolean)
         fun displayMessageOceaniaMaxFlags(amount: Int)
+        fun animateViewsAlpha(alphaValue: Float, duration: Long)
+        fun setupGlobeAnimation()
+        fun showWtfDivider(duration: Long = 0, delay: Long = 0)
+        fun hideWtfDivider(duration: Long = 0, delay: Long = 0)
+        fun runCompoundGlobeAnimation()
+        fun animateBackgroundColor()
     }
 
     interface Presenter {

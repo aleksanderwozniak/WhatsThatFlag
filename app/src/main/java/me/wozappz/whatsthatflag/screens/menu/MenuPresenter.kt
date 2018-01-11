@@ -15,22 +15,21 @@ class MenuPresenter @Inject constructor(
         private val model: Model)
     : MenuScreenContract.Presenter {
 
-    private val animManager = MenuAnimationManager(view as MenuActivity)
 
     override fun start() {
-        animManager.setupGlobeAnimation()
-        animManager.animateViewsAlpha(0.2f, 0)
+        view.setupGlobeAnimation()
+        view.animateViewsAlpha(0.2f, 0)
     }
 
     override fun restartWtfDividerAnimation() {
-        animManager.hideWtfDivider()
-        animManager.showWtfDivider(800, 200)
+        view.hideWtfDivider()
+        view.showWtfDivider(800, 200)
     }
 
     override fun startGlobeAnimation() {
-        animManager.animateViewsAlpha(1f, 1200)
-        animManager.compoundGlobeAnimation()
-        animManager.animateBackgroundColor()
+        view.animateViewsAlpha(1f, 1200)
+        view.runCompoundGlobeAnimation()
+        view.animateBackgroundColor()
     }
 
 
@@ -61,7 +60,7 @@ class MenuPresenter @Inject constructor(
             }
 
             // starting a new activity has some lag to it, thus durations below are not equal
-            animManager.hideWtfDivider(600)
+            view.hideWtfDivider(600)
             view.startGameActivityWithDelay(continent, 400)
         }
     }
