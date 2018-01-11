@@ -45,7 +45,7 @@ class ModelTest {
     }
 
     @Test
-    fun getURLFromName_validesCountryName() {
+    fun getURLFromName_validatesCountryName() {
         val expected = "United_Kingdom"
         val input = "United Kingdom"
 
@@ -66,7 +66,7 @@ class ModelTest {
     }
 
     @Test
-    fun getButtonNames_test() {
+    fun getButtonNames_returnsValidList() {
         model.flagList = listOf(
                 Pair("Albania", "FlagAlbania"),
                 Pair("Bermuda", "FlagBermuda"),

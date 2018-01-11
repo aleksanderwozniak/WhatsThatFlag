@@ -13,16 +13,14 @@ class GamePresenter @Inject constructor(
     : GameScreenContract.Presenter {
 
 
-    private var score = 0
-    private var currentFlagId = 0
-    private var amountOfLoadedCountries = 0
+    var score = 0
+    var currentFlagId = 0
+    var amountOfLoadedCountries = 0
     private var amountOfNetworkErrors = 0
 
 
     override fun start() {
-        score = 0
-        currentFlagId = 0
-        amountOfNetworkErrors = 0
+        resetVariables()
 
         view.showScore(score)
 
@@ -30,7 +28,12 @@ class GamePresenter @Inject constructor(
 
         view.setButtonsClickability(false)
         downloadImg(currentFlagId)
-        renameBtns(currentFlagId)
+    }
+
+    private fun resetVariables() {
+        score = 0
+        currentFlagId = 0
+        amountOfNetworkErrors = 0
     }
 
     private fun downloadImg(id: Int) {
@@ -75,7 +78,6 @@ class GamePresenter @Inject constructor(
         } else {
             val currentFlag = model.flagList[currentFlagId].first
             view.displayMessageFlagSkipped(currentFlag)
-//            Log.d("loadImgError", "[Flag Skipped]  ${model.flagList[currentFlagId].first}, ${model.flagList[currentFlagId].second}")
             goToNextFlag()
         }
     }
