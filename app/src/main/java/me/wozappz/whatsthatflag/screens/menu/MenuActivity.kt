@@ -1,31 +1,35 @@
 package me.wozappz.whatsthatflag.screens.menu
 
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.view.View
-import android.widget.SeekBar
-import kotlinx.android.synthetic.main.activity_menu.*
-import kotlinx.android.synthetic.main.radio_group_table_layout.*
-import org.jetbrains.anko.startActivity
 import android.graphics.Color
 import android.net.Uri
+import android.os.Bundle
 import android.os.Handler
 import android.support.customtabs.CustomTabsIntent
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.AppCompatButton
+import android.view.View
+import android.widget.SeekBar
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_menu.*
+import kotlinx.android.synthetic.main.radio_group_table_layout.*
 import me.wozappz.whatsthatflag.R
-import me.wozappz.whatsthatflag.injector.Injector
+import me.wozappz.whatsthatflag.app.App
+import me.wozappz.whatsthatflag.di.menu.MenuScreenModule
 import me.wozappz.whatsthatflag.screens.game.GameActivity
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.find
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import javax.inject.Inject
 
 class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
-    override lateinit var presenter: MenuScreenContract.Presenter
+    @Inject override lateinit var presenter: MenuScreenContract.Presenter
+
+    private val animManager by lazy { MenuAnimationManager(this) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +39,11 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
         setupUiElements()
 
-        presenter = MenuPresenter(this, Injector.provideModel(applicationContext))
+        (application as App).daggerComponent
+                .plus(MenuScreenModule(this))
+                .injectTo(this)
+
+
         presenter.start()
     }
 
@@ -172,5 +180,29 @@ class MenuActivity : AppCompatActivity(), MenuScreenContract.View {
 
     override fun displayMessageOceaniaMaxFlags(amount: Int) {
         toast(getString(R.string.toast_game_oceania_max_flags, amount))
+    }
+
+    override fun animateViewsAlpha(alphaValue: Float, duration: Long) {
+        animManager.animateViewsAlpha(alphaValue, duration)
+    }
+
+    override fun setupGlobeAnimation() {
+        animManager.setupGlobeAnimation()
+    }
+
+    override fun showWtfDivider(duration: Long, delay: Long) {
+        animManager.showWtfDivider(duration, delay)
+    }
+
+    override fun hideWtfDivider(duration: Long, delay: Long) {
+        animManager.hideWtfDivider(duration, delay)
+    }
+
+    override fun runCompoundGlobeAnimation() {
+        animManager.compoundGlobeAnimation()
+    }
+
+    override fun animateBackgroundColor() {
+        animManager.animateBackgroundColor()
     }
 }

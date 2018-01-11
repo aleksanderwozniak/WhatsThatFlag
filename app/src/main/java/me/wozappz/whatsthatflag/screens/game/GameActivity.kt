@@ -15,7 +15,8 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_game.*
 import me.wozappz.whatsthatflag.R
-import me.wozappz.whatsthatflag.injector.Injector
+import me.wozappz.whatsthatflag.app.App
+import me.wozappz.whatsthatflag.di.game.GameScreenModule
 import me.wozappz.whatsthatflag.screens.menu.CONTINENT
 import me.wozappz.whatsthatflag.utils.checkInternetConnection
 import me.wozappz.whatsthatflag.utils.loadUrl
@@ -23,10 +24,11 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.find
 import org.jetbrains.anko.toast
+import javax.inject.Inject
 
 class GameActivity : AppCompatActivity(), GameScreenContract.View {
 
-    override lateinit var presenter: GameScreenContract.Presenter
+    @Inject override lateinit var presenter: GameScreenContract.Presenter
     private var isAnswerTimerInitialized = false
 
     private val animationManager by lazy { AnswerAnimationManager(this) }
@@ -46,7 +48,12 @@ class GameActivity : AppCompatActivity(), GameScreenContract.View {
         val continentText = getString(continentResId)
         mCategoryTextView.text = getString(R.string.category_text, continentText)
 
-        presenter = GamePresenter(this, Injector.provideModel(applicationContext))
+
+        (application as App).daggerComponent
+                .plus(GameScreenModule(this))
+                .injectTo(this)
+
+
         presenter.start()
 
         setupListeners()

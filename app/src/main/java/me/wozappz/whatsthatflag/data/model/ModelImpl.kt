@@ -1,34 +1,22 @@
-package me.wozappz.whatsthatflag.data
+package me.wozappz.whatsthatflag.data.model
 
 import me.wozappz.whatsthatflag.screens.menu.CONTINENT
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Created by olq on 20.11.17.
  */
 
-class Model (private val dataLoader: DataLoader) {
-
-    companion object {
-        private var instance: Model? = null
-
-        @Synchronized
-        fun getInstance(dataLoader: DataLoader): Model {
-            if (instance == null) {
-                instance = Model(dataLoader)
-            }
-
-            return instance!!
-        }
-    }
-
+class ModelImpl @Inject constructor(private val dataLoader: DataLoader)
+    : Model {
 
     lateinit private var continentSpliterator: IntArray
-    lateinit var totalFlagList: List<Pair<String, String>>
-    lateinit var flagList: List<Pair<String, String>>
+    override lateinit var totalFlagList: List<Pair<String, String>>
+    override lateinit var flagList: List<Pair<String, String>>
 
 
-    fun loadTotalFlagList() {
+    override fun loadTotalFlagList() {
         totalFlagList = dataLoader.getWtfFlagList()
         loadContinentSpliterator()
     }
@@ -38,7 +26,7 @@ class Model (private val dataLoader: DataLoader) {
     }
 
 
-    fun getButtonNames(flagId: Int): List<String> {
+    override fun getButtonNames(flagId: Int): List<String> {
         val dupFlagList = flagList
                 .map { it.first }
                 .toMutableList()
@@ -57,7 +45,7 @@ class Model (private val dataLoader: DataLoader) {
     }
 
 
-    fun selectFlags(gameData: Pair<CONTINENT, Int>) {
+    override fun selectFlags(gameData: Pair<CONTINENT, Int>) {
         var dupFlagList = totalFlagList.toMutableList() // duplicate contents of totalFlagList
 
         if (gameData.first != CONTINENT.GLOBAL) {
@@ -87,8 +75,14 @@ class Model (private val dataLoader: DataLoader) {
         }
     }
 
-    fun getURLFromName(countryName: String): String {
+    override fun getURLFromName(countryName: String): String {
         val validCountryName: String = countryName.replace("[ ]".toRegex(), "_")
         return dataLoader.getWikipediaLink(validCountryName)
+    }
+
+    override fun fetchFlags() {
+        totalFlagList.forEach {
+            dataLoader.fetchFlag(it.second)
+        }
     }
 }

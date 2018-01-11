@@ -1,41 +1,34 @@
 package me.wozappz.whatsthatflag.screens.start
 
-import android.content.SharedPreferences
-import android.graphics.Bitmap
-import com.squareup.picasso.Picasso
-import me.wozappz.whatsthatflag.data.Model
+import me.wozappz.whatsthatflag.data.Repository
 import java.util.*
+import javax.inject.Inject
 import kotlin.concurrent.schedule
-import android.preference.PreferenceManager
-
 
 
 /**
  * Created by olq on 20.11.17.
  */
-class StartPresenter(private val view: StartScreenContract.View,
-                     private val model: Model)
+class StartPresenter @Inject constructor(
+        private val view: StartScreenContract.View,
+        private val repo: Repository)
     : StartScreenContract.Presenter {
 
 
-    private val ctx by lazy { view as StartActivity }
-
-
     override fun start() {
-        model.loadTotalFlagList()
+        repo.model.loadTotalFlagList()
 
         offlineModeSetup()
     }
 
 
     private fun offlineModeSetup() {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
-        val isDataFetched = prefs.getBoolean("isDataFetched", false)
+        val isDataFetched = repo.prefsRepo.isDataFetched()
 
         if (view.isConnectedToInternet()) {
             fetchFlagsForOfflineMode()
 
-            notifyUserOnce(isDataFetched, prefs)
+            notifyUserOnce(isDataFetched)
 
             startMenuActivityDelayed()
 
@@ -45,22 +38,14 @@ class StartPresenter(private val view: StartScreenContract.View,
     }
 
     private fun fetchFlagsForOfflineMode() {
-        // loads images to disk cache
-        model.totalFlagList.forEach {
-            Picasso.with(ctx)
-                    .load(it.second)
-                    .config(Bitmap.Config.RGB_565)
-                    .fetch()
-        }
+        repo.model.fetchFlags()
     }
 
-    private fun notifyUserOnce(isDataFetched: Boolean, prefs: SharedPreferences) {
+    private fun notifyUserOnce(isDataFetched: Boolean) {
         if (!isDataFetched) {
             view.displayOfflineModeMessage()
 
-            val editor = prefs.edit()
-            editor.putBoolean("isDataFetched", true)
-            editor.apply()
+            repo.prefsRepo.putDataFetched(true)
         }
     }
 

@@ -1,13 +1,15 @@
 package me.wozappz.whatsthatflag.screens.game
 
 import com.squareup.picasso.Callback
-import me.wozappz.whatsthatflag.data.Model
+import me.wozappz.whatsthatflag.data.model.Model
+import javax.inject.Inject
 
 /**
  * Created by olq on 20.11.17.
  */
-class GamePresenter(private val view: GameScreenContract.View,
-                    private val model: Model)
+class GamePresenter @Inject constructor(
+        private val view: GameScreenContract.View,
+        private val model: Model)
     : GameScreenContract.Presenter {
 
 
@@ -50,7 +52,6 @@ class GamePresenter(private val view: GameScreenContract.View,
 
                         if (amountOfNetworkErrors < 3) {
                             view.displayMessageErrorLoadNextFlag()
-//                        Log.d("loadImgError", "${model.flagList[id].first}, ${model.flagList[id].second}")
                             goToNextFlag()
                         } else {
                             view.showNoConnectionAlert()

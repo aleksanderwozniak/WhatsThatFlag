@@ -2,14 +2,15 @@ package me.wozappz.whatsthatflag.screens.start
 
 import android.graphics.Color
 import android.graphics.drawable.Animatable
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_start.*
 import me.wozappz.whatsthatflag.R
-import me.wozappz.whatsthatflag.injector.Injector
+import me.wozappz.whatsthatflag.app.App
+import me.wozappz.whatsthatflag.di.start.StartScreenModule
 import me.wozappz.whatsthatflag.screens.menu.MenuActivity
 import me.wozappz.whatsthatflag.utils.checkInternetConnection
 import org.jetbrains.anko.alert
@@ -17,17 +18,22 @@ import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import javax.inject.Inject
 
 class StartActivity : AppCompatActivity(), StartScreenContract.View {
 
-    override lateinit var presenter: StartScreenContract.Presenter
+    @Inject override lateinit var presenter: StartScreenContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
         window.decorView.setBackgroundColor(Color.BLACK)
 
-        presenter = StartPresenter(this, Injector.provideModel(applicationContext))
+        (application as App).daggerComponent
+                .plus(StartScreenModule(this))
+                .injectTo(this)
+
+
         presenter.start()
 
         (mTrgAnim.drawable as Animatable).start()
