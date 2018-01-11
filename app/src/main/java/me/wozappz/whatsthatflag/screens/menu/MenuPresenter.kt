@@ -2,7 +2,7 @@ package me.wozappz.whatsthatflag.screens.menu
 
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
-import me.wozappz.whatsthatflag.data.Model
+import me.wozappz.whatsthatflag.data.model.Model
 import org.jetbrains.anko.coroutines.experimental.bg
 import javax.inject.Inject
 
@@ -49,7 +49,7 @@ class MenuPresenter @Inject constructor(
 
         async(UI) {
             bg {
-//                 setup list of flags for next quiz
+                // setup list of flags for next quiz
                 model.selectFlags(Pair(continent, amount))
             }.await()
 

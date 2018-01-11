@@ -2,7 +2,7 @@ package me.wozappz.whatsthatflag.di.start
 
 import dagger.Module
 import dagger.Provides
-import me.wozappz.whatsthatflag.data.Model
+import me.wozappz.whatsthatflag.data.Repository
 import me.wozappz.whatsthatflag.screens.start.StartPresenter
 import me.wozappz.whatsthatflag.screens.start.StartScreenContract
 
@@ -13,5 +13,5 @@ import me.wozappz.whatsthatflag.screens.start.StartScreenContract
 class StartScreenModule(private val view: StartScreenContract.View) {
 
     @Provides
-    fun provideStartPresenter(model: Model): StartScreenContract.Presenter = StartPresenter(view, model)
+    fun provideStartPresenter(repo: Repository): StartScreenContract.Presenter = StartPresenter(view, repo)
 }

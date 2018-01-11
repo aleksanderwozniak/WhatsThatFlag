@@ -1,7 +1,7 @@
 package me.wozappz.whatsthatflag.screens.game
 
 import com.squareup.picasso.Callback
-import me.wozappz.whatsthatflag.data.Model
+import me.wozappz.whatsthatflag.data.model.Model
 import javax.inject.Inject
 
 /**
@@ -52,7 +52,6 @@ class GamePresenter @Inject constructor(
 
                         if (amountOfNetworkErrors < 3) {
                             view.displayMessageErrorLoadNextFlag()
-//                        Log.d("loadImgError", "${model.flagList[id].first}, ${model.flagList[id].second}")
                             goToNextFlag()
                         } else {
                             view.showNoConnectionAlert()

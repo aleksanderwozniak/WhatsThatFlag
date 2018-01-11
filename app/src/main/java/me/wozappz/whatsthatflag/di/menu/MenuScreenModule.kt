@@ -2,7 +2,7 @@ package me.wozappz.whatsthatflag.di.menu
 
 import dagger.Module
 import dagger.Provides
-import me.wozappz.whatsthatflag.data.Model
+import me.wozappz.whatsthatflag.data.model.Model
 import me.wozappz.whatsthatflag.screens.menu.MenuPresenter
 import me.wozappz.whatsthatflag.screens.menu.MenuScreenContract
 

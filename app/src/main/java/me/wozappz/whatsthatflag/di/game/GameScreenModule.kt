@@ -2,7 +2,7 @@ package me.wozappz.whatsthatflag.di.game
 
 import dagger.Module
 import dagger.Provides
-import me.wozappz.whatsthatflag.data.Model
+import me.wozappz.whatsthatflag.data.model.Model
 import me.wozappz.whatsthatflag.screens.game.GamePresenter
 import me.wozappz.whatsthatflag.screens.game.GameScreenContract
 

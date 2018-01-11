@@ -2,10 +2,10 @@ package me.wozappz.whatsthatflag.screens.start
 
 import android.graphics.Color
 import android.graphics.drawable.Animatable
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_start.*
 import me.wozappz.whatsthatflag.R
