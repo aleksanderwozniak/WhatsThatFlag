@@ -1,6 +1,7 @@
 package me.wozappz.whatsthatflag.screens.game
 
 import com.squareup.picasso.Callback
+import me.wozappz.whatsthatflag.screens.BasePresenter
 import me.wozappz.whatsthatflag.screens.BaseView
 
 /**
@@ -31,8 +32,7 @@ interface GameScreenContract {
     }
 
 
-    interface Presenter {
-        fun start()
+    interface Presenter: BasePresenter {
         fun answerBtnClicked(selectedCountry: String)
         fun animationTimerFinished()
         fun redownloadImg(goToNext: Boolean = false)

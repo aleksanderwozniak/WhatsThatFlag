@@ -1,5 +1,6 @@
 package me.wozappz.whatsthatflag.screens.start
 
+import me.wozappz.whatsthatflag.screens.BasePresenter
 import me.wozappz.whatsthatflag.screens.BaseView
 
 /**
@@ -14,7 +15,6 @@ interface StartScreenContract {
         fun displayOfflineModeMessage()
     }
 
-    interface Presenter {
-        fun start()
+    interface Presenter: BasePresenter {
     }
 }

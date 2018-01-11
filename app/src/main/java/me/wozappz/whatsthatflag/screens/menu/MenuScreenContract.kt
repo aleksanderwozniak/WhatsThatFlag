@@ -1,5 +1,6 @@
 package me.wozappz.whatsthatflag.screens.menu
 
+import me.wozappz.whatsthatflag.screens.BasePresenter
 import me.wozappz.whatsthatflag.screens.BaseView
 
 /**
@@ -25,8 +26,7 @@ interface MenuScreenContract {
         fun animateBackgroundColor()
     }
 
-    interface Presenter {
-        fun start()
+    interface Presenter: BasePresenter {
         fun restartWtfDividerAnimation()
         fun startGlobeAnimation()
         fun btnStartClicked()
