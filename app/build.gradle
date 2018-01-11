@@ -73,4 +73,6 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.11'
     implementation 'com.google.dagger:dagger:2.11'
     compileOnly 'org.glassfish:javax.annotation:10.0-b28'
+
+    testImplementation 'org.mockito:mockito-inline:2.8.9'
 }

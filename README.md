@@ -22,7 +22,7 @@ alt="Official Trailer" /></a>
 
 ## Info
 
-> Images of flags are fetched from the ***Internet***. List of countries and URLs to their flags are now hardcoded in .xml file (to support translations and offline mode). If for some reason you want to get ***all*** data from web (via HTML scanning), then ***countries-from-net*** branch is there for you.
+Images of flags are fetched from the ***Internet***. List of countries and URLs to their flags are now hardcoded in .xml file (to support translations and offline mode)
 
 Game currently supports these languages:
 * English *[default]*
@@ -37,10 +37,6 @@ Game currently supports these languages:
 * [Anko](https://github.com/Kotlin/anko)
 * [Picasso](https://github.com/square/picasso)
 * [Dagger2](https://github.com/google/dagger)
-
-## Author
-
-* **Aleksander Woźniak** - [GitHub](https://github.com/aleksanderwozniak)
 
 ## License
 
